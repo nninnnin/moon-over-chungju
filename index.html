@@ -45,35 +45,28 @@
     <script src="/Tile.js"></script>
 
     <script>
-      let TILE_SIZE;
-      let NUMBER_OF_ROW = 23;
-      let NUMBER_OF_COL = 23;
-      let NUMBER_OF_TILES =
-        NUMBER_OF_ROW * NUMBER_OF_COL;
-      const MARGIN = 0;
-    </script>
-
-    <script>
       function initializeTiles(
+        numberOfRow,
+        numberOfCol,
         numberOfTiles,
         tileSize
       ) {
         const tiles = [];
 
         const MIDDLE_ROW_INDEX = Math.floor(
-          (NUMBER_OF_ROW - 1) / 2
+          (numberOfRow - 1) / 2
         );
         const MIDDLE_COL_INDEX = Math.floor(
-          (NUMBER_OF_COL - 1) / 2
+          (numberOfCol - 1) / 2
         );
 
         for (let i = 0; i < numberOfTiles; i++) {
           const rowIndex = Math.floor(
-            i / NUMBER_OF_COL
+            i / numberOfCol
           );
-          const colIndex = i % NUMBER_OF_COL;
+          const colIndex = i % numberOfCol;
 
-          const unit = tileSize + MARGIN;
+          const unit = tileSize;
 
           const x = unit * colIndex;
           const y = unit * rowIndex;
@@ -84,6 +77,29 @@
         }
 
         return tiles;
+      }
+
+      function setTiles(width, height) {
+        const NUMBER_OF_COL = 23;
+        const numberOfCol = NUMBER_OF_COL;
+        const tileSize = width / numberOfCol;
+        const numberOfRow = Math.ceil(
+          height / tileSize
+        );
+        const numberOfTiles =
+          numberOfCol * numberOfRow;
+
+        window.TILE_SIZE = tileSize;
+        window.NUMBER_OF_COL = numberOfCol;
+        window.NUMBER_OF_ROW = numberOfRow;
+        window.NUMBER_OF_TILES = numberOfTiles;
+
+        return {
+          tileSize,
+          numberOfRow,
+          numberOfCol,
+          numberOfTiles,
+        };
       }
     </script>
 
@@ -97,12 +113,12 @@
           WEBGL
         );
 
-        TILE_SIZE = width / NUMBER_OF_COL;
-        NUMBER_OF_ROW = Math.ceil(
-          height / TILE_SIZE
-        );
-        NUMBER_OF_TILES =
-          NUMBER_OF_ROW * NUMBER_OF_COL;
+        const {
+          tileSize,
+          numberOfRow,
+          numberOfCol,
+          numberOfTiles,
+        } = setTiles(canvas.width, canvas.height);
 
         window.addEventListener("resize", () => {
           resizeCanvas(
@@ -110,19 +126,19 @@
             window.innerHeight
           );
 
-          const TILE_SIZE = width / NUMBER_OF_COL;
-
-          NUMBER_OF_ROW = Math.ceil(
-            height / TILE_SIZE
-          );
-
-          NUMBER_OF_TILES =
-            NUMBER_OF_ROW * NUMBER_OF_COL;
+          const {
+            tileSize,
+            numberOfRow,
+            numberOfCol,
+            numberOfTiles,
+          } = setTiles(width, height);
 
           tiles = [
             ...initializeTiles(
-              NUMBER_OF_TILES,
-              TILE_SIZE
+              numberOfRow,
+              numberOfCol,
+              numberOfTiles,
+              tileSize
             ),
           ];
         });
@@ -132,8 +148,10 @@
 
         tiles = [
           ...initializeTiles(
-            NUMBER_OF_TILES,
-            TILE_SIZE
+            numberOfRow,
+            numberOfCol,
+            numberOfTiles,
+            tileSize
           ),
         ];
 
