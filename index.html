@@ -2,8 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tiles</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>청주에 뜬 달</title>
 
     <style>
       * {
@@ -45,23 +48,35 @@
       let TILE_SIZE;
       let NUMBER_OF_ROW = 23;
       let NUMBER_OF_COL = 23;
-      const NUMBER_OF_TILES = NUMBER_OF_ROW * NUMBER_OF_COL;
+      const NUMBER_OF_TILES =
+        NUMBER_OF_ROW * NUMBER_OF_COL;
       const MARGIN = 0;
     </script>
 
     <script>
-      function initializeTiles(numberOfTiles, tileSize) {
+      function initializeTiles(
+        numberOfTiles,
+        tileSize
+      ) {
         const tiles = [];
 
-        const MIDDLE_ROW_INDEX = Math.floor((NUMBER_OF_ROW - 1) / 2);
-        const MIDDLE_COL_INDEX = Math.floor((NUMBER_OF_COL - 1) / 2);
+        const MIDDLE_ROW_INDEX = Math.floor(
+          (NUMBER_OF_ROW - 1) / 2
+        );
+        const MIDDLE_COL_INDEX = Math.floor(
+          (NUMBER_OF_COL - 1) / 2
+        );
 
         for (let i = 0; i < numberOfTiles; i++) {
-          const rowIndex = Math.floor(i / NUMBER_OF_COL);
+          const rowIndex = Math.floor(
+            i / NUMBER_OF_COL
+          );
           const colIndex = i % NUMBER_OF_COL;
 
-          const rowDifference = MIDDLE_ROW_INDEX - rowIndex;
-          const colDifference = MIDDLE_COL_INDEX - colIndex;
+          const rowDifference =
+            MIDDLE_ROW_INDEX - rowIndex;
+          const colDifference =
+            MIDDLE_COL_INDEX - colIndex;
 
           const unit = tileSize + MARGIN;
 
@@ -87,18 +102,26 @@
           WEBGL
         );
 
-        TILE_SIZE = (Math.max(width, height)) / NUMBER_OF_COL;
+        TILE_SIZE =
+          Math.max(width, height) / NUMBER_OF_COL;
 
         window.addEventListener("resize", () => {
-          resizeCanvas(window.innerWidth, window.innerHeight);
+          resizeCanvas(
+            window.innerWidth,
+            window.innerHeight
+          );
 
-          const TILE_SIZE = (Math.max(window.innerWidth, window.innerHeight)) / NUMBER_OF_COL;
+          const TILE_SIZE =
+            Math.max(
+              window.innerWidth,
+              window.innerHeight
+            ) / NUMBER_OF_COL;
 
           tiles = [
             ...initializeTiles(
               NUMBER_OF_TILES,
               TILE_SIZE
-            )
+            ),
           ];
         });
 
@@ -109,7 +132,7 @@
           ...initializeTiles(
             NUMBER_OF_TILES,
             TILE_SIZE
-          )
+          ),
         ];
 
         canvas.mousePressed(() => {
@@ -124,7 +147,11 @@
       function draw() {
         background(255, 210, 150);
 
-        point(mouseX - width / 2, mouseY - height / 2, 0);
+        point(
+          mouseX - width / 2,
+          mouseY - height / 2,
+          0
+        );
 
         // orbitControl();
 

@@ -1,7 +1,7 @@
 {
-  "name": "tiles",
+  "name": "The Moon Over Chungju",
   "version": "1.0.0",
-  "description": "",
+  "description": "2024 청주시립미술관 강익중 전시 연계 미디어 - 청주에 뜬 달",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
