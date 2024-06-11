@@ -48,7 +48,7 @@
       let TILE_SIZE;
       let NUMBER_OF_ROW = 23;
       let NUMBER_OF_COL = 23;
-      const NUMBER_OF_TILES =
+      let NUMBER_OF_TILES =
         NUMBER_OF_ROW * NUMBER_OF_COL;
       const MARGIN = 0;
     </script>
@@ -73,15 +73,10 @@
           );
           const colIndex = i % NUMBER_OF_COL;
 
-          const rowDifference =
-            MIDDLE_ROW_INDEX - rowIndex;
-          const colDifference =
-            MIDDLE_COL_INDEX - colIndex;
-
           const unit = tileSize + MARGIN;
 
-          const x = unit * colDifference;
-          const y = unit * rowDifference;
+          const x = unit * colIndex;
+          const y = unit * rowIndex;
 
           const tile = new Tile(x, y, tileSize);
 
@@ -102,8 +97,12 @@
           WEBGL
         );
 
-        TILE_SIZE =
-          Math.max(width, height) / NUMBER_OF_COL;
+        TILE_SIZE = width / NUMBER_OF_COL;
+        NUMBER_OF_ROW = Math.ceil(
+          height / TILE_SIZE
+        );
+        NUMBER_OF_TILES =
+          NUMBER_OF_ROW * NUMBER_OF_COL;
 
         window.addEventListener("resize", () => {
           resizeCanvas(
@@ -111,11 +110,14 @@
             window.innerHeight
           );
 
-          const TILE_SIZE =
-            Math.max(
-              window.innerWidth,
-              window.innerHeight
-            ) / NUMBER_OF_COL;
+          const TILE_SIZE = width / NUMBER_OF_COL;
+
+          NUMBER_OF_ROW = Math.ceil(
+            height / TILE_SIZE
+          );
+
+          NUMBER_OF_TILES =
+            NUMBER_OF_ROW * NUMBER_OF_COL;
 
           tiles = [
             ...initializeTiles(

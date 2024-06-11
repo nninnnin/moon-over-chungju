@@ -15,7 +15,11 @@ class Tile {
   draw() {
     push();
 
-    translate(this.x, this.y, this.z);
+    translate(
+      -width / 2 + this.size / 2 + this.x,
+      -height / 2 + this.size / 2 + this.y,
+      this.z - this.size / 2
+    );
 
     this.animateZoom();
     this.animateRotation();
@@ -30,15 +34,11 @@ class Tile {
     }
 
     if (this.rotation > 0) {
-      const milestones = [
-        0,
-        90,
-        180,
-        270,
-        360,
-      ];
+      const milestones = [0, 90, 180, 270, 360];
 
-      const closestMilestone = milestones.find(ms => ms > this.rotation)
+      const closestMilestone = milestones.find(
+        (ms) => ms > this.rotation
+      );
 
       this.targetRotation = closestMilestone;
 
@@ -116,19 +116,16 @@ class Tile {
       return;
     }
 
-    const mouseX3D = mouseX - width / 2;
-    const mouseY3D = mouseY - height / 2;
-
     const leftEnd = this.x - this.size / 2;
     const rightEnd = this.x + this.size / 2;
     const topEnd = this.y - this.size / 2;
     const bottomEnd = this.y + this.size / 2;
 
     if (
-      mouseX3D > leftEnd &&
-      mouseX3D < rightEnd &&
-      mouseY3D > topEnd &&
-      mouseY3D < bottomEnd
+      mouseX > leftEnd &&
+      mouseX < rightEnd &&
+      mouseY > topEnd &&
+      mouseY < bottomEnd
     ) {
       this.hovered = true;
     } else {
