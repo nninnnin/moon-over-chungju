@@ -28,7 +28,7 @@ class Tile {
     );
 
     // this.animateZoom();
-    // this.animateRotation();
+    this.animateRotation();
     this.animateCollapse();
 
     box(this.size);
@@ -65,8 +65,18 @@ class Tile {
     this.animatingCollapse = true;
   }
 
+  setNotToBeCollapsed() {
+    this.animatingCollapse = false;
+  }
+
   animateCollapse() {
     if (this.animatingCollapse) {
+      const outOfScreen = this.y > height + 100;
+
+      if (outOfScreen) {
+        this.animatingCollapse = false;
+      }
+
       this.y =
         this.y + 3 * this.rotation3d.x * 0.033;
 
@@ -76,14 +86,7 @@ class Tile {
       rotateX(
         (this.rotation3d.x += randomRotate())
       );
-
-      // rotateY(
-      //   (this.rotation3d.y += randomRotate())
-      // );
-
-      // rotateZ(
-      //   (this.rotation3d.z += randomRotate())
-      // );
+    } else {
     }
   }
 
