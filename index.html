@@ -11,6 +11,7 @@
     <style>
       * {
         touch-action: manipulation;
+        box-sizing: border-box;
       }
 
       html,
@@ -32,7 +33,15 @@
       }
     </style>
 
-    <script src="/components/Layout.js"></script>
+    <script src="/src/components/Layout.js"></script>
+
+    <script>
+      function rerenderComponents() {
+        const appLayout =
+          document.querySelector("app-layout");
+        appLayout.render();
+      }
+    </script>
   </head>
   <body>
     <app-layout></app-layout>
@@ -41,8 +50,8 @@
     <script src="/dist/lambda-client-bundled.js"></script>
 
     <!-- for p5.js -->
-    <script src="/libs/p5.min.js"></script>
-    <script src="/Tile.js"></script>
+    <script src="/src/libs/p5.min.js"></script>
+    <script src="/src/Tile.js"></script>
 
     <script>
       function initializeTiles(
@@ -80,7 +89,9 @@
       }
 
       function setTiles(width, height) {
-        const NUMBER_OF_COL = 23;
+        const isMobile = window.innerWidth < 768;
+
+        const NUMBER_OF_COL = isMobile ? 11 : 23;
         const numberOfCol = NUMBER_OF_COL;
         const tileSize = width / numberOfCol;
         const numberOfRow = Math.ceil(
@@ -94,6 +105,9 @@
         window.NUMBER_OF_ROW = numberOfRow;
         window.NUMBER_OF_TILES = numberOfTiles;
 
+        // After set tiles, rerender components
+        rerenderComponents();
+
         return {
           tileSize,
           numberOfRow,
@@ -104,8 +118,6 @@
     </script>
 
     <script>
-      let tiles = [];
-
       function setup() {
         const canvas = createCanvas(
           window.innerWidth,
@@ -133,7 +145,7 @@
             numberOfTiles,
           } = setTiles(width, height);
 
-          tiles = [
+          window.tiles = [
             ...initializeTiles(
               numberOfRow,
               numberOfCol,
@@ -144,9 +156,11 @@
         });
 
         background(999);
-        angleMode(DEGREES);
 
-        tiles = [
+        angleMode(DEGREES);
+        blendMode(BLEND);
+
+        window.tiles = [
           ...initializeTiles(
             numberOfRow,
             numberOfCol,
@@ -167,6 +181,15 @@
       function draw() {
         background(255, 210, 150);
 
+        ortho(
+          -width / 2,
+          width / 2,
+          -height / 2,
+          height / 2,
+          100,
+          1000
+        );
+
         point(
           mouseX - width / 2,
           mouseY - height / 2,
@@ -175,7 +198,7 @@
 
         // orbitControl();
 
-        tiles.forEach((tile) => {
+        window.tiles.forEach((tile) => {
           tile.checkIsHovered();
           tile.draw();
         });

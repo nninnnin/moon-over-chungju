@@ -1,9 +1,9 @@
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-  entry: './lambda-client.js',
+  entry: "./src/lambda-client.js",
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'lambda-client-bundled.js'
-  }
-}
+    path: path.resolve(__dirname, "dist"),
+    filename: "lambda-client-bundled.js",
+  },
+};

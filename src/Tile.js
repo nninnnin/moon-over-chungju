@@ -6,10 +6,16 @@ class Tile {
     this.size = size;
 
     this.rotation = 0;
+    this.rotation3d = {
+      x: 0,
+      y: 0,
+      z: 0,
+    };
     this.targetRotation = null;
 
     this.hovered = false;
     this.animatingZoom = false;
+    this.animatingCollapse = false;
   }
 
   draw() {
@@ -21,8 +27,10 @@ class Tile {
       this.z - this.size / 2
     );
 
-    this.animateZoom();
-    this.animateRotation();
+    // this.animateZoom();
+    // this.animateRotation();
+    this.animateCollapse();
+
     box(this.size);
 
     pop();
@@ -51,6 +59,32 @@ class Tile {
     }
 
     rotateY(this.rotation);
+  }
+
+  setToBeCollapsed() {
+    this.animatingCollapse = true;
+  }
+
+  animateCollapse() {
+    if (this.animatingCollapse) {
+      this.y =
+        this.y + 3 * this.rotation3d.x * 0.033;
+
+      const randomRotate = () =>
+        Math.floor(Math.random() * 10);
+
+      rotateX(
+        (this.rotation3d.x += randomRotate())
+      );
+
+      // rotateY(
+      //   (this.rotation3d.y += randomRotate())
+      // );
+
+      // rotateZ(
+      //   (this.rotation3d.z += randomRotate())
+      // );
+    }
   }
 
   animateZoom() {
