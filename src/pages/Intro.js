@@ -8,10 +8,16 @@ class Intro extends PageComponent {
       this.createTilePosition(2, 5);
 
     const secondLabelPosition =
-      this.createTilePosition(-2, -5);
+      this.createTilePosition(
+        -2,
+        window.NUMBER_OF_ROW - 5
+      );
 
     const thirdLabelPosition =
-      this.createTilePosition(-2, -6);
+      this.createTilePosition(
+        -2,
+        window.NUMBER_OF_ROW - 6
+      );
 
     const buttonPosition =
       this.createTilePosition(
@@ -23,8 +29,8 @@ class Intro extends PageComponent {
       <style>
         button {
           position: fixed;
-          top: ${buttonPosition.y}px;
-          left: ${buttonPosition.x}px;
+          ${buttonPosition.x};
+          ${buttonPosition.y};
           z-index: 9999;
 
           width: ${window.TILE_SIZE * 5}px;

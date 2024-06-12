@@ -18,15 +18,23 @@ class PageComponent extends HTMLElement {
     let yPosition;
 
     if (x < 0) {
-      x = `right: ${window.TILE_SIZE * x}px;`;
+      xPosition = `right: ${
+        window.TILE_SIZE * Math.abs(x)
+      }px;`;
     } else {
-      x = `left: ${window.TILE_SIZE}px;`;
+      xPosition = `left: ${
+        window.TILE_SIZE * Math.abs(x)
+      }px;`;
     }
 
     if (y < 0) {
-      y = `right: ${window.TILE_SIZE}px`;
+      yPosition = `bottom: ${
+        window.TILE_SIZE * Math.abs(y)
+      }px`;
     } else {
-      y = `left: ${window.TILE_SIZE}px`;
+      yPosition = `top: ${
+        window.TILE_SIZE * Math.abs(y)
+      }px`;
     }
 
     return {
