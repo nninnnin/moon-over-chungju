@@ -21,38 +21,28 @@ const getLambdaClient = (() => {
 })();
 
 const main = () => {
-  document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-      // const appLayout =
-      //   document.querySelector("app-layout");
-      // const button =
-      //   appLayout.shadowRoot.querySelector(
-      //     "button"
-      //   );
-      // button.addEventListener(
-      //   "click",
-      //   async () => {
-      //     const lambdaClient = getLambdaClient();
-      //     const command = new InvokeCommand({
-      //       FunctionName:
-      //         "Chungju-Art-Museum-Message-Find",
-      //       Payload: JSON.stringify({
-      //         // message: "Hello, JongHan!",
-      //         id: 14,
-      //       }),
-      //     });
-      //     try {
-      //       const response =
-      //         await lambdaClient.send(command);
-      //       console.log(response);
-      //     } catch (error) {
-      //       console.error(error);
-      //     }
-      //   }
-      // );
+  const lambdaClient = getLambdaClient();
+
+  const requestLambda = async () => {
+    const command = new InvokeCommand({
+      FunctionName:
+        "Chungju-Art-Museum-Message-Find",
+      Payload: JSON.stringify({
+        // message: "Hello, JongHan!",
+        id: 14,
+      }),
+    });
+    try {
+      const response = await lambdaClient.send(
+        command
+      );
+      console.log(response);
+    } catch (error) {
+      console.error(error);
     }
-  );
+  };
+
+  window.requestLambda = requestLambda;
 };
 
 main();

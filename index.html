@@ -19,8 +19,6 @@
         margin: 0;
         padding: 0;
 
-        background-color: gray;
-
         overflow: hidden;
         overscroll-behavior: none;
       }
@@ -30,10 +28,24 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+
+        background-color: black;
+        background-image: url("/public/images/moon.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 50%;
       }
     </style>
 
+    <script src="/src/Tile.js"></script>
+
+    <script src="/src/components/PageComponent.js"></script>
     <script src="/src/components/Layout.js"></script>
+
+    <script></script>
+
+    <script src="/src/pages/Intro.js"></script>
+    <script src="/src/pages/First.js"></script>
 
     <script>
       function rerenderComponents() {
@@ -51,71 +63,6 @@
 
     <!-- for p5.js -->
     <script src="/src/libs/p5.min.js"></script>
-    <script src="/src/Tile.js"></script>
-
-    <script>
-      function initializeTiles(
-        numberOfRow,
-        numberOfCol,
-        numberOfTiles,
-        tileSize
-      ) {
-        const tiles = [];
-
-        const MIDDLE_ROW_INDEX = Math.floor(
-          (numberOfRow - 1) / 2
-        );
-        const MIDDLE_COL_INDEX = Math.floor(
-          (numberOfCol - 1) / 2
-        );
-
-        for (let i = 0; i < numberOfTiles; i++) {
-          const rowIndex = Math.floor(
-            i / numberOfCol
-          );
-          const colIndex = i % numberOfCol;
-
-          const unit = tileSize;
-
-          const x = unit * colIndex;
-          const y = unit * rowIndex;
-
-          const tile = new Tile(x, y, tileSize);
-
-          tiles.push(tile);
-        }
-
-        return tiles;
-      }
-
-      function setTiles(width, height) {
-        const isMobile = window.innerWidth < 768;
-
-        const NUMBER_OF_COL = isMobile ? 11 : 23;
-        const numberOfCol = NUMBER_OF_COL;
-        const tileSize = width / numberOfCol;
-        const numberOfRow = Math.ceil(
-          height / tileSize
-        );
-        const numberOfTiles =
-          numberOfCol * numberOfRow;
-
-        window.TILE_SIZE = tileSize;
-        window.NUMBER_OF_COL = numberOfCol;
-        window.NUMBER_OF_ROW = numberOfRow;
-        window.NUMBER_OF_TILES = numberOfTiles;
-
-        // After set tiles, rerender components
-        rerenderComponents();
-
-        return {
-          tileSize,
-          numberOfRow,
-          numberOfCol,
-          numberOfTiles,
-        };
-      }
-    </script>
 
     <script>
       function setup() {
@@ -130,7 +77,13 @@
           numberOfRow,
           numberOfCol,
           numberOfTiles,
-        } = setTiles(canvas.width, canvas.height);
+        } = Tile.setTiles(
+          canvas.width,
+          canvas.height
+        );
+
+        // After set tiles, rerender components
+        rerenderComponents();
 
         window.addEventListener("resize", () => {
           resizeCanvas(
@@ -143,11 +96,13 @@
             numberOfRow,
             numberOfCol,
             numberOfTiles,
-          } = setTiles(width, height);
+          } = Tile.setTiles(width, height);
+
+          // After set tiles, rerender components
+          rerenderComponents();
 
           window.tiles = [
-            ...initializeTiles(
-              numberOfRow,
+            ...Tile.initializeTiles(
               numberOfCol,
               numberOfTiles,
               tileSize
@@ -155,14 +110,11 @@
           ];
         });
 
-        background(999);
-
         angleMode(DEGREES);
         blendMode(BLEND);
 
         window.tiles = [
-          ...initializeTiles(
-            numberOfRow,
+          ...Tile.initializeTiles(
             numberOfCol,
             numberOfTiles,
             tileSize
@@ -179,7 +131,7 @@
       }
 
       function draw() {
-        background(255, 210, 150);
+        clear();
 
         ortho(
           -width / 2,
