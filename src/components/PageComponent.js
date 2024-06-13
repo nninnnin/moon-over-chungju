@@ -86,6 +86,8 @@ class PageComponent extends HTMLElement {
     user-select: none;
     -webkit-user-select: none;
 
+    box-sizing: border-box;
+
     border: none;
     outline: none;
     background-color: black;

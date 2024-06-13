@@ -204,6 +204,10 @@ class First extends PageComponent {
               : `${window.TILE_SIZE * 6}px`
           };
           height: ${window.TILE_SIZE * 2}px;
+
+          background-color: #d8d8d8;
+          border: 0.5px solid black;
+          box-sizing: border-box;
         }
 
         .label {
