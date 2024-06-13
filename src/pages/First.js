@@ -298,55 +298,55 @@ class First extends PageComponent {
         "button--next"
       );
 
-    backButton.addEventListener("click", () => {
-      const movePage = () => {
-        const AppLayout =
-          document.querySelector("app-layout");
+    const movePage = (pageNumber) => {
+      const AppLayout =
+        document.querySelector("app-layout");
 
-        AppLayout.setStateAndRerender({
-          pageNumber: 0,
-        });
-      };
+      AppLayout.setStateAndRerender({
+        pageNumber,
+      });
+    };
 
-      const collapseTiles = () => {
-        window.tiles.forEach((tile) => {
-          tile.setToBeCollapse();
-        });
-      };
+    const removeElements = () => {
+      const elements = [
+        this.shadowRoot.getElementById("logo"),
+        ...this.shadowRoot.querySelectorAll(
+          ".label"
+        ),
+        ...this.shadowRoot.querySelectorAll(
+          "button"
+        ),
+      ];
 
-      const restackTiles = () => {
-        const {
-          tileSize,
+      elements.forEach((element) => {
+        element.remove();
+      });
+    };
+
+    const restackTiles = () => {
+      const {
+        tileSize,
+        numberOfCol,
+        numberOfTiles,
+      } = Tile.setTiles(width, height);
+
+      window.tiles = [
+        ...Tile.initializeTiles(
           numberOfCol,
           numberOfTiles,
-        } = Tile.setTiles(width, height);
+          tileSize,
+          true
+        ),
+      ];
+    };
 
-        window.tiles = [
-          ...Tile.initializeTiles(
-            numberOfCol,
-            numberOfTiles,
-            tileSize,
-            true
-          ),
-        ];
-      };
+    const collapseTiles = () => {
+      window.tiles.forEach((tile) => {
+        tile.setToBeCollapse();
+      });
+    };
 
-      const removeElements = () => {
-        const elements = [
-          this.shadowRoot.getElementById("logo"),
-          ...this.shadowRoot.querySelectorAll(
-            ".label"
-          ),
-          ...this.shadowRoot.querySelectorAll(
-            "button"
-          ),
-        ];
-
-        elements.forEach((element) => {
-          element.remove();
-        });
-      };
-
+    backButton.addEventListener("click", () => {
       collapseTiles();
       removeElements();
 
@@ -354,18 +354,22 @@ class First extends PageComponent {
         restackTiles();
 
         setTimeout(() => {
-          movePage();
+          movePage(0);
         }, 2500);
       }, 2500);
     });
 
     nextButton.addEventListener("click", () => {
-      const AppLayout =
-        document.querySelector("app-layout");
+      collapseTiles();
+      removeElements();
 
-      AppLayout.setStateAndRerender({
-        pageNumber: 2,
-      });
+      setTimeout(() => {
+        restackTiles();
+
+        setTimeout(() => {
+          movePage(2);
+        }, 2500);
+      }, 2500);
     });
   }
 }
