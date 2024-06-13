@@ -49,7 +49,7 @@ class PageComponent extends HTMLElement {
 
   static labelStyles = `
     box-sizing: border-box;
-    background-color: turquoise;
+    background-color: #d8d8d8;
 
     display: flex;
     justify-content: flex-start;

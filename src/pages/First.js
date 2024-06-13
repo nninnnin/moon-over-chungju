@@ -29,8 +29,6 @@ class First extends PageComponent {
   }
 
   render() {
-    const isMobile = window.innerWidth > 768;
-
     const MIDDLE_ROW_INDEX = Math.floor(
       window.NUMBER_OF_ROW / 2
     );
@@ -128,22 +126,26 @@ class First extends PageComponent {
       },
     ];
 
-    const labelStyles = labels.map((label) => {
-      const position = this.createTilePosition(
-        label.position.x,
-        label.position.y
-      );
+    const labelStyles = labels.map(
+      (label) => {
+        const position =
+          this.createTilePosition(
+            label.position.x,
+            label.position.y
+          );
 
-      return `
+        return `
         #${label.id} {
           ${position.x};
           ${position.y};
   
           width: ${
-            window.TILE_SIZE * label.size.x
+            window.TILE_SIZE *
+            label.size.x
           }px;
           height: ${
-            window.TILE_SIZE * label.size.y
+            window.TILE_SIZE *
+            label.size.y
           }px;
 
           background-color: ${
@@ -151,28 +153,34 @@ class First extends PageComponent {
           };
         }
       `
-        .replaceAll("\n", "")
-        .trim();
-    });
+          .replaceAll("\n", "")
+          .trim();
+      }
+    );
 
-    const labelElements = labels.map((label) => {
-      const AppLayout =
-        document.querySelector("app-layout");
+    const labelElements = labels.map(
+      (label) => {
+        const AppLayout =
+          document.querySelector(
+            "app-layout"
+          );
 
-      const isSelectedLabel =
-        AppLayout.state.selectedReceiver ===
-        label.id;
+        const isSelectedLabel =
+          AppLayout.state
+            .selectedReceiver ===
+          label.id;
 
-      return `
+        return `
         <div class='label ${
           isSelectedLabel ? "zoom" : ""
         }' id='${label.id}'>
           ${label.text}
         </div>
       `
-        .replaceAll("\n", "")
-        .trim();
-    });
+          .replaceAll("\n", "")
+          .trim();
+      }
+    );
 
     const MIDDLE_COL_INDEX = Math.floor(
       window.NUMBER_OF_COL / 2
@@ -199,11 +207,17 @@ class First extends PageComponent {
           z-index: 9999;
 
           width: ${
-            isMobile
-              ? `${window.TILE_SIZE * 7}px`
-              : `${window.TILE_SIZE * 6}px`
+            window.innerWidth > 768
+              ? `${
+                  window.TILE_SIZE * 7
+                }px`
+              : `${
+                  window.TILE_SIZE * 6
+                }px`
           };
-          height: ${window.TILE_SIZE * 2}px;
+          height: ${
+            window.TILE_SIZE * 2
+          }px;
 
           background-color: #d8d8d8;
           border: 0.5px solid black;
@@ -263,7 +277,9 @@ class First extends PageComponent {
 
   addLabelListeners() {
     let labels =
-      this.shadowRoot.querySelectorAll(".label");
+      this.shadowRoot.querySelectorAll(
+        ".label"
+      );
 
     labels = [...labels].filter(
       (label) =>
@@ -272,19 +288,26 @@ class First extends PageComponent {
     );
 
     labels.forEach((label) => {
-      label.addEventListener("click", () => {
-        labels.forEach((label) => {
-          label.classList.remove("zoom");
-        });
+      label.addEventListener(
+        "click",
+        () => {
+          labels.forEach((label) => {
+            label.classList.remove(
+              "zoom"
+            );
+          });
 
-        label.classList.add("zoom");
+          label.classList.add("zoom");
 
-        const AppLayout =
-          document.querySelector("app-layout");
+          const AppLayout =
+            document.querySelector(
+              "app-layout"
+            );
 
-        AppLayout.state.selectedReceiver =
-          label.id;
-      });
+          AppLayout.state.selectedReceiver =
+            label.id;
+        }
+      );
     });
   }
 
@@ -300,7 +323,9 @@ class First extends PageComponent {
 
     const movePage = (pageNumber) => {
       const AppLayout =
-        document.querySelector("app-layout");
+        document.querySelector(
+          "app-layout"
+        );
 
       AppLayout.setStateAndRerender({
         pageNumber,
@@ -309,7 +334,9 @@ class First extends PageComponent {
 
     const removeElements = () => {
       const elements = [
-        this.shadowRoot.getElementById("logo"),
+        this.shadowRoot.getElementById(
+          "logo"
+        ),
         ...this.shadowRoot.querySelectorAll(
           ".label"
         ),
@@ -346,32 +373,51 @@ class First extends PageComponent {
       });
     };
 
-    backButton.addEventListener("click", () => {
-      collapseTiles();
-      removeElements();
-
-      setTimeout(() => {
-        restackTiles();
-
-        setTimeout(() => {
-          movePage(0);
-        }, 2500);
-      }, 2500);
-    });
-
-    nextButton.addEventListener("click", () => {
-      collapseTiles();
-      removeElements();
-
-      setTimeout(() => {
-        restackTiles();
+    backButton.addEventListener(
+      "click",
+      () => {
+        collapseTiles();
+        removeElements();
 
         setTimeout(() => {
-          movePage(2);
+          restackTiles();
+
+          setTimeout(() => {
+            movePage(0);
+          }, 2500);
         }, 2500);
-      }, 2500);
-    });
+      }
+    );
+
+    nextButton.addEventListener(
+      "click",
+      () => {
+        collapseTiles();
+        removeElements();
+
+        setTimeout(() => {
+          restackTiles();
+
+          setTimeout(() => {
+            const AppLayout =
+              document.querySelector(
+                "app-layout"
+              );
+
+            AppLayout.resetCanvasBackgroundImage();
+            AppLayout.setCanvasBackgroundColor(
+              "#ffd56c"
+            );
+
+            movePage(2);
+          }, 2500);
+        }, 2500);
+      }
+    );
   }
 }
 
-customElements.define("page-first", First);
+customElements.define(
+  "page-first",
+  First
+);

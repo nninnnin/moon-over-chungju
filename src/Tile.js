@@ -1,9 +1,18 @@
 class Tile {
-  constructor(x, y, size) {
+  constructor(
+    x,
+    y,
+    size,
+    rowIndex,
+    colIndex
+  ) {
     this.x = x;
     this.y = y;
     this.z = 0;
     this.size = size;
+
+    this.rowIndex = rowIndex;
+    this.colIndex = colIndex;
 
     this.targetY = null;
 
@@ -19,8 +28,8 @@ class Tile {
     this.animatingStack = false;
     this.animatingZoom = false;
     this.animatingCollapse = false;
+    this.animatingPunching = false;
   }
-
   static initializeTiles(
     numberOfCol,
     numberOfTiles,
@@ -29,7 +38,11 @@ class Tile {
   ) {
     const tiles = [];
 
-    for (let i = 0; i < numberOfTiles; i++) {
+    for (
+      let i = 0;
+      i < numberOfTiles;
+      i++
+    ) {
       const rowIndex = Math.floor(
         i / numberOfCol
       );
@@ -39,7 +52,14 @@ class Tile {
 
       const x = unit * colIndex;
       const y = unit * rowIndex;
-      const tile = new Tile(x, y, tileSize);
+
+      const tile = new Tile(
+        x,
+        y,
+        tileSize,
+        rowIndex,
+        colIndex
+      );
 
       if (animateIntro) {
         tile.targetY = y;
@@ -59,11 +79,15 @@ class Tile {
   }
 
   static setTiles() {
-    const isMobile = window.innerWidth < 768;
+    const isMobile =
+      window.innerWidth < 768;
 
-    const NUMBER_OF_COL = isMobile ? 11 : 23;
+    const NUMBER_OF_COL = isMobile
+      ? 11
+      : 23;
     const numberOfCol = NUMBER_OF_COL;
-    const tileSize = width / numberOfCol;
+    const tileSize =
+      width / numberOfCol;
     const numberOfRow = Math.ceil(
       height / tileSize
     );
@@ -73,7 +97,8 @@ class Tile {
     window.TILE_SIZE = tileSize;
     window.NUMBER_OF_COL = numberOfCol;
     window.NUMBER_OF_ROW = numberOfRow;
-    window.NUMBER_OF_TILES = numberOfTiles;
+    window.NUMBER_OF_TILES =
+      numberOfTiles;
 
     return {
       tileSize,
@@ -87,8 +112,12 @@ class Tile {
     push();
 
     translate(
-      -width / 2 + this.size / 2 + this.x,
-      -height / 2 + this.size / 2 + this.y,
+      -width / 2 +
+        this.size / 2 +
+        this.x,
+      -height / 2 +
+        this.size / 2 +
+        this.y,
       this.z - this.size / 2
     );
 
@@ -103,6 +132,10 @@ class Tile {
       this.animateStack();
     }
 
+    if (this.animatingPunching) {
+      this.animatePunching();
+    }
+
     fill(218);
     box(this.size);
 
@@ -113,7 +146,8 @@ class Tile {
   animateStack() {
     // y값 조절
     if (this.y < this.targetY) {
-      this.y += 5 + this.rotation3d.x * 0.033;
+      this.y +=
+        5 + this.rotation3d.x * 0.033;
     }
 
     // 회전 조절
@@ -123,7 +157,8 @@ class Tile {
         Math.floor(Math.random() * 10);
 
       rotateX(
-        (this.rotation3d.x += randomRotate())
+        (this.rotation3d.x +=
+          randomRotate())
       );
     }
 
@@ -154,18 +189,26 @@ class Tile {
     }
 
     if (this.rotation > 0) {
-      const milestones = [0, 90, 180, 270, 360];
+      const milestones = [
+        0, 90, 180, 270, 360,
+      ];
 
-      const closestMilestone = milestones.find(
-        (ms) => ms > this.rotation
-      );
+      const closestMilestone =
+        milestones.find(
+          (ms) => ms > this.rotation
+        );
 
-      this.targetRotation = closestMilestone;
+      this.targetRotation =
+        closestMilestone;
 
-      if (this.rotation < this.targetRotation) {
+      if (
+        this.rotation <
+        this.targetRotation
+      ) {
         this.rotation += 5;
       } else {
-        this.rotation = this.targetRotation;
+        this.rotation =
+          this.targetRotation;
         this.targetRotation = null;
       }
     }
@@ -184,36 +227,45 @@ class Tile {
 
   animateCollapse() {
     // 시작될때의 y위치를 저장해둔다
-    if (this.yBeforeCollapse === undefined) {
+    if (
+      this.yBeforeCollapse === undefined
+    ) {
       this.yBeforeCollapse = this.y;
     }
 
-    const outOfScreen = this.y > height + 100;
+    const outOfScreen =
+      this.y > height + 100;
 
     if (outOfScreen) {
       this.setNotToBeCollapse();
 
       // remove tile
-      const index = window.tiles.indexOf(this);
+      const index =
+        window.tiles.indexOf(this);
       window.tiles.splice(index, 1);
 
       return;
     }
 
     this.y =
-      this.y + 3 * this.rotation3d.x * 0.033;
+      this.y +
+      3 * this.rotation3d.x * 0.033;
 
     const randomRotate = () =>
       Math.floor(Math.random() * 10);
 
     rotateX(
-      (this.rotation3d.x += randomRotate())
+      (this.rotation3d.x +=
+        randomRotate())
     );
   }
 
   // Zoom
   animateZoom() {
-    if (this.randomize() && !this.animatingZoom) {
+    if (
+      this.randomize() &&
+      !this.animatingZoom
+    ) {
       this.animatingZoom = true;
     }
 
@@ -242,10 +294,109 @@ class Tile {
     }
   }
 
+  // Punching Middle Hole
+  setToBePunching() {
+    this.animatingPunching = true;
+  }
+
+  resetPunching() {
+    this.animatingPunching = false;
+  }
+
+  calculatePunchingPosition() {
+    const FLOOR = 4;
+    const NUMBER_OF_STARTING_BLOCK = 9;
+    const punchingPositions = [];
+
+    const middleRowIndex = Math.floor(
+      window.NUMBER_OF_ROW / 2
+    );
+
+    for (let i = 0; i < FLOOR; i++) {
+      const currentFloor = i + 1;
+
+      for (
+        let j = 0;
+        j < window.NUMBER_OF_COL;
+        j++
+      ) {
+        const colIndex = j;
+
+        const middleColIndex =
+          Math.floor(
+            window.NUMBER_OF_COL / 2
+          );
+
+        const numberOfFloorBlocks =
+          NUMBER_OF_STARTING_BLOCK -
+          2 * (currentFloor - 1);
+
+        const isSkippingIndex =
+          Math.abs(
+            middleColIndex - colIndex
+          ) > numberOfFloorBlocks;
+
+        if (isSkippingIndex) {
+          continue;
+        }
+
+        const upperTileIndex = {
+          colIndex,
+          rowIndex:
+            middleRowIndex -
+            (currentFloor - 1), // 4, 3, 2, 1, 0
+        };
+
+        const lowerTileIndex = {
+          colIndex,
+          rowIndex:
+            middleRowIndex +
+            currentFloor, // 5, 6, 7, 8, 9
+        };
+
+        punchingPositions.push(
+          upperTileIndex,
+          lowerTileIndex
+        );
+      }
+    }
+
+    return punchingPositions;
+  }
+
+  animatePunching() {
+    const punchingPositions =
+      this.calculatePunchingPosition();
+
+    const tileIndex = {
+      colIndex: this.colIndex,
+      rowIndex: this.rowIndex,
+    };
+
+    const isPunchingTile =
+      punchingPositions.some(
+        (position) =>
+          position.colIndex ===
+            tileIndex.colIndex &&
+          position.rowIndex ===
+            tileIndex.rowIndex
+      );
+
+    if (isPunchingTile) {
+      rotateX(this.rotation3d.x + 3);
+
+      rotateY(this.rotation3d.y + 3);
+
+      this.y = this.y + 3;
+    }
+  }
+
   randomize() {
     let result;
 
-    result = Math.floor(Math.random() * 2000);
+    result = Math.floor(
+      Math.random() * 2000
+    );
 
     return result === 0;
   }
@@ -275,10 +426,14 @@ class Tile {
       return;
     }
 
-    const leftEnd = this.x - this.size / 2;
-    const rightEnd = this.x + this.size / 2;
-    const topEnd = this.y - this.size / 2;
-    const bottomEnd = this.y + this.size / 2;
+    const leftEnd =
+      this.x - this.size / 2;
+    const rightEnd =
+      this.x + this.size / 2;
+    const topEnd =
+      this.y - this.size / 2;
+    const bottomEnd =
+      this.y + this.size / 2;
 
     if (
       mouseX > leftEnd &&

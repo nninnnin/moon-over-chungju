@@ -41,6 +41,29 @@ class Layout extends HTMLElement {
 
     this.render();
   }
+
+  setCanvasBackgroundImage(url) {
+    const canvas =
+      document.querySelector("canvas");
+
+    canvas.style.backgroundImage = `url(${url})`;
+  }
+
+  resetCanvasBackgroundImage() {
+    const canvas =
+      document.querySelector("canvas");
+
+    canvas.style.backgroundImage =
+      "none";
+  }
+
+  setCanvasBackgroundColor(color) {
+    const canvas =
+      document.querySelector("canvas");
+
+    canvas.style.backgroundColor =
+      color;
+  }
 }
 
 window.customElements.define(
