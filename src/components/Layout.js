@@ -21,12 +21,8 @@ class Layout extends HTMLElement {
   }
 
   render() {
-    console.log(this.state);
-
     const pageComponent =
       PAGE_MAP[this.state.pageNumber];
-
-    console.log(pageComponent);
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -34,6 +30,15 @@ class Layout extends HTMLElement {
 
       ${pageComponent}
     `;
+  }
+
+  setStateAndRerender(state) {
+    this.state = {
+      ...this.state,
+      ...state,
+    };
+
+    this.render();
   }
 }
 

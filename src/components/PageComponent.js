@@ -14,17 +14,21 @@ class PageComponent extends HTMLElement {
   render() {}
 
   createTilePosition(x, y) {
+    if (isNaN(x) || isNaN(y)) {
+      return;
+    }
+
     let xPosition;
     let yPosition;
 
     if (x < 0) {
       xPosition = `right: ${
         window.TILE_SIZE * Math.abs(x)
-      }px;`;
+      }px`;
     } else {
       xPosition = `left: ${
         window.TILE_SIZE * Math.abs(x)
-      }px;`;
+      }px`;
     }
 
     if (y < 0) {
@@ -42,4 +46,42 @@ class PageComponent extends HTMLElement {
       y: yPosition,
     };
   }
+
+  static labelStyles = `
+    box-sizing: border-box;
+    background-color: turquoise;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    white-space: nowrap;
+    overflow: hidden;
+    padding-left: 0.5em;
+
+    position: fixed;
+    z-index: 9999;
+
+    border: 0.5px solid rgba(0, 0, 0, 0.8);
+    filter: blur(0.2px);
+  `;
+
+  static buttonStyles = `
+    position: fixed;
+    z-index: 9999;
+
+    font-size: 1em;
+    white-space: nowrap;
+
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+
+    border: none;
+    outline: none;
+    background-color: black;
+    color: white;
+
+    cursor: pointer;
+  `;
 }

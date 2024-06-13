@@ -103,6 +103,7 @@ class Tile {
       this.animateStack();
     }
 
+    fill(218);
     box(this.size);
 
     pop();
@@ -131,17 +132,8 @@ class Tile {
       // y 초기화
       this.y = this.targetY;
 
-      // 각도 조절
-      if (this.rotation3d.x <= 10) {
-        this.rotation3d.x = 0;
-        this.resetAnimatingStack();
-      } else {
-        this.rotation3d.x = lerp(
-          this.rotation3d.x,
-          0,
-          0.1
-        );
-      }
+      this.rotation3d.x = 0;
+      this.resetAnimatingStack();
 
       rotateX(this.rotation3d.x);
     }
@@ -197,6 +189,7 @@ class Tile {
     }
 
     const outOfScreen = this.y > height + 100;
+
     if (outOfScreen) {
       this.setNotToBeCollapse();
 

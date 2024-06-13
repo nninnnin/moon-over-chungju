@@ -3,15 +3,314 @@ class First extends PageComponent {
     super();
   }
 
+  connectedCallback() {
+    const {
+      tileSize,
+      numberOfCol,
+      numberOfTiles,
+    } = Tile.setTiles(width, height);
+
+    window.tiles = [
+      ...Tile.initializeTiles(
+        numberOfCol,
+        numberOfTiles,
+        tileSize,
+        true
+      ),
+    ];
+
+    setTimeout(() => {
+      this.render();
+    }, 2500);
+  }
+
   render() {
-    this.shadowRoot.innerHTMl = `
+    const isMobile = window.innerWidth > 768;
+
+    const MIDDLE_ROW_INDEX = Math.floor(
+      window.NUMBER_OF_ROW / 2
+    );
+
+    const labels = [
+      {
+        id: "label-years",
+        position: {
+          x: 1,
+          y: MIDDLE_ROW_INDEX - 6,
+        },
+        size: { x: 3, y: 1 },
+        backgroundColor: "#DADADA",
+        text: "10년 후",
+      },
+      {
+        id: "label-family",
+        position: {
+          x: 1,
+          y: MIDDLE_ROW_INDEX - 4,
+        },
+        size: { x: 3, y: 1 },
+        backgroundColor: "#8FD4FF",
+        text: "가족",
+      },
+      {
+        id: "label-friend",
+        position: {
+          x: window.NUMBER_OF_COL - 5,
+          y: MIDDLE_ROW_INDEX - 4,
+        },
+        size: { x: 3, y: 1 },
+        backgroundColor: "#FFD56C",
+        text: "친구",
+      },
+      {
+        id: "label-partner",
+        position: {
+          x: 1,
+          y: MIDDLE_ROW_INDEX - 3,
+        },
+        size: { x: 5, y: 1 },
+        backgroundColor: "#01A29B",
+        text: "소중한 사람",
+      },
+      {
+        id: "label-me",
+        position: {
+          x: 1,
+          y: MIDDLE_ROW_INDEX - 2,
+        },
+        size: { x: 2, y: 1 },
+        backgroundColor: "#FFD56C",
+        text: "나",
+      },
+      {
+        id: "label-pet",
+        position: {
+          x: window.NUMBER_OF_COL - 4,
+          y: MIDDLE_ROW_INDEX - 1,
+        },
+        size: { x: 3, y: 1 },
+        backgroundColor: "#8FD4FF",
+        text: "반려동물",
+      },
+      {
+        id: "label-chungju",
+        position: {
+          x: window.NUMBER_OF_COL - 6,
+          y: MIDDLE_ROW_INDEX,
+        },
+        size: { x: 2, y: 1 },
+        backgroundColor: "#EB4891",
+        text: "청주시",
+      },
+      {
+        id: "label-somebody",
+        position: {
+          x: window.NUMBER_OF_COL - 5,
+          y: MIDDLE_ROW_INDEX + 1,
+        },
+        size: { x: 3, y: 1 },
+        backgroundColor: "#01A29B",
+        text: "누군가",
+      },
+      {
+        id: "label-wish",
+        position: {
+          x: window.NUMBER_OF_COL - 8,
+          y: MIDDLE_ROW_INDEX + 3,
+        },
+        size: { x: 7, y: 1 },
+        backgroundColor: "#DADADA",
+        text: "에게 바람을 남기고 싶어요",
+      },
+    ];
+
+    const labelStyles = labels.map((label) => {
+      const position = this.createTilePosition(
+        label.position.x,
+        label.position.y
+      );
+
+      return `
+        #${label.id} {
+          ${position.x};
+          ${position.y};
+  
+          width: ${
+            window.TILE_SIZE * label.size.x
+          }px;
+          height: ${
+            window.TILE_SIZE * label.size.y
+          }px;
+
+          background-color: ${
+            label.backgroundColor
+          };
+        }
+      `
+        .replaceAll("\n", "")
+        .trim();
+    });
+
+    const labelElements = labels.map((label) => {
+      return `
+        <div class='label' id='${label.id}'>
+          ${label.text}
+        </div>
+      `
+        .replaceAll("\n", "")
+        .trim();
+    });
+
+    const MIDDLE_COL_INDEX = Math.floor(
+      window.NUMBER_OF_COL / 2
+    );
+
+    const backButtonStyle =
+      this.createTilePosition(
+        MIDDLE_COL_INDEX - 4,
+        window.NUMBER_OF_ROW - 3
+      );
+
+    const nextButtonStyle =
+      this.createTilePosition(
+        MIDDLE_COL_INDEX,
+        window.NUMBER_OF_ROW - 3
+      );
+
+    this.shadowRoot.innerHTML = `
       <style>
+        #logo {
+          position: fixed;
+          left: 0;
+          top: 0;
+          z-index: 9999;
+
+          width: ${
+            isMobile
+              ? `${window.TILE_SIZE * 7}px`
+              : `${window.TILE_SIZE * 6}px`
+          };
+          height: ${window.TILE_SIZE * 2}px;
+        }
+
+        .label {
+          ${PageComponent.labelStyles}
+        }
+
+        ${labelStyles.join("\n")}
+
+        button {
+          ${PageComponent.buttonStyles}
+        }
+
+        #button--back {
+          width: ${TILE_SIZE * 3}px;
+          height: ${TILE_SIZE}px;
+
+          ${backButtonStyle.x};
+          ${backButtonStyle.y};
+        }
+
+        #button--next {
+          width: ${TILE_SIZE * 5}px;
+          height: ${TILE_SIZE}px;
+
+          ${nextButtonStyle.x};
+          ${nextButtonStyle.y};
+        }
       </style>
 
       <div>
-        스텝 원
+        <img id='logo' src='/public/images/logo--intro.svg' />
+
+        ${labelElements.join("\n")}
       </div>
+
+      <button id='button--back'>이전으로</button>
+      <button id='button--next'>다음으로</button>
     `;
+
+    this.addListeners();
+  }
+
+  addListeners() {
+    const backButton =
+      this.shadowRoot.getElementById(
+        "button--back"
+      );
+    const nextButton =
+      this.shadowRoot.getElementById(
+        "button--next"
+      );
+
+    backButton.addEventListener("click", () => {
+      const movePage = () => {
+        const AppLayout =
+          document.querySelector("app-layout");
+
+        AppLayout.setStateAndRerender({
+          pageNumber: 0,
+        });
+      };
+
+      const collapseTiles = () => {
+        window.tiles.forEach((tile) => {
+          tile.setToBeCollapse();
+        });
+      };
+
+      const restackTiles = () => {
+        const {
+          tileSize,
+          numberOfCol,
+          numberOfTiles,
+        } = Tile.setTiles(width, height);
+
+        window.tiles = [
+          ...Tile.initializeTiles(
+            numberOfCol,
+            numberOfTiles,
+            tileSize,
+            true
+          ),
+        ];
+      };
+
+      const removeElements = () => {
+        const elements = [
+          ...this.shadowRoot.querySelectorAll(
+            ".label"
+          ),
+          ...this.shadowRoot.querySelectorAll(
+            "button"
+          ),
+        ];
+
+        elements.forEach((element) => {
+          element.remove();
+        });
+      };
+
+      collapseTiles();
+      removeElements();
+
+      setTimeout(() => {
+        restackTiles();
+
+        setTimeout(() => {
+          movePage();
+        }, 2500);
+      }, 2500);
+    });
+
+    nextButton.addEventListener("click", () => {
+      const AppLayout =
+        document.querySelector("app-layout");
+
+      AppLayout.setStateAndRerender({
+        pageNumber: 2,
+      });
+    });
   }
 }
 

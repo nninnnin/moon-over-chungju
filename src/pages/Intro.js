@@ -25,49 +25,35 @@ class Intro extends PageComponent {
         window.NUMBER_OF_ROW - 3
       );
 
+    const isMobile = window.innerWidth < 768;
+
+    const positions = [
+      firstLabelPosition,
+      secondLabelPosition,
+      thirdLabelPosition,
+      buttonPosition,
+    ];
+
+    const hasNoPosition = positions.some(
+      (pos) => !pos
+    );
+
+    if (hasNoPosition) return;
+
     this.shadowRoot.innerHTML = `
       <style>
         button {
-          position: fixed;
+          ${PageComponent.buttonStyles}
+
           ${buttonPosition.x};
           ${buttonPosition.y};
-          z-index: 9999;
 
           width: ${window.TILE_SIZE * 5}px;
           height: ${window.TILE_SIZE}px;
-
-          font-size: 1em;
-          white-space: nowrap;
-
-          touch-action: manipulation;
-          user-select: none;
-          -webkit-user-select: none;
-
-          border: none;
-          outline: none;
-          background-color: black;
-          color: white;
-
-          cursor: pointer;
         }
 
         .label {
-          box-sizing: border-box;
-          background-color: turquoise;
-
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
-
-          white-space: nowrap;
-          overflow: hidden;
-          padding-left: 0.5em;
-
-          position: fixed;
-          z-index: 9999;
-
-          border: 0.5px solid rgba(0, 0, 0, 0.8);
-          filter: blur(0.2px);
+          ${PageComponent.labelStyles}
         }
 
         #label--left-first {
@@ -93,7 +79,30 @@ class Intro extends PageComponent {
           ${thirdLabelPosition.y};
           ${thirdLabelPosition.x};
         }
+
+        #logo {
+          position: fixed;
+          left: 0;
+          top: 0;
+          z-index: 9999;
+
+          width: ${
+            isMobile
+              ? "100%"
+              : `${window.TILE_SIZE * 6}px`
+          };
+
+          height: ${
+            isMobile
+              ? "auto"
+              : `${window.TILE_SIZE * 2}px`
+          }
+        }
       </style>
+
+      <img id='logo' src="/public/images/logo--intro.svg" />
+
+      <img id='logo-desktop' />
 
       <div class='label' id='label--left-first'>
         청주시립미술관
@@ -117,34 +126,44 @@ class Intro extends PageComponent {
     const button =
       this.shadowRoot.querySelector("button");
 
-    button.addEventListener("click", () => {
+    const collapseTiles = () => {
       window.tiles.forEach((tile) => {
         tile.setToBeCollapse();
       });
+    };
+
+    const removeElements = () => {
+      const labels =
+        this.shadowRoot.querySelectorAll(
+          ".label"
+        );
+      const button =
+        this.shadowRoot.querySelector("button");
+      const logo =
+        this.shadowRoot.getElementById("logo");
+
+      const elements = [...labels, button, logo];
+
+      elements.forEach((el) => el.remove());
+    };
+
+    const movePage = () => {
+      const AppLayout =
+        document.querySelector("app-layout");
+
+      AppLayout.setStateAndRerender({
+        pageNumber: 1,
+      });
+    };
+
+    button.addEventListener("click", () => {
+      collapseTiles();
+
+      removeElements();
 
       setTimeout(() => {
-        console.log(tiles);
-
-        // 1. 새로운 타일들을 생성
-        const newTiles = Tile.initializeTiles(
-          window.NUMBER_OF_COL,
-          window.NUMBER_OF_TILES,
-          window.TILE_SIZE,
-          true
-        );
-
-        console.log(newTiles);
-
-        window.tiles = [...newTiles];
+        movePage();
       }, 2500);
-
-      this.shadowRoot.querySelector(
-        "button"
-      ).style.display = "none";
-
-      this.shadowRoot.querySelector(
-        "#test"
-      ).style.display = "none";
     });
   }
 }
