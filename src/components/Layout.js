@@ -13,6 +13,7 @@ class Layout extends HTMLElement {
 
     this.state = {
       pageNumber: 0,
+      selectedReceiver: null,
     };
   }
 

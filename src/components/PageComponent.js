@@ -69,6 +69,10 @@ class PageComponent extends HTMLElement {
     font-weight: 700;
     font-size: 20px;
     letter-spacing: -0.2em;
+
+    cursor: pointer;
+
+    transition: 0.5s;
   `;
 
   static buttonStyles = `

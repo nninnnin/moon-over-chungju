@@ -1,6 +1,10 @@
 class First extends PageComponent {
   constructor() {
     super();
+
+    this.state = {
+      selectedReceiver: null,
+    };
   }
 
   connectedCallback() {
@@ -152,8 +156,17 @@ class First extends PageComponent {
     });
 
     const labelElements = labels.map((label) => {
+      const AppLayout =
+        document.querySelector("app-layout");
+
+      const isSelectedLabel =
+        AppLayout.state.selectedReceiver ===
+        label.id;
+
       return `
-        <div class='label' id='${label.id}'>
+        <div class='label ${
+          isSelectedLabel ? "zoom" : ""
+        }' id='${label.id}'>
           ${label.text}
         </div>
       `
@@ -195,9 +208,15 @@ class First extends PageComponent {
 
         .label {
           ${PageComponent.labelStyles}
+          z-index: 1;
         }
 
         ${labelStyles.join("\n")}
+
+        .zoom {
+          transform: scale3d(1.3, 1.3, 1.3);
+          z-index: 9999;
+        }
 
         button {
           ${PageComponent.buttonStyles}
@@ -234,6 +253,38 @@ class First extends PageComponent {
   }
 
   addListeners() {
+    this.addLabelListeners();
+    this.addButtonListners();
+  }
+
+  addLabelListeners() {
+    let labels =
+      this.shadowRoot.querySelectorAll(".label");
+
+    labels = [...labels].filter(
+      (label) =>
+        label.id !== "label-wish" &&
+        label.id !== "label-years"
+    );
+
+    labels.forEach((label) => {
+      label.addEventListener("click", () => {
+        labels.forEach((label) => {
+          label.classList.remove("zoom");
+        });
+
+        label.classList.add("zoom");
+
+        const AppLayout =
+          document.querySelector("app-layout");
+
+        AppLayout.state.selectedReceiver =
+          label.id;
+      });
+    });
+  }
+
+  addButtonListners() {
     const backButton =
       this.shadowRoot.getElementById(
         "button--back"
@@ -278,6 +329,7 @@ class First extends PageComponent {
 
       const removeElements = () => {
         const elements = [
+          this.shadowRoot.getElementById("logo"),
           ...this.shadowRoot.querySelectorAll(
             ".label"
           ),
