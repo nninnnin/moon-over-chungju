@@ -57,13 +57,18 @@ class PageComponent extends HTMLElement {
 
     white-space: nowrap;
     overflow: hidden;
-    padding-left: 0.5em;
+    padding-left: 0.2em;
 
     position: fixed;
     z-index: 9999;
 
     border: 0.5px solid rgba(0, 0, 0, 0.8);
     filter: blur(0.2px);
+
+    font-family: JTimeMachine;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.2em;
   `;
 
   static buttonStyles = `
@@ -83,5 +88,14 @@ class PageComponent extends HTMLElement {
     color: white;
 
     cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: JTimeMachine;
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: -0.2em;
   `;
 }

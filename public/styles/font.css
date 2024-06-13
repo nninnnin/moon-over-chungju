@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "JTimeMachine";
+  src: url("/public/fonts/JTimeMachine--Medium.otf")
+    format("opentype");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "JTimeMachine";
+  src: url("/public/fonts/JTimeMachine--Bold.otf")
+    format("opentype");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "JTimeMachine";
+  src: url("/public/fonts/JTimeMachine--Light.otf")
+    format("opentype");
+  font-weight: 500;
+}
