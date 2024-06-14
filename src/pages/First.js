@@ -8,24 +8,11 @@ class First extends PageComponent {
   }
 
   connectedCallback() {
-    const {
-      tileSize,
-      numberOfCol,
-      numberOfTiles,
-    } = Tile.setTiles(width, height);
+    window.tiles.forEach((tile) => {
+      tile.resetAnimatingStack();
+    });
 
-    window.tiles = [
-      ...Tile.initializeTiles(
-        numberOfCol,
-        numberOfTiles,
-        tileSize,
-        true
-      ),
-    ];
-
-    setTimeout(() => {
-      this.render();
-    }, 2500);
+    this.render();
   }
 
   render() {

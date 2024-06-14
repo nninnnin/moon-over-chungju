@@ -229,8 +229,7 @@ class Intro extends PageComponent {
           restackTiles();
 
           setTimeout(() => {
-            // movePage(1);
-            movePage(2);
+            movePage(1);
           }, 2500);
         }, 2500);
       }
