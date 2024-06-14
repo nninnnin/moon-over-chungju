@@ -27,6 +27,9 @@
       }
 
       canvas {
+        width: 100vw;
+        height: 100dvh;
+
         position: fixed;
         top: 50%;
         left: 50%;
@@ -41,6 +44,36 @@
       rel="stylesheet"
       href="/public/styles/font.css"
     />
+    <link
+      rel="stylesheet"
+      href="/public/styles/glide.css"
+    />
+
+    <style>
+      .moon-header,
+      .moon-footer {
+        text-align: center;
+        font-family: "JTimeMachine";
+        letter-spacing: -0.2em;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 120%;
+      }
+
+      .moon {
+        width: 140px;
+        height: 140px;
+
+        margin-top: 13px;
+        margin-bottom: 8px;
+      }
+
+      .eng {
+        letter-spacing: -0.13em;
+      }
+    </style>
+
+    <script src="https://unpkg.com/@glidejs/glide@3.6.0/dist/glide.js"></script>
 
     <script src="/src/Tile.js"></script>
 
@@ -64,6 +97,187 @@
 
   <body>
     <app-layout></app-layout>
+
+    <div class="glide">
+      <div
+        class="glide__track"
+        data-glide-el="track"
+      >
+        <ul class="glide__slides">
+          <li class="glide__slide">
+            <header class="moon-header">
+              신월
+              <br />
+              <span class="eng"
+                >New Moon</span
+              >
+            </header>
+
+            <img
+              class="moon"
+              src="/public/images/moon/new-moon.svg"
+            />
+
+            <footer class="moon-footer">
+              시작
+            </footer>
+          </li>
+
+          <li class="glide__slide">
+            <header class="moon-header">
+              초승달
+              <br />
+              <span class="eng">
+                Waxing Crescent
+              </span>
+            </header>
+
+            <img
+              class="moon"
+              src="/public/images/moon/waxing-crescent.svg"
+            />
+
+            <footer class="moon-footer">
+              성장
+            </footer>
+          </li>
+
+          <li class="glide__slide">
+            <header class="moon-header">
+              상현달
+              <br />
+              <span class="eng"
+                >New Moon</span
+              >
+            </header>
+
+            <img
+              class="moon"
+              src="/public/images/moon/first-quarter.svg"
+            />
+
+            <footer class="moon-footer">
+              결단
+            </footer>
+          </li>
+
+          <li class="glide__slide">
+            <header class="moon-header">
+              차오르는 달
+              <br />
+              <span class="eng"
+                >Waxing Gibbous</span
+              >
+            </header>
+
+            <img
+              class="moon"
+              src="/public/images/moon/waxing-gibbous.svg"
+            />
+
+            <footer class="moon-footer">
+              준비
+            </footer>
+          </li>
+
+          <li class="glide__slide">
+            <header class="moon-header">
+              보름달
+              <br />
+              <span class="eng"
+                >Full Moon</span
+              >
+            </header>
+
+            <img
+              class="moon"
+              src="/public/images/moon/full-moon.svg"
+            />
+
+            <footer class="moon-footer">
+              완성
+            </footer>
+          </li>
+
+          <li class="glide__slide">
+            <header class="moon-header">
+              기우는 달
+              <br />
+              <span class="eng"
+                >Waning Gibbous</span
+              >
+            </header>
+
+            <img
+              class="moon"
+              src="/public/images/moon/waning-gibbous.svg"
+            />
+
+            <footer class="moon-footer">
+              성찰
+            </footer>
+          </li>
+
+          <li class="glide__slide">
+            <header class="moon-header">
+              하현달
+              <br />
+              <span class="eng"
+                >Last Quarter</span
+              >
+            </header>
+
+            <img
+              class="moon"
+              src="/public/images/moon/last-quarter.svg"
+            />
+
+            <footer class="moon-footer">
+              평가
+            </footer>
+          </li>
+
+          <li class="glide__slide">
+            <header class="moon-header">
+              그믐달
+              <br />
+              <span class="eng"
+                >Waning Crescent</span
+              >
+            </header>
+
+            <img
+              class="moon"
+              src="/public/images/moon/waning-crescent.svg"
+            />
+
+            <footer class="moon-footer">
+              해방
+            </footer>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="glide__arrows">
+      <button
+        class="glide__arrow glide__arrow--left"
+        data-glide-dir="<"
+      >
+        <img
+          src="/public/images/glide-button--left.svg"
+        />
+      </button>
+
+      <button
+        class="glide__arrow glide__arrow--right"
+        data-glide-dir=">"
+      >
+        <img
+          src="/public/images/glide-button--right.svg"
+        />
+      </button>
+    </div>
 
     <!-- for using lambda client -->
     <script src="/dist/lambda-client-bundled.js"></script>

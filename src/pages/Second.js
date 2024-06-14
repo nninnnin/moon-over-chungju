@@ -8,6 +8,35 @@ class Second extends PageComponent {
       tile.resetAnimatingStack();
     });
 
+    const displayMoonGlide = () => {
+      const glideContainer =
+        document.querySelector(
+          ".glide"
+        );
+
+      const glideArrowsContainer =
+        document.querySelector(
+          ".glide__arrows"
+        );
+
+      glideContainer.style.display =
+        "block";
+      glideArrowsContainer.style.display =
+        "block";
+
+      const glideScript =
+        document.createElement(
+          "script"
+        );
+      glideScript.src =
+        "/src/scripts/glide.js";
+
+      document.body.appendChild(
+        glideScript
+      );
+    };
+
+    displayMoonGlide();
     this.animateTiles();
 
     setTimeout(() => {
@@ -137,7 +166,8 @@ class Second extends PageComponent {
         }
       </style>
 
-      <div id='background'></div>
+      <div id='background'>
+      </div>
 
       <img id='logo' src='/public/images/logo--intro.svg' />
 
