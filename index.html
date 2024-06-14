@@ -470,8 +470,16 @@
           // if (tile.animatingPunching) {
           //   perspective();
           // } else {
-          //   ortho();
+          //   ortho(
+          //     -width / 2,
+          //     width / 2,
+          //     -height / 2,
+          //     height / 2,
+          //     100,
+          //     1000
+          //   );
           // }
+          perspective();
 
           tile.draw();
         });
