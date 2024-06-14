@@ -1,14 +1,14 @@
-<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_188_2235)">
-<circle cx="18" cy="18" r="18" fill="url(#paint0_radial_188_2235)"/>
+<svg width="140" height="140" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_276_2089)">
+<circle cx="70" cy="70" r="70" fill="url(#paint0_radial_276_2089)"/>
 </g>
 <defs>
-<radialGradient id="paint0_radial_188_2235" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(18 18) rotate(180) scale(18.5)">
+<radialGradient id="paint0_radial_276_2089" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(70 70) rotate(180) scale(71.9444)">
 <stop offset="0.78" stop-color="#535353" stop-opacity="0"/>
 <stop offset="1"/>
 </radialGradient>
-<clipPath id="clip0_188_2235">
-<rect width="36" height="36" fill="white"/>
+<clipPath id="clip0_276_2089">
+<rect width="140" height="140" fill="white"/>
 </clipPath>
 </defs>
 </svg>
