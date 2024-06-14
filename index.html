@@ -1,6 +1,7 @@
 <!DOCTYPE html>
+
 <html lang="en">
-  <link>
+  <head>
     <meta charset="UTF-8" />
     <meta
       name="viewport"
@@ -29,17 +30,17 @@
         position: fixed;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
-
-        background-color: black;
-        background-image: url("/public/images/moon.svg");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: 100%;
+        transform: translate(
+          -50%,
+          -50%
+        );
       }
     </style>
 
-    <link rel="stylesheet" href="/public/styles/font.css"></link>
+    <link
+      rel="stylesheet"
+      href="/public/styles/font.css"
+    />
 
     <script src="/src/Tile.js"></script>
 
@@ -53,11 +54,14 @@
     <script>
       function rerenderComponents() {
         const appLayout =
-          document.querySelector("app-layout");
+          document.querySelector(
+            "app-layout"
+          );
         appLayout.render();
       }
     </script>
   </head>
+
   <body>
     <app-layout></app-layout>
 
@@ -88,30 +92,36 @@
         // After set tiles, rerender components
         rerenderComponents();
 
-        window.addEventListener("resize", () => {
-          resizeCanvas(
-            window.innerWidth,
-            window.innerHeight
-          );
+        window.addEventListener(
+          "resize",
+          () => {
+            resizeCanvas(
+              window.innerWidth,
+              window.innerHeight
+            );
 
-          const {
-            tileSize,
-            numberOfRow,
-            numberOfCol,
-            numberOfTiles,
-          } = Tile.setTiles(width, height);
-
-          // After set tiles, rerender components
-          rerenderComponents();
-
-          window.tiles = [
-            ...Tile.initializeTiles(
+            const {
+              tileSize,
+              numberOfRow,
               numberOfCol,
               numberOfTiles,
-              tileSize
-            ),
-          ];
-        });
+            } = Tile.setTiles(
+              width,
+              height
+            );
+
+            // After set tiles, rerender components
+            rerenderComponents();
+
+            window.tiles = [
+              ...Tile.initializeTiles(
+                numberOfCol,
+                numberOfTiles,
+                tileSize
+              ),
+            ];
+          }
+        );
 
         angleMode(DEGREES);
         blendMode(BLEND);
@@ -155,6 +165,13 @@
 
         window.tiles.forEach((tile) => {
           tile.checkIsHovered();
+
+          if (tile.animatingPunching) {
+            perspective();
+          } else {
+            ortho();
+          }
+
           tile.draw();
         });
       }

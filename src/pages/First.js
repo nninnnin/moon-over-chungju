@@ -399,16 +399,6 @@ class First extends PageComponent {
           restackTiles();
 
           setTimeout(() => {
-            const AppLayout =
-              document.querySelector(
-                "app-layout"
-              );
-
-            AppLayout.resetCanvasBackgroundImage();
-            AppLayout.setCanvasBackgroundColor(
-              "#ffd56c"
-            );
-
             movePage(2);
           }, 2500);
         }, 2500);

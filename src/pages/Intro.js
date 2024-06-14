@@ -21,11 +21,14 @@ class Intro extends PageComponent {
 
     const buttonPosition =
       this.createTilePosition(
-        Math.floor(window.NUMBER_OF_COL / 2) - 2,
+        Math.floor(
+          window.NUMBER_OF_COL / 2
+        ) - 2,
         window.NUMBER_OF_ROW - 3
       );
 
-    const isMobile = window.innerWidth < 768;
+    const isMobile =
+      window.innerWidth < 768;
 
     const positions = [
       firstLabelPosition,
@@ -34,9 +37,8 @@ class Intro extends PageComponent {
       buttonPosition,
     ];
 
-    const hasNoPosition = positions.some(
-      (pos) => !pos
-    );
+    const hasNoPosition =
+      positions.some((pos) => !pos);
 
     if (hasNoPosition) return;
 
@@ -48,7 +50,9 @@ class Intro extends PageComponent {
           ${buttonPosition.x};
           ${buttonPosition.y};
 
-          width: ${window.TILE_SIZE * 5}px;
+          width: ${
+            window.TILE_SIZE * 5
+          }px;
           height: ${window.TILE_SIZE}px;
         }
 
@@ -57,7 +61,9 @@ class Intro extends PageComponent {
         }
 
         #label--left-first {
-          width: ${window.TILE_SIZE * 3}px;
+          width: ${
+            window.TILE_SIZE * 3
+          }px;
           height: ${window.TILE_SIZE}px;
 
           ${firstLabelPosition.y};
@@ -65,7 +71,9 @@ class Intro extends PageComponent {
         }
 
         #label--right-first {
-          width: ${window.TILE_SIZE * 2}px;
+          width: ${
+            window.TILE_SIZE * 2
+          }px;
           height: ${window.TILE_SIZE}px;
 
           ${secondLabelPosition.y};
@@ -73,7 +81,9 @@ class Intro extends PageComponent {
         }
 
         #label--right-second {
-          width: ${window.TILE_SIZE * 4}px;
+          width: ${
+            window.TILE_SIZE * 4
+          }px;
           height: ${window.TILE_SIZE}px;
 
           ${thirdLabelPosition.y};
@@ -89,19 +99,41 @@ class Intro extends PageComponent {
           width: ${
             isMobile
               ? "100%"
-              : `${window.TILE_SIZE * 6}px`
+              : `${
+                  window.TILE_SIZE * 6
+                }px`
           };
 
           height: ${
             isMobile
               ? "auto"
-              : `${window.TILE_SIZE * 2}px`
+              : `${
+                  window.TILE_SIZE * 2
+                }px`
           }
+        }
+
+        #background {
+          width: 100vw;
+          height: 100dvh;
+
+          position: fixed;
+          left: 0;
+          top: 0;
+          z-index: -1;
+
+          background-color: black;
+          background-image: url("/public/images/moon-background.svg");
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: 100%;
         }
       </style>
 
-      <img id='logo' src="/public/images/logo--intro.svg" />
+      <div id='background'>
+      </div>
 
+      <img id='logo' src="/public/images/logo--intro.svg" />
       <img id='logo-desktop' />
 
       <div class='label' id='label--left-first'>
@@ -124,7 +156,9 @@ class Intro extends PageComponent {
 
   addListeners() {
     const button =
-      this.shadowRoot.querySelector("button");
+      this.shadowRoot.querySelector(
+        "button"
+      );
 
     const collapseTiles = () => {
       window.tiles.forEach((tile) => {
@@ -138,34 +172,73 @@ class Intro extends PageComponent {
           ".label"
         );
       const button =
-        this.shadowRoot.querySelector("button");
+        this.shadowRoot.querySelector(
+          "button"
+        );
       const logo =
-        this.shadowRoot.getElementById("logo");
+        this.shadowRoot.getElementById(
+          "logo"
+        );
 
-      const elements = [...labels, button, logo];
+      const elements = [
+        ...labels,
+        button,
+        logo,
+      ];
 
-      elements.forEach((el) => el.remove());
+      elements.forEach((el) =>
+        el.remove()
+      );
     };
 
-    const movePage = () => {
+    const movePage = (pageNumber) => {
       const AppLayout =
-        document.querySelector("app-layout");
+        document.querySelector(
+          "app-layout"
+        );
 
       AppLayout.setStateAndRerender({
-        pageNumber: 1,
+        pageNumber,
       });
     };
 
-    button.addEventListener("click", () => {
-      collapseTiles();
+    const restackTiles = () => {
+      const {
+        tileSize,
+        numberOfCol,
+        numberOfTiles,
+      } = Tile.setTiles(width, height);
 
-      removeElements();
+      window.tiles = [
+        ...Tile.initializeTiles(
+          numberOfCol,
+          numberOfTiles,
+          tileSize,
+          true
+        ),
+      ];
+    };
 
-      setTimeout(() => {
-        movePage();
-      }, 2500);
-    });
+    button.addEventListener(
+      "click",
+      () => {
+        collapseTiles();
+        removeElements();
+
+        setTimeout(() => {
+          restackTiles();
+
+          setTimeout(() => {
+            // movePage(1);
+            movePage(2);
+          }, 2500);
+        }, 2500);
+      }
+    );
   }
 }
 
-customElements.define("page-intro", Intro);
+customElements.define(
+  "page-intro",
+  Intro
+);

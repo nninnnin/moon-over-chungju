@@ -16,8 +16,30 @@ class Second extends PageComponent {
   }
 
   animateTiles() {
+    this.shadowRoot.innerHTML = `
+      <style>
+        #background {
+          width: 100vw;
+          height: 100dvh;
+
+          position: fixed;
+          left: 0;
+          top: 0;
+          z-index: -1;
+
+          background-color: #FFD56C;
+        }
+      </style>
+
+      <div id='background'></div>
+    `;
+
     window.tiles.forEach((tile) => {
       tile.setToBePunching();
+
+      setTimeout(() => {
+        tile.resetPunching();
+      }, 2500);
     });
   }
 
@@ -43,6 +65,18 @@ class Second extends PageComponent {
 
     this.shadowRoot.innerHTML = `
       <style>
+        #background {
+          width: 100vw;
+          height: 100dvh;
+
+          position: fixed;
+          left: 0;
+          top: 0;
+          z-index: -1;
+
+          background-color: #FFD56C;
+        }
+
         .label {
           ${PageComponent.labelStyles}
         }
@@ -102,6 +136,8 @@ class Second extends PageComponent {
           ${nextButtonStyle.y};
         }
       </style>
+
+      <div id='background'></div>
 
       <img id='logo' src='/public/images/logo--intro.svg' />
 
