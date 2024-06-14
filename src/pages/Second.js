@@ -41,6 +41,10 @@ class Second extends PageComponent {
 
     setTimeout(() => {
       this.render();
+
+      window.tiles.forEach((tile) => {
+        tile.resetPunching();
+      });
     }, 2500);
   }
 
@@ -217,6 +221,12 @@ class Second extends PageComponent {
         ),
         ...this.shadowRoot.querySelectorAll(
           "button"
+        ),
+        document.querySelector(
+          ".glide"
+        ),
+        document.querySelector(
+          ".glide__arrows"
         ),
       ];
 

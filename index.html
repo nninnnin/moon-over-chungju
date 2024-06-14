@@ -73,6 +73,74 @@
       }
     </style>
 
+    <style>
+      #moon {
+        width: 60px;
+        height: 60px;
+      }
+
+      #third-input-container {
+        width: 100vw;
+        height: fit-content;
+
+        position: fixed;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 9999;
+
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #message-input {
+        background-color: white;
+
+        width: 300px;
+        height: 28px;
+
+        margin: 34px 0px;
+
+        font-family: JTimeMachine;
+        font-weight: 700;
+        font-size: 20px;
+
+        border: none;
+        outline: none;
+      }
+
+      #message-input::placeholder {
+        text-align: center;
+      }
+
+      /* or, for legacy browsers */
+
+      #message-input::-webkit-input-placeholder {
+        text-align: center;
+      }
+
+      :-moz-placeholder {
+        /* Firefox 18- */
+        text-align: center;
+      }
+
+      #message-input::-moz-placeholder {
+        /* Firefox 19+ */
+        text-align: center;
+      }
+
+      #message-input:-ms-input-placeholder {
+        text-align: center;
+      }
+
+      #dummy-box {
+        width: 60px;
+        height: 60px;
+      }
+    </style>
+
     <script src="https://unpkg.com/@glidejs/glide@3.6.0/dist/glide.js"></script>
 
     <script src="/src/Tile.js"></script>
@@ -83,6 +151,7 @@
     <script src="/src/pages/Intro.js"></script>
     <script src="/src/pages/First.js"></script>
     <script src="/src/pages/Second.js"></script>
+    <script src="/src/pages/Third.js"></script>
 
     <script>
       function rerenderComponents() {
@@ -98,6 +167,20 @@
   <body>
     <app-layout></app-layout>
 
+    <!-- 3페이지 인풋 -->
+    <div id="third-input-container">
+      <img id="moon" />
+
+      <input
+        id="message-input"
+        type="text"
+        placeholder="10자 이내로 입력해주세요!"
+      />
+
+      <div id="dummy-box"></div>
+    </div>
+
+    <!-- 2페이지 글라이드 -->
     <div class="glide">
       <div
         class="glide__track"

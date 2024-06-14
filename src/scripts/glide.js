@@ -9,7 +9,7 @@ const glide = new Glide(".glide", {
 });
 
 glide.on("move.after", () => {
-  window.glideIndex = glide.index;
+  window.moonIndex = glide.index;
 });
 
 glide.mount();
