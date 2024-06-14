@@ -29,6 +29,8 @@ class Tile {
     this.animatingZoom = false;
     this.animatingCollapse = false;
     this.animatingPunching = false;
+
+    this.punchingPositions = {};
   }
   static initializeTiles(
     numberOfCol,
@@ -86,6 +88,7 @@ class Tile {
       ? 11
       : 23;
     const numberOfCol = NUMBER_OF_COL;
+
     const tileSize =
       width / numberOfCol;
     const numberOfRow = Math.ceil(
@@ -303,14 +306,40 @@ class Tile {
     this.animatingPunching = false;
   }
 
+  getPunchingShapeMiddleIndexes() {
+    return {
+      x: Math.floor(
+        window.NUMBER_OF_COL / 2
+      ),
+      y:
+        Math.floor(
+          window.NUMBER_OF_ROW / 2
+        ) - 1,
+    };
+  }
+
   calculatePunchingPosition() {
+    // canvas 크기에 따라 계산된 값이 메모되어져 있는지 확인한다
+    const canvasSize = `${width}x${height}`;
+    const isCached =
+      this.punchingPositions[
+        canvasSize
+      ];
+
+    if (isCached) {
+      return this.punchingPositions[
+        canvasSize
+      ];
+    }
+
     const FLOOR = 4;
-    const NUMBER_OF_STARTING_BLOCK = 9;
     const punchingPositions = [];
 
-    const middleRowIndex = Math.floor(
-      window.NUMBER_OF_ROW / 2
-    );
+    const {
+      x: middleColIndex,
+      y: middleRowIndex,
+    } =
+      this.getPunchingShapeMiddleIndexes();
 
     for (let i = 0; i < FLOOR; i++) {
       const currentFloor = i + 1;
@@ -322,19 +351,11 @@ class Tile {
       ) {
         const colIndex = j;
 
-        const middleColIndex =
-          Math.floor(
-            window.NUMBER_OF_COL / 2
-          );
-
-        const numberOfFloorBlocks =
-          NUMBER_OF_STARTING_BLOCK -
-          2 * (currentFloor - 1);
-
         const isSkippingIndex =
           Math.abs(
             middleColIndex - colIndex
-          ) > numberOfFloorBlocks;
+          ) >
+          FLOOR - currentFloor + 1;
 
         if (isSkippingIndex) {
           continue;
@@ -361,6 +382,9 @@ class Tile {
       }
     }
 
+    this.punchingPositions[canvasSize] =
+      punchingPositions;
+
     return punchingPositions;
   }
 
@@ -383,11 +407,49 @@ class Tile {
       );
 
     if (isPunchingTile) {
-      rotateX(this.rotation3d.x + 3);
+      this.rotation3d.x += 3;
+      this.rotation3d.y += 3;
 
-      rotateY(this.rotation3d.y + 3);
+      rotateX(this.rotation3d.x);
+      rotateY(this.rotation3d.y);
 
-      this.y = this.y + 3;
+      // 다이아몬드의 중앙 인덱스에서 어느 평방에 위치하는지 알아낸다
+      const {
+        x: middleColIndex,
+        y: middleRowIndex,
+      } =
+        this.getPunchingShapeMiddleIndexes();
+
+      const isUpperTile =
+        middleRowIndex > this.rowIndex;
+      const isLowerTile =
+        middleRowIndex < this.rowIndex;
+
+      if (isUpperTile) {
+        this.y = this.y - 3;
+        this.z = this.z + 3;
+      } else if (isLowerTile) {
+        this.y = this.y + 3;
+        this.z = this.z - 3;
+      } else {
+        // middle
+        const isLeftTile =
+          middleColIndex >
+          this.colIndex;
+        const isRightTile =
+          middleColIndex <
+          this.colIndex;
+
+        if (isLeftTile) {
+          this.x = this.x - 3;
+        } else if (isRightTile) {
+          this.x = this.x + 3;
+        } else {
+          this.x = this.x + 3;
+        }
+
+        this.z = this.z + 3;
+      }
     }
   }
 
