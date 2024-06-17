@@ -14,6 +14,9 @@ class Second extends PageComponent {
           ".glide"
         );
 
+      glideContainer.style.backgroundColor =
+        window.themeColor;
+
       const glideArrowsContainer =
         document.querySelector(
           ".glide__arrows"
@@ -60,7 +63,7 @@ class Second extends PageComponent {
           top: 0;
           z-index: -1;
 
-          background-color: #FFD56C;
+          background-color: ${window.themeColor};
         }
       </style>
 
@@ -107,7 +110,9 @@ class Second extends PageComponent {
           top: 0;
           z-index: -1;
 
-          background-color: #FFD56C;
+          background-color: ${
+            window.themeColor
+          };
         }
 
         .label {
@@ -136,14 +141,8 @@ class Second extends PageComponent {
           z-index: 9999;
 
           width: ${
-            window.innerWidth > 768
-              ? `${
-                  window.TILE_SIZE * 7
-                }px`
-              : `${
-                  window.TILE_SIZE * 6
-                }px`
-          };
+            window.TILE_SIZE * 7
+          }px;
           height: ${
             window.TILE_SIZE * 2
           }px;

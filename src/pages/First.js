@@ -48,7 +48,7 @@ class First extends PageComponent {
           y: MIDDLE_ROW_INDEX - 4,
         },
         size: { x: 3, y: 1 },
-        backgroundColor: "#FFD56C",
+        backgroundColor: "#5699FF",
         text: "친구",
       },
       {
@@ -78,7 +78,7 @@ class First extends PageComponent {
           y: MIDDLE_ROW_INDEX - 1,
         },
         size: { x: 3, y: 1 },
-        backgroundColor: "#8FD4FF",
+        backgroundColor: "#A1EEA8",
         text: "반려동물",
       },
       {
@@ -194,14 +194,8 @@ class First extends PageComponent {
           z-index: 9999;
 
           width: ${
-            window.innerWidth > 768
-              ? `${
-                  window.TILE_SIZE * 7
-                }px`
-              : `${
-                  window.TILE_SIZE * 6
-                }px`
-          };
+            window.TILE_SIZE * 7
+          }px;
           height: ${
             window.TILE_SIZE * 2
           }px;
@@ -242,7 +236,22 @@ class First extends PageComponent {
           ${nextButtonStyle.x};
           ${nextButtonStyle.y};
         }
+
+        #background {
+          width: 100vw;
+          height: 100dvh;
+
+          position: fixed;
+          left: 0;
+          top: 0;
+          z-index: -1;
+
+          background-color: black;
+        }
       </style>
+
+      <div id='background'>
+      </div>
 
       <div>
         <img id='logo' src='/public/images/logo--intro.svg' />
@@ -292,7 +301,24 @@ class First extends PageComponent {
             );
 
           AppLayout.state.selectedReceiver =
-            label.id;
+            label.innerText;
+
+          // Store selected label's background color as theme color
+          const labelColor =
+            getComputedStyle(
+              label
+            ).backgroundColor;
+
+          window.themeColor =
+            labelColor;
+
+          const background =
+            this.shadowRoot.getElementById(
+              "background"
+            );
+
+          background.style.backgroundColor =
+            labelColor;
         }
       );
     });

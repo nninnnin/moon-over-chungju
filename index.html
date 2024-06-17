@@ -86,8 +86,8 @@
         position: fixed;
         left: 0;
         top: 50%;
-        transform: translateY(-50%);
-        z-index: 9999;
+        transform: translateY(-46%);
+        z-index: 8000;
 
         display: none;
         flex-direction: column;
@@ -103,7 +103,9 @@
 
         font-family: JTimeMachine;
         font-weight: 700;
-        font-size: 20px;
+        font-size: 18px;
+        text-align: center;
+        letter-spacing: -0.2em;
 
         border: none;
         outline: none;
@@ -143,10 +145,43 @@
         width: 60px;
         height: 60px;
       }
+
+      @keyframes moon-centering {
+        0% {
+          transform: translateY(0%)
+            scale(1);
+        }
+        100% {
+          transform: translateY(40%)
+            scale(3);
+        }
+      }
+
+      @keyframes moon-fly {
+        0% {
+          transform: translateY(40%)
+            scale(3);
+        }
+        100% {
+          transform: translateY(-2000%)
+            scale(3);
+        }
+      }
+
+      .moon-centering {
+        animation: moon-centering 1s
+          forwards;
+      }
+
+      .moon-fly {
+        animation: moon-fly 3s forwards;
+      }
     </style>
 
+    <!-- for using glide.js -->
     <script src="https://unpkg.com/@glidejs/glide@3.6.0/dist/glide.js"></script>
 
+    <!-- internal classes -->
     <script src="/src/Tile.js"></script>
 
     <script src="/src/components/PageComponent.js"></script>
@@ -156,6 +191,8 @@
     <script src="/src/pages/First.js"></script>
     <script src="/src/pages/Second.js"></script>
     <script src="/src/pages/Third.js"></script>
+    <script src="/src/pages/Result.js"></script>
+    <script src="/src/pages/Error.js"></script>
 
     <script>
       function rerenderComponents() {
@@ -367,7 +404,7 @@
     </div>
 
     <!-- for using lambda client -->
-    <script src="/dist/lambda-client-bundled.js"></script>
+    <script src="/dist/bundled.js"></script>
 
     <!-- for p5.js -->
     <script src="/src/libs/p5.min.js"></script>
@@ -379,19 +416,6 @@
           window.innerHeight,
           WEBGL
         );
-
-        const {
-          tileSize,
-          numberOfRow,
-          numberOfCol,
-          numberOfTiles,
-        } = Tile.setTiles(
-          canvas.width,
-          canvas.height
-        );
-
-        // After set tiles, rerender components
-        rerenderComponents();
 
         window.addEventListener(
           "resize",
@@ -427,14 +451,6 @@
         angleMode(DEGREES);
         blendMode(BLEND);
 
-        window.tiles = [
-          ...Tile.initializeTiles(
-            numberOfCol,
-            numberOfTiles,
-            tileSize
-          ),
-        ];
-
         canvas.mousePressed(() => {
           window.isMousePressed = true;
         });
@@ -442,6 +458,8 @@
         canvas.mouseReleased(() => {
           window.isMousePressed = false;
         });
+
+        rerenderComponents();
       }
 
       function draw() {
@@ -464,6 +482,8 @@
 
         // orbitControl();
 
+        if (!window.tiles) return;
+
         window.tiles.forEach((tile) => {
           tile.checkIsHovered();
 
@@ -479,6 +499,7 @@
           //     1000
           //   );
           // }
+
           perspective();
 
           tile.draw();

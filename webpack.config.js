@@ -1,21 +1,43 @@
-const path = require("path");
-const { ProvidePlugin } = require("webpack");
+const dotenv = require("dotenv");
+dotenv.config();
 
-module.exports = {
-  entry: "./src/lambda-client.js",
-  output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "lambda-client-bundled.js",
-  },
-  resolve: {
-    fallback: {
-      crypto: false,
-      "crypto-browserify": false,
+const path = require("path");
+const {
+  ProvidePlugin,
+  DefinePlugin,
+} = require("webpack");
+
+module.exports = () => {
+  const env = dotenv.config().parsed;
+
+  const envKeys = Object.keys(
+    env
+  ).reduce((prev, next) => {
+    prev[`process.env.${next}`] =
+      JSON.stringify(env[next]);
+    return prev;
+  }, {});
+
+  return {
+    entry: "./src/index.js",
+    output: {
+      path: path.resolve(
+        __dirname,
+        "dist"
+      ),
+      filename: "bundled.js",
     },
-  },
-  plugins: [
-    new ProvidePlugin({
-      process: "process/browser.js",
-    }),
-  ],
+    resolve: {
+      fallback: {
+        crypto: false,
+        "crypto-browserify": false,
+      },
+    },
+    plugins: [
+      new ProvidePlugin({
+        process: "process/browser.js",
+      }),
+      new DefinePlugin(envKeys),
+    ],
+  };
 };

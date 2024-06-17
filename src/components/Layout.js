@@ -1,8 +1,10 @@
 const PAGE_MAP = {
-  0: `<page-intro>`,
-  1: `<page-first>`,
-  2: `<page-second>`,
-  3: `<page-third>`,
+  0: "<page-intro>",
+  1: "<page-first>",
+  2: "<page-second>",
+  3: "<page-third>",
+  4: "<page-result>",
+  5: "<page-error>",
 };
 
 class Layout extends HTMLElement {

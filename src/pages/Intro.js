@@ -1,6 +1,39 @@
 class Intro extends PageComponent {
   constructor() {
     super();
+
+    this.state = {
+      showBackgroundImage: false,
+    };
+  }
+
+  connectedCallback() {
+    const canvas =
+      document.querySelector("canvas");
+
+    if (!canvas) return;
+
+    const { width, height } = canvas;
+
+    const {
+      tileSize,
+      numberOfCol,
+      numberOfTiles,
+    } = Tile.setTiles(width, height);
+
+    window.tiles = [
+      ...Tile.initializeTiles(
+        numberOfCol,
+        numberOfTiles,
+        tileSize
+      ),
+    ];
+
+    this.render();
+
+    this.shadowRoot.getElementById(
+      "background"
+    ).style.backgroundImage = `url("/public/images/moon-background.svg")`;
   }
 
   render() {
@@ -123,7 +156,7 @@ class Intro extends PageComponent {
           z-index: -1;
 
           background-color: black;
-          background-image: url("/public/images/moon-background.svg");
+          background-image: none;
           background-position: center;
           background-repeat: no-repeat;
           background-size: 100%;
@@ -219,11 +252,24 @@ class Intro extends PageComponent {
       ];
     };
 
+    const removeBackgroundImage =
+      () => {
+        const background =
+          this.shadowRoot.getElementById(
+            "background"
+          );
+
+        background.style.backgroundImage =
+          "none";
+      };
+
     button.addEventListener(
       "click",
       () => {
-        collapseTiles();
+        removeBackgroundImage();
         removeElements();
+
+        collapseTiles();
 
         setTimeout(() => {
           restackTiles();

@@ -22,7 +22,6 @@ const glideArrowLeft =
 glideArrowLeft.addEventListener(
   "click",
   () => {
-    console.log("left");
     glide.go("<");
   }
 );
@@ -35,7 +34,6 @@ const glideArrowRight =
 glideArrowRight.addEventListener(
   "click",
   () => {
-    console.log("right");
     glide.go(">");
   }
 );
