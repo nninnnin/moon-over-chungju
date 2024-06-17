@@ -140,7 +140,8 @@ class ResultPage extends PageComponent {
           }px;
           background-color: transparent;
 
-          ${headerPosition.x};
+          left: 50%;
+          transform: translateX(-50%);
           ${headerPosition.y};
         }
 
@@ -155,16 +156,6 @@ class ResultPage extends PageComponent {
         }
 
         #card-container {
-          position: fixed;
-          ${cardPoisiton.x};
-          ${cardPoisiton.y};
-          z-index: 9999;
-
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-
           width: ${
             window.TILE_SIZE * 9
           }px;
@@ -172,6 +163,15 @@ class ResultPage extends PageComponent {
             window.TILE_SIZE *
             (window.NUMBER_OF_ROW - 7)
           }px;
+
+          position: fixed;
+          ${cardPoisiton.y};
+          z-index: 9999;
+
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
 
           animation: driveIn 3s forwards ease-out;
         }
@@ -195,14 +195,16 @@ class ResultPage extends PageComponent {
           background: linear-gradient(0deg, black, transparent 20%), ${
             window.themeColor
           };
+
+          overflow: hidden;
         }
 
         #moon-container #moon {
-          width: 50vw;
+          width: 70%;
           height: 50vw;
 
           position: absolute;
-          top: 50%;
+          top: 62%;
           left: 50%;
           transform: translate(-50%, -70%);
         }
