@@ -13,11 +13,6 @@ class First extends PageComponent {
         (tile) => !tile.animatingFill
       );
 
-    console.log(
-      "끝났냐규",
-      isAnimatingOver
-    );
-
     if (isAnimatingOver) {
       setTimeout(() => {
         this.render();

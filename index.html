@@ -486,6 +486,28 @@
 
         if (!window.tiles) return;
 
+        const isAnimatingFillOver =
+          window.tiles.every(
+            (tile) =>
+              !tile.animatingFill
+          );
+
+        if (
+          animatingFill &&
+          isAnimatingFillOver
+        ) {
+          animatingFill = false;
+
+          rerenderComponents();
+        }
+
+        if (
+          !animatingFill &&
+          !isAnimatingFillOver
+        ) {
+          animatingFill = true;
+        }
+
         window.tiles.forEach((tile) => {
           tile.checkIsHovered();
 
@@ -506,35 +528,6 @@
 
           tile.draw();
         });
-
-        const isAnimatingFillOver =
-          window.tiles.every(
-            (tile) =>
-              !tile.animatingFill
-          );
-
-        console.log(
-          isAnimatingFillOver
-        );
-
-        if (
-          animatingFill &&
-          isAnimatingFillOver
-        ) {
-          animatingFill = false;
-
-          console.log("끝!");
-
-          rerenderComponents();
-        }
-
-        if (
-          !animatingFill &&
-          !isAnimatingFillOver
-        ) {
-          console.log("시작");
-          animatingFill = true;
-        }
       }
     </script>
   </body>

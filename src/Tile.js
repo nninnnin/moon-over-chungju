@@ -210,7 +210,6 @@ class Tile {
     if (isEmptyTile) {
       this.rotation = 0;
       this.z = -160;
-
       return;
     }
 
