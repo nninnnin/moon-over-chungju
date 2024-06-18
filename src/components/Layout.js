@@ -27,6 +27,11 @@ class Layout extends HTMLElement {
     const pageComponent =
       PAGE_MAP[this.state.pageNumber];
 
+    console.log(
+      "페이지 꼼포논트",
+      pageComponent
+    );
+
     this.shadowRoot.innerHTML = `
       <style>
       </style>

@@ -27,7 +27,7 @@ class ResultPage extends PageComponent {
           numberOfCol,
           numberOfTiles,
           tileSize,
-          true
+          "restack"
         ),
       ];
     };

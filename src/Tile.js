@@ -29,6 +29,7 @@ class Tile {
     this.animatingZoom = false;
     this.animatingCollapse = false;
     this.animatingPunching = false;
+    this.animatingFill = false;
 
     this.punchingPositions = {};
   }
@@ -36,7 +37,7 @@ class Tile {
     numberOfCol,
     numberOfTiles,
     tileSize,
-    animateIntro = false
+    animateIntro = null
   ) {
     const tiles = [];
 
@@ -64,14 +65,19 @@ class Tile {
       );
 
       if (animateIntro) {
-        tile.targetY = y;
+        if ("fill") {
+          tile.setAnimatingFill();
+        } else if ("restack") {
+          tile.targetY = y;
 
-        const MARGIN = 100;
-        tile.y = y - (height + MARGIN);
+          const MARGIN = 100;
+          tile.y =
+            y - (height + MARGIN);
 
-        setTimeout(() => {
-          tile.setAnimatingStack();
-        }, 500);
+          setTimeout(() => {
+            tile.setAnimatingStack();
+          }, 500);
+        }
       }
 
       tiles.push(tile);
@@ -135,6 +141,10 @@ class Tile {
       this.animateStack();
     }
 
+    if (this.animatingFill) {
+      this.animateFill();
+    }
+
     if (this.animatingPunching) {
       this.animatePunching();
     }
@@ -183,6 +193,33 @@ class Tile {
 
   resetAnimatingStack() {
     this.animatingStack = false;
+  }
+
+  setAnimatingFill() {
+    this.animatingFill = true;
+  }
+
+  resetAnimatingFill() {
+    this.animatingFill = false;
+  }
+
+  animateFill() {
+    const isEmptyTile =
+      this.rotation === undefined;
+
+    if (isEmptyTile) {
+      this.rotation = 0;
+      this.z = -160;
+
+      return;
+    }
+
+    if (this.z < 0) {
+      this.z = this.z + 4;
+    } else {
+      this.z = 0;
+      this.resetAnimatingFill();
+    }
   }
 
   // Rotation

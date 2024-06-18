@@ -246,7 +246,7 @@ class Second extends PageComponent {
           numberOfCol,
           numberOfTiles,
           tileSize,
-          true
+          "fill"
         ),
       ];
     };

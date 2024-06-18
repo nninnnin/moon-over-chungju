@@ -193,12 +193,6 @@ class Intro extends PageComponent {
         "button"
       );
 
-    const collapseTiles = () => {
-      window.tiles.forEach((tile) => {
-        tile.setToBeCollapse();
-      });
-    };
-
     const removeElements = () => {
       const labels =
         this.shadowRoot.querySelectorAll(
@@ -235,23 +229,6 @@ class Intro extends PageComponent {
       });
     };
 
-    const restackTiles = () => {
-      const {
-        tileSize,
-        numberOfCol,
-        numberOfTiles,
-      } = Tile.setTiles(width, height);
-
-      window.tiles = [
-        ...Tile.initializeTiles(
-          numberOfCol,
-          numberOfTiles,
-          tileSize,
-          true
-        ),
-      ];
-    };
-
     const removeBackgroundImage =
       () => {
         const background =
@@ -263,21 +240,21 @@ class Intro extends PageComponent {
           "none";
       };
 
+    const refillTiles = () => {
+      window.tiles.forEach((tile) => {
+        tile.setAnimatingFill();
+      });
+    };
+
     button.addEventListener(
       "click",
       () => {
         removeBackgroundImage();
         removeElements();
 
-        collapseTiles();
+        refillTiles();
 
-        setTimeout(() => {
-          restackTiles();
-
-          setTimeout(() => {
-            movePage(1);
-          }, 2500);
-        }, 2500);
+        movePage(1);
       }
     );
   }

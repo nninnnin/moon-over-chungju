@@ -8,14 +8,26 @@ class First extends PageComponent {
   }
 
   connectedCallback() {
-    window.tiles.forEach((tile) => {
-      tile.resetAnimatingStack();
-    });
+    const isAnimatingOver =
+      window.tiles.every(
+        (tile) => !tile.animatingFill
+      );
 
-    this.render();
+    console.log(
+      "끝났냐규",
+      isAnimatingOver
+    );
+
+    if (isAnimatingOver) {
+      setTimeout(() => {
+        this.render();
+      }, 500);
+    }
   }
 
   render() {
+    console.log("호출은 되나?");
+
     const MIDDLE_ROW_INDEX = Math.floor(
       window.NUMBER_OF_ROW / 2
     );
@@ -375,7 +387,7 @@ class First extends PageComponent {
           numberOfCol,
           numberOfTiles,
           tileSize,
-          true
+          "fill"
         ),
       ];
     };

@@ -200,6 +200,12 @@
           document.querySelector(
             "app-layout"
           );
+
+        console.log(
+          "이제 문제는 너다",
+          appLayout.state
+        );
+
         appLayout.render();
       }
     </script>
@@ -462,6 +468,8 @@
         rerenderComponents();
       }
 
+      let animatingFill = false;
+
       function draw() {
         clear();
 
@@ -498,6 +506,35 @@
 
           tile.draw();
         });
+
+        const isAnimatingFillOver =
+          window.tiles.every(
+            (tile) =>
+              !tile.animatingFill
+          );
+
+        console.log(
+          isAnimatingFillOver
+        );
+
+        if (
+          animatingFill &&
+          isAnimatingFillOver
+        ) {
+          animatingFill = false;
+
+          console.log("끝!");
+
+          rerenderComponents();
+        }
+
+        if (
+          !animatingFill &&
+          !isAnimatingFillOver
+        ) {
+          console.log("시작");
+          animatingFill = true;
+        }
       }
     </script>
   </body>
