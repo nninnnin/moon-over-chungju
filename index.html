@@ -457,14 +457,6 @@
         angleMode(DEGREES);
         blendMode(BLEND);
 
-        canvas.mousePressed(() => {
-          window.isMousePressed = true;
-        });
-
-        canvas.mouseReleased(() => {
-          window.isMousePressed = false;
-        });
-
         rerenderComponents();
       }
 

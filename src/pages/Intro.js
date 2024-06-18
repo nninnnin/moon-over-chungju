@@ -247,6 +247,27 @@ class Intro extends PageComponent {
     };
 
     button.addEventListener(
+      "mouseenter",
+      () => {
+        window.preventMousePress = true;
+      }
+    );
+
+    button.addEventListener(
+      "mouseleave",
+      () => {
+        window.preventMousePress = false;
+      }
+    );
+
+    button.addEventListener(
+      "mousedown",
+      () => {
+        window.preventMousePress = true;
+      }
+    );
+
+    button.addEventListener(
       "click",
       () => {
         removeBackgroundImage();

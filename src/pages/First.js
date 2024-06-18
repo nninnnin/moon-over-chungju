@@ -21,8 +21,6 @@ class First extends PageComponent {
   }
 
   render() {
-    console.log("호출은 되나?");
-
     const MIDDLE_ROW_INDEX = Math.floor(
       window.NUMBER_OF_ROW / 2
     );
@@ -132,7 +130,7 @@ class First extends PageComponent {
         #${label.id} {
           ${position.x};
           ${position.y};
-  
+
           width: ${
             window.TILE_SIZE *
             label.size.x

@@ -131,7 +131,10 @@ class Tile {
     );
 
     // this.animateZoom();
-    this.animateRotation();
+
+    if (!window.preventMousePress) {
+      this.animateRotation();
+    }
 
     if (this.animatingCollapse) {
       this.animateCollapse();
