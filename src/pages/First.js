@@ -1,19 +1,13 @@
 class First extends PageComponent {
   constructor() {
     super();
-
-    this.state = {
-      selectedReceiver: null,
-    };
   }
 
   connectedCallback() {
     this.resetTileInteractionPreventer();
 
     if (this.isFillAnimationOver()) {
-      setTimeout(() => {
-        this.render();
-      }, 500);
+      this.render();
     }
   }
 
@@ -187,6 +181,11 @@ class First extends PageComponent {
         window.NUMBER_OF_ROW - 3
       );
 
+    const AppLayout =
+      document.querySelector(
+        "app-layout"
+      );
+
     this.shadowRoot.innerHTML = `
       <style>
         #logo {
@@ -239,6 +238,10 @@ class First extends PageComponent {
           ${nextButtonStyle.y};
         }
 
+        #button--next:disabled {
+          background-color: #c3c3c3;
+        }
+
         #background {
           width: 100vw;
           height: 100dvh;
@@ -248,7 +251,9 @@ class First extends PageComponent {
           top: 0;
           z-index: -1;
 
-          background-color: black;
+          background-color: ${
+            window.themeColor ?? "black"
+          };
         }
       </style>
 
@@ -262,7 +267,11 @@ class First extends PageComponent {
       </div>
 
       <button id='button--back'>이전으로</button>
-      <button id='button--next'>다음으로</button>
+      <button id='button--next' ${
+        AppLayout.state.selectedReceiver
+          ? ""
+          : "disabled"
+      }>다음으로</button>
     `;
 
     this.addListeners();
@@ -286,10 +295,17 @@ class First extends PageComponent {
         label.id !== "label-years"
     );
 
+    const nextButton =
+      this.shadowRoot.querySelector(
+        "#button--next"
+      );
+
     labels.forEach((label) => {
       label.addEventListener(
         "click",
         () => {
+          nextButton.disabled = false;
+
           labels.forEach((label) => {
             label.classList.remove(
               "zoom"
@@ -336,16 +352,14 @@ class First extends PageComponent {
       this.shadowRoot.getElementById(
         "button--next"
       );
+    const AppLayout =
+      document.querySelector(
+        "app-layout"
+      );
 
     const movePage = (pageNumber) => {
-      const AppLayout =
-        document.querySelector(
-          "app-layout"
-        );
-
-      AppLayout.setStateAndRerender({
-        pageNumber,
-      });
+      AppLayout.state.pageNumber =
+        pageNumber;
     };
 
     const removeElements = () => {
@@ -366,29 +380,6 @@ class First extends PageComponent {
       });
     };
 
-    const restackTiles = () => {
-      const {
-        tileSize,
-        numberOfCol,
-        numberOfTiles,
-      } = Tile.setTiles(width, height);
-
-      window.tiles = [
-        ...Tile.initializeTiles(
-          numberOfCol,
-          numberOfTiles,
-          tileSize,
-          "fill"
-        ),
-      ];
-    };
-
-    const collapseTiles = () => {
-      window.tiles.forEach((tile) => {
-        tile.setToBeCollapse();
-      });
-    };
-
     const refillTiles = () => {
       window.tiles.forEach((tile) => {
         tile.setAnimatingFill();
@@ -399,9 +390,7 @@ class First extends PageComponent {
       "click",
       () => {
         removeElements();
-
         refillTiles();
-
         movePage(0);
       }
     );
@@ -409,16 +398,16 @@ class First extends PageComponent {
     nextButton.addEventListener(
       "click",
       () => {
-        collapseTiles();
+        if (
+          !AppLayout.state
+            .selectedReceiver
+        ) {
+          return;
+        }
+
         removeElements();
-
-        setTimeout(() => {
-          restackTiles();
-
-          setTimeout(() => {
-            movePage(2);
-          }, 2500);
-        }, 2500);
+        refillTiles();
+        movePage(2);
       }
     );
   }

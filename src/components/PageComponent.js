@@ -33,6 +33,7 @@ class PageComponent extends HTMLElement {
       button.addEventListener(
         "mousedown",
         () => {
+          if (button.disabled) return;
           window.preventMousePress = true;
         }
       );
@@ -40,6 +41,7 @@ class PageComponent extends HTMLElement {
       button.addEventListener(
         "mouseleave",
         () => {
+          if (button.disabled) return;
           window.preventMousePress = false;
         }
       );
@@ -47,6 +49,7 @@ class PageComponent extends HTMLElement {
       button.addEventListener(
         "pointerdown",
         () => {
+          if (button.disabled) return;
           window.preventMousePress = true;
         }
       );
@@ -54,6 +57,7 @@ class PageComponent extends HTMLElement {
       button.addEventListener(
         "pointerout",
         () => {
+          if (button.disabled) return;
           window.preventMousePress = false;
         }
       );

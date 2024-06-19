@@ -192,7 +192,7 @@ class Intro extends PageComponent {
         청주 가는 길: 강익중
       </div>
 
-      <button>바람 남기기</button>
+      <button>소망 남기기</button>
     `;
 
     this.addListeners();
@@ -235,21 +235,9 @@ class Intro extends PageComponent {
           "app-layout"
         );
 
-      AppLayout.setStateAndRerender({
-        pageNumber,
-      });
+      AppLayout.state.pageNumber =
+        pageNumber;
     };
-
-    const removeBackgroundImage =
-      () => {
-        const background =
-          this.shadowRoot.getElementById(
-            "background"
-          );
-
-        background.style.backgroundImage =
-          "none";
-      };
 
     const refillTiles = () => {
       window.tiles.forEach((tile) => {
@@ -262,11 +250,8 @@ class Intro extends PageComponent {
     button.addEventListener(
       "click",
       () => {
-        removeBackgroundImage();
         removeElements();
-
         refillTiles();
-
         movePage(1);
       }
     );
