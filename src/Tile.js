@@ -519,6 +519,8 @@ class Tile {
   }
 
   checkIsHovered() {
+    if (window.ignoreHover) return;
+
     if (!window.mouseIsPressed) {
       this.hovered = false;
       mouseX = 0;

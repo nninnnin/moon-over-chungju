@@ -111,7 +111,7 @@ class PageComponent extends HTMLElement {
     padding-left: 0.2em;
 
     position: fixed;
-    z-index: 9999;
+    z-index: 8000;
 
     border: 0.5px solid rgba(0, 0, 0, 0.8);
     filter: blur(0.2px);
@@ -128,7 +128,7 @@ class PageComponent extends HTMLElement {
 
   static buttonStyles = `
     position: fixed;
-    z-index: 9999;
+    z-index: 8000;
 
     font-size: 1em;
     white-space: nowrap;

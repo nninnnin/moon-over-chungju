@@ -192,7 +192,7 @@ class First extends PageComponent {
           position: fixed;
           left: 0;
           top: 0;
-          z-index: 9999;
+          z-index: 8900;
 
           width: ${
             window.TILE_SIZE * 7
@@ -215,7 +215,7 @@ class First extends PageComponent {
 
         .zoom {
           transform: scale3d(1.3, 1.3, 1.3);
-          z-index: 9999;
+          z-index: 8900;
         }
 
         button {

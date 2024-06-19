@@ -33,6 +33,13 @@ class Intro extends PageComponent {
           tileSize
         ),
       ];
+
+      const AppLayout =
+        document.querySelector(
+          "app-layout"
+        );
+
+      AppLayout.render();
     }
 
     if (this.isFillAnimationOver()) {

@@ -130,9 +130,7 @@ class SecondPage extends PageComponent {
         }
 
         #background {
-          background-color: ${
-            window.themeColor
-          };
+          background-color: ${window.themeColor};
 
           width: 100vw;
           height: 100dvh;
@@ -149,10 +147,7 @@ class SecondPage extends PageComponent {
       <div id='third-input-container'>
         <img
           id='moon'
-          src='/public/images/moon/${
-            moons[window.moonIndex] ??
-            "waxing-crescent"
-          }.svg'
+          src='/public/images/moon/waxing-crescent.svg'
         />
 
         <input
@@ -500,7 +495,12 @@ class SecondPage extends PageComponent {
           );
         };
 
+        // 1. 엘리먼트 사라지기
         hideElements();
+
+        // 2. 메시지 페이드아웃
+
+        // 3. ..
         collapseTiles();
 
         const result = await submit();
@@ -532,10 +532,7 @@ class SecondPage extends PageComponent {
 
     background.querySelector(
       "img"
-    ).src = `/public/images/moon/${
-      moons[window.moonIndex] ??
-      "waxing-crescent"
-    }.svg`;
+    ).src = `/public/images/moon/waxing-crescent.svg`;
 
     background.style.display = "flex";
   }
