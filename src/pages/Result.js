@@ -4,65 +4,10 @@ class ResultPage extends PageComponent {
   }
 
   connectedCallback() {
-    this.prerender();
+    this.render();
+    this.renderBarCode();
 
-    const canvas =
-      document.querySelector("canvas");
-
-    if (!canvas) {
-      return;
-    }
-
-    const { width, height } = canvas;
-
-    const restackTiles = () => {
-      const {
-        tileSize,
-        numberOfCol,
-        numberOfTiles,
-      } = Tile.setTiles(width, height);
-
-      window.tiles = [
-        ...Tile.initializeTiles(
-          numberOfCol,
-          numberOfTiles,
-          tileSize,
-          "restack"
-        ),
-      ];
-    };
-
-    restackTiles();
-
-    setTimeout(() => {
-      window.tiles.forEach((tile) => {
-        tile.setNotToBeCollapse();
-      });
-
-      this.render();
-      this.renderBarCode();
-
-      this.addListeners();
-    }, 2500);
-  }
-
-  prerender() {
-    this.shadowRoot.innerHTML = `
-      <style>
-        #background {
-          background-color: ${window.themeColor};
-
-          width: 100vw;
-          height: 100vh;
-
-          position: fixed;
-          top: 0;
-          left: 0;
-        }
-      </style>
-
-      <div id='background'></div>
-    `;
+    this.addListeners();
   }
 
   render() {
@@ -74,18 +19,18 @@ class ResultPage extends PageComponent {
       this.createTilePosition(1, 1);
 
     const cardPoisiton =
-      this.createTilePosition(1, 3);
+      this.createTilePosition(1, 3.5);
 
     const aboutButtonPosition =
       this.createTilePosition(
         MIDDLE_COL_INDEX - 4,
-        window.NUMBER_OF_ROW - 3
+        window.NUMBER_OF_ROW - 2.5
       );
 
     const homeButtonPosition =
       this.createTilePosition(
         MIDDLE_COL_INDEX + 1,
-        window.NUMBER_OF_ROW - 3
+        window.NUMBER_OF_ROW - 2.5
       );
 
     setTimeout(() => {
@@ -115,6 +60,10 @@ class ResultPage extends PageComponent {
           display: flex;
           justify-content: center;
           align-items: center;
+
+          background-color: ${
+            window.themeColor
+          };
         }
 
         .label {
@@ -123,6 +72,7 @@ class ResultPage extends PageComponent {
 
         #label-header {
           display: none;
+          border: none;
 
           font-family: JTimeMachine;
           font-weight: bold;
@@ -131,6 +81,7 @@ class ResultPage extends PageComponent {
 
           text-align: center;
           justify-content: center;
+          align-items: center;
 
           width: ${
             window.TILE_SIZE * 9
@@ -179,34 +130,42 @@ class ResultPage extends PageComponent {
         #barcode-container {
           background-color: white;
           width: 100%;
+          height: ${
+            window.TILE_SIZE * 4
+          }px;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
 
         #barcode {
+          width: 100%;
+          height: 100%;
+
           display: block;
-          height: 12vh;
-          width: 85%;
-          margin: 1vh auto;
         }
 
         #moon-container {
-          flex: 1;
           width: 100%;
+          height: ${
+            window.TILE_SIZE * 9
+          }px;
+
           position: relative;
-          background: linear-gradient(0deg, black, transparent 20%), ${
-            window.themeColor
-          };
+          background: linear-gradient(0deg, black, transparent 20%), #ffd56c;
 
           overflow: hidden;
         }
 
         #moon-container #moon {
-          width: 70%;
-          height: 50vw;
+          width: 100%;
+          height: auto;
 
           position: absolute;
-          top: 62%;
+          top: 50%;
           left: 50%;
-          transform: translate(-50%, -70%);
+          transform: translate(-50%, -50%);
         }
 
         #moon-container #card-logo {
@@ -220,7 +179,7 @@ class ResultPage extends PageComponent {
 
         #moon-container #card-description {
           position: absolute;
-          bottom: 20px;
+          top: 25%;
           left: 50%;
           transform: translateX(-50%);
 
@@ -230,7 +189,7 @@ class ResultPage extends PageComponent {
           font-weight: 500;
           letter-spacing: -0.27em;
 
-          color: white;
+          color: black;
 
           white-space: nowrap;
         }
@@ -277,16 +236,13 @@ class ResultPage extends PageComponent {
           </div>
 
           <div id='moon-container'>
-            <img id='moon' src='/public/images/moon/${
-              moons[
-                window.moonIndex ?? 0
-              ]
-            }.svg' />
+            <img id='moon' src='/public/images/last-moon.png' />
 
             <img id='card-logo' src='/public/images/card-logo.svg' />
 
             <div id='card-description'>
-              청주시립미술관에 방문하여 나의 달을 찾아보세요
+              청주시립미술관에 방문하여<br/>
+              나의 달을 찾아보세요
             </div>
           </div>
         </div>

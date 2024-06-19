@@ -147,7 +147,7 @@ class Intro extends PageComponent {
           position: fixed;
           left: 0;
           top: 0;
-          z-index: 9999;
+          z-index: 8000;
 
           width: ${
             isMobile

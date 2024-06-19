@@ -8,17 +8,10 @@ class SecondPage extends PageComponent {
     this.prerender();
 
     if (this.isFillAnimationOver()) {
-      setTimeout(() => {
-        this.animateTiles();
-        this.render();
+      this.animateTiles();
 
-        setTimeout(() => {
-          window.tiles.forEach(
-            (tile) => {
-              tile.resetPunching();
-            }
-          );
-        }, 2500);
+      setTimeout(() => {
+        this.render();
       }, 500);
     }
   }
@@ -26,109 +19,6 @@ class SecondPage extends PageComponent {
   prerender() {
     this.shadowRoot.innerHTML = `
       <style>
-        #moon {
-          width: 60px;
-          height: 60px;
-        }
-
-        #third-input-container {
-          width: 100vw;
-          height: fit-content;
-
-          position: fixed;
-          left: 0;
-          top: 50%;
-          transform: translateY(-46%);
-          z-index: -1;
-
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        #message-input {
-          width: 300px;
-          height: 28px;
-
-          margin: 34px 0px;
-
-          font-family: JTimeMachine;
-          font-weight: 700;
-          font-size: 18px;
-          text-align: center;
-          letter-spacing: -0.2em;
-
-          border: none;
-          outline: none;
-          background-color: transparent;
-        }
-
-        #message-input::placeholder {
-          text-align: center;
-          color: rgba(0, 0, 0, 0.4);
-        }
-
-        /* or, for legacy browsers */
-
-        #message-input::-webkit-input-placeholder {
-          text-align: center;
-          color: rgba(0, 0, 0, 0.4);
-        }
-
-        :-moz-placeholder {
-          /* Firefox 18- */
-          text-align: center;
-          color: rgba(0, 0, 0, 0.4);
-        }
-
-        #message-input::-moz-placeholder {
-          /* Firefox 19+ */
-          text-align: center;
-          color: rgba(0, 0, 0, 0.4);
-        }
-
-        #message-input:-ms-input-placeholder {
-          text-align: center;
-          color: rgba(0, 0, 0, 0.4);
-        }
-
-        #dummy-box {
-          width: 60px;
-          height: 60px;
-        }
-
-        @keyframes moon-centering {
-          0% {
-            transform: translateY(0%)
-              scale(1);
-          }
-          100% {
-            transform: translateY(40%)
-              scale(3);
-          }
-        }
-
-        @keyframes moon-fly {
-          0% {
-            transform: translateY(40%)
-              scale(3);
-          }
-          100% {
-            transform: translateY(-2000%)
-              scale(3);
-          }
-        }
-
-        .moon-centering {
-          animation: moon-centering 1s
-            forwards;
-        }
-
-        .moon-fly {
-          animation: moon-fly 3s forwards;
-        }
-
         #background {
           background-color: ${window.themeColor};
 
@@ -143,21 +33,6 @@ class SecondPage extends PageComponent {
       </style>
 
       <div id='background'></div>
-
-      <div id='third-input-container'>
-        <img
-          id='moon'
-          src='/public/images/moon/waxing-crescent.svg'
-        />
-
-        <input
-          id='message-input'
-          type='text'
-          placeholder='10자 이내로 입력해주세요!'
-        />
-
-        <div id='dummy-box'></div>
-      </div>
     `;
   }
 
@@ -210,7 +85,6 @@ class SecondPage extends PageComponent {
     const selectedReceiver =
       AppLayout.state.selectedReceiver;
 
-    this.resetStyles();
     this.shadowRoot.innerHTML = `
       <style>
         ${PageComponent.resetStyles}
@@ -219,7 +93,7 @@ class SecondPage extends PageComponent {
           position: fixed;
           left: 0;
           top: 0;
-          z-index: 9999;
+          z-index: 8000;
 
           width: ${
             window.TILE_SIZE * 7
@@ -323,23 +197,75 @@ class SecondPage extends PageComponent {
       </div>
 
       <div class='label' id='label-second'>
-        ${selectedReceiver ?? "나"}
+        ${
+          LABEL_VALUE_MAP[
+            selectedReceiver
+          ]
+        }
       </div>
 
       <div class='label' id='label-third'>
-        에게 어떤 말을 전하고 싶나요?
+        을 위해 소망을 남겨주세요
       </div>
 
       <button id='button--back'>이전으로</button>
       <button id='button--submit' disabled>전송하기</button>
     `;
 
-    this.addListeners();
     this.showContents();
+    this.addListeners();
   }
 
   addListeners() {
     this.addButtonListeners();
+    this.addInputListener();
+  }
+
+  addInputListener() {
+    const input =
+      document.getElementById(
+        "message-input"
+      );
+
+    input.addEventListener(
+      "input",
+      (e) => {
+        const value = e.target.value;
+
+        const submitButton =
+          this.shadowRoot.querySelector(
+            "#button--submit"
+          );
+
+        if (
+          submitButton &&
+          value?.length
+        ) {
+          submitButton.disabled = false;
+        } else {
+          submitButton.disabled = true;
+        }
+      }
+    );
+
+    input.addEventListener(
+      "click",
+      () => {
+        input.setAttribute(
+          "contenteditable",
+          true
+        );
+      }
+    );
+    input.addEventListener(
+      "blur",
+      () => {
+        input.setAttribute(
+          "contenteditable",
+          false
+        );
+      }
+    );
   }
 
   addButtonListeners() {
@@ -355,28 +281,20 @@ class SecondPage extends PageComponent {
 
     const hideElements = () => {
       const elements = [
-        document.querySelector(
-          "#third-input-container"
-        ),
         this.shadowRoot.querySelector(
           "#logo"
         ),
         ...this.shadowRoot.querySelectorAll(
           ".label"
         ),
-        document.getElementById(
-          "message-input"
-        ),
-        document.getElementById(
-          "dummy-box"
-        ),
+        backButton,
         submitButton,
       ];
 
       elements.forEach((el) => {
         if (!el) return;
 
-        el.style.display = "none";
+        el.remove();
       });
     };
 
@@ -389,12 +307,15 @@ class SecondPage extends PageComponent {
     const movePage = (pageNumber) => {
       AppLayout.state.pageNumber =
         pageNumber;
+
+      AppLayout.render();
     };
 
     backButton.addEventListener(
       "click",
       () => {
         hideElements();
+        this.hideContents();
         refillTiles();
         movePage(1);
       }
@@ -414,26 +335,16 @@ class SecondPage extends PageComponent {
               "#message-input"
             );
 
-          console.log(
-            "input element",
-            MessageInput
-          );
+          const keyword =
+            AppLayout.state
+              .selectedReceiver;
 
-          // const keyword =
-          //   AppLayout.state
-          //     .selectedReceiver;
-          // const moonType =
-          //   moons[window.moonIndex];
-
-          const keyword = "나";
-          const moonType =
-            "waxing-crescent";
           const message =
             MessageInput.value;
 
           const payload = {
             keyword,
-            moonType,
+            moonType: null,
             message,
           };
 
@@ -448,53 +359,24 @@ class SecondPage extends PageComponent {
               tile.setToBeCollapse();
             }
           );
-        };
-
-        const animateMoon = (cb) => {
-          this.prerender();
-
-          this.shadowRoot.getElementById(
-            "dummy-box"
-          ).style.visibility = "hidden";
-
-          this.shadowRoot.getElementById(
-            "message-input"
-          ).style.visibility = "hidden";
 
           setTimeout(() => {
-            const moon =
-              this.shadowRoot.getElementById(
-                "moon"
-              );
-
-            moon.classList.add(
-              "moon-centering"
+            window.tiles.forEach(
+              (tile) => {
+                tile.setNotToBeCollapse();
+              }
             );
-
-            setTimeout(() => {
-              moon.classList.add(
-                "moon-fly"
-              );
-
-              setTimeout(() => {
-                cb();
-              }, 3000);
-            }, 2000);
-          }, 2000);
+          }, 2500);
         };
 
-        const movePage = (
-          pageNumber
-        ) => {
-          const AppLayout =
+        const animateMoon = () => {
+          const lastMoon =
             document.querySelector(
-              "app-layout"
+              "#last-moon"
             );
 
-          AppLayout.setStateAndRerender(
-            {
-              pageNumber,
-            }
+          lastMoon.classList.add(
+            "moon-drive"
           );
         };
 
@@ -502,27 +384,26 @@ class SecondPage extends PageComponent {
         hideElements();
 
         // 2. 메시지 페이드아웃
+        const input =
+          document.getElementById(
+            "message-input"
+          );
 
-        // 3. ..
-        collapseTiles();
+        input.classList.add("fadeout");
 
-        const result = await submit();
+        setTimeout(() => {
+          // 3. 타일 콜랩스
+          setTimeout(() => {
+            collapseTiles();
+          }, 300);
 
-        console.log(
-          "submit result..",
-          result
-        );
+          // 4. 달 떠오르기
+          animateMoon();
 
-        animateMoon(() => {
-          if (!result) {
-            // 실패 페이지로 이동
-            movePage(5);
-
-            return;
-          }
-
-          movePage(4);
-        });
+          setTimeout(() => {
+            movePage(3);
+          }, 4000);
+        }, 900);
       }
     );
   }
@@ -532,10 +413,6 @@ class SecondPage extends PageComponent {
       document.body.querySelector(
         "#third-input-container"
       );
-
-    background.querySelector(
-      "img"
-    ).src = `/public/images/moon/waxing-crescent.svg`;
 
     background.style.display = "flex";
   }

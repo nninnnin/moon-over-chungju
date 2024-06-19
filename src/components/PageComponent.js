@@ -102,7 +102,7 @@ class PageComponent extends HTMLElement {
     * {
       touch-action: manipulation;
       box-sizing: border-box;
-      -webkit-font-smoothing: antialiased;
+      -webkit-font-smoothing: auto;
       text-rendering: optimizeLegibility;
     }
   `;
@@ -126,7 +126,7 @@ class PageComponent extends HTMLElement {
     filter: blur(0.2px);
 
     font-family: JTimeMachine;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 20px;
     letter-spacing: -0.2em;
 

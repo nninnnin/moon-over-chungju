@@ -26,6 +26,7 @@ class First extends PageComponent {
         size: { x: 3, y: 1 },
         backgroundColor: "#DADADA",
         text: "10년 후",
+        value: null,
       },
       {
         id: "label-family",
@@ -36,6 +37,7 @@ class First extends PageComponent {
         size: { x: 3, y: 1 },
         backgroundColor: "#8FD4FF",
         text: "가족",
+        value: "family",
       },
       {
         id: "label-friend",
@@ -46,6 +48,7 @@ class First extends PageComponent {
         size: { x: 3, y: 1 },
         backgroundColor: "#5699FF",
         text: "친구",
+        value: "friend",
       },
       {
         id: "label-partner",
@@ -56,6 +59,7 @@ class First extends PageComponent {
         size: { x: 5, y: 1 },
         backgroundColor: "#01A29B",
         text: "소중한 사람",
+        value: "specialPerson",
       },
       {
         id: "label-me",
@@ -66,6 +70,7 @@ class First extends PageComponent {
         size: { x: 2, y: 1 },
         backgroundColor: "#FFD56C",
         text: "나",
+        value: "me",
       },
       {
         id: "label-pet",
@@ -74,8 +79,9 @@ class First extends PageComponent {
           y: MIDDLE_ROW_INDEX - 1,
         },
         size: { x: 3, y: 1 },
-        backgroundColor: "#A1EEA8",
+        backgroundColor: "#A8E9AE",
         text: "반려동물",
+        value: "pet",
       },
       {
         id: "label-chungju",
@@ -84,8 +90,9 @@ class First extends PageComponent {
           y: MIDDLE_ROW_INDEX,
         },
         size: { x: 2, y: 1 },
-        backgroundColor: "#EB4891",
+        backgroundColor: "#C3C3C3",
         text: "청주시",
+        value: "cheongju",
       },
       {
         id: "label-somebody",
@@ -94,8 +101,9 @@ class First extends PageComponent {
           y: MIDDLE_ROW_INDEX + 1,
         },
         size: { x: 3, y: 1 },
-        backgroundColor: "#01A29B",
+        backgroundColor: "#EB4891",
         text: "누군가",
+        value: "someone",
       },
       {
         id: "label-wish",
@@ -106,6 +114,7 @@ class First extends PageComponent {
         size: { x: 7, y: 1 },
         backgroundColor: "#DADADA",
         text: "에게 바람을 남기고 싶어요",
+        value: null,
       },
     ];
 
@@ -156,7 +165,9 @@ class First extends PageComponent {
         return `
         <div class='label ${
           isSelectedLabel ? "zoom" : ""
-        }' id='${label.id}'>
+        }' id='${
+          label.id
+        }' data-value=${label.value}>
           ${label.text}
         </div>
       `
@@ -322,7 +333,7 @@ class First extends PageComponent {
             );
 
           AppLayout.state.selectedReceiver =
-            label.innerText;
+            label.dataset.value;
 
           // Store selected label's background color as theme color
           const labelColor =
