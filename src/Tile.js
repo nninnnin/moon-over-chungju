@@ -465,7 +465,7 @@ class Tile {
         middleRowIndex < this.rowIndex;
 
       if (isUpperTile) {
-        this.y = this.y - 3;
+        this.x = this.x - 3;
         this.z = this.z + 3;
       } else if (isLowerTile) {
         this.y = this.y + 3;
