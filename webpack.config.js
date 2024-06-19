@@ -19,7 +19,7 @@ module.exports = () => {
   }, {});
 
   return {
-    entry: "./src/index.js",
+    entry: "./src/scripts/index.js",
     output: {
       path: path.resolve(
         __dirname,

@@ -6,8 +6,28 @@ class ResultPage extends PageComponent {
   connectedCallback() {
     this.render();
     this.renderBarCode();
-
     this.addListeners();
+
+    setTimeout(() => {
+      this.renderCapturedCard().then(
+        (data) => {
+          console.log("this!", data);
+
+          const image = new Image();
+          image.src = data;
+
+          const cardContainer =
+            this.shadowRoot.querySelector(
+              "#card-container"
+            );
+
+          // cardContainer.innerHTML = "";
+          document.body.appendChild(
+            image
+          );
+        }
+      );
+    }, 0);
   }
 
   render() {
@@ -107,10 +127,10 @@ class ResultPage extends PageComponent {
         }
 
         #card-container {
-          width: ${
+          min-width: ${
             window.TILE_SIZE * 9
           }px;
-          height: ${
+          min-height: ${
             window.TILE_SIZE *
             (window.NUMBER_OF_ROW - 7)
           }px;
@@ -263,6 +283,15 @@ class ResultPage extends PageComponent {
       "id....",
       barcodeCanvas
     );
+  }
+
+  renderCapturedCard() {
+    const cardContainer =
+      this.shadowRoot.querySelector(
+        "#card-container"
+      );
+
+    return captureDom(cardContainer);
   }
 
   addListeners() {
