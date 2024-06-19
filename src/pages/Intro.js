@@ -56,18 +56,18 @@ class Intro extends PageComponent {
 
   render() {
     const firstLabelPosition =
-      this.createTilePosition(2, 5);
+      this.createTilePosition(
+        window.NUMBER_OF_COL - 6,
+        6
+      );
 
     const secondLabelPosition =
-      this.createTilePosition(
-        -2,
-        window.NUMBER_OF_ROW - 5
-      );
+      this.createTilePosition(1, 7);
 
     const thirdLabelPosition =
       this.createTilePosition(
-        -2,
-        window.NUMBER_OF_ROW - 6
+        -1,
+        window.NUMBER_OF_ROW - 7
       );
 
     const buttonPosition =
@@ -115,7 +115,7 @@ class Intro extends PageComponent {
 
         #label--left-first {
           width: ${
-            window.TILE_SIZE * 3
+            window.TILE_SIZE * 4
           }px;
           height: ${window.TILE_SIZE}px;
 
@@ -125,7 +125,7 @@ class Intro extends PageComponent {
 
         #label--right-first {
           width: ${
-            window.TILE_SIZE * 2
+            window.TILE_SIZE * 5
           }px;
           height: ${window.TILE_SIZE}px;
 
@@ -135,7 +135,7 @@ class Intro extends PageComponent {
 
         #label--right-second {
           width: ${
-            window.TILE_SIZE * 4
+            window.TILE_SIZE * 5
           }px;
           height: ${window.TILE_SIZE}px;
 
@@ -189,17 +189,17 @@ class Intro extends PageComponent {
       <img id='logo' src="/public/images/logo--intro.svg" />
       <img id='logo-desktop' />
 
-      <div class='label' id='label--left-first'>
+      <marquee class='label' id='label--left-first'>
         청주시립미술관
-      </div>
+      </marquee>
 
-      <div class='label' id='label--right-first'>
-        청주에 뜬 달
-      </div>
+      <marquee class='label' id='label--right-first'>
+        <청주에 뜬 달> 전시 소개
+      </marquee>
 
-      <div class='label' id='label--right-second'>
-        청주 가는 길: 강익중
-      </div>
+      <marquee class='label' id='label--right-second'>
+        청주시립미술관 통합 청주시 10주년 기념전 <청주 가는 길:강익중>
+      </marquee>
 
       <button>소망 남기기</button>
     `;
