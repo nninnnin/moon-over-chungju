@@ -8,29 +8,40 @@ class Intro extends PageComponent {
   }
 
   connectedCallback() {
-    const canvas =
-      document.querySelector("canvas");
+    this.resetTileInteractionPreventer();
 
-    if (!canvas) return;
+    if (!window.tiles?.length) {
+      const canvas =
+        document.querySelector(
+          "canvas"
+        );
 
-    const { width, height } = canvas;
+      if (!canvas) return;
 
-    const {
-      tileSize,
-      numberOfCol,
-      numberOfTiles,
-    } = Tile.setTiles(width, height);
+      const { width, height } = canvas;
 
-    window.tiles = [
-      ...Tile.initializeTiles(
+      const {
+        tileSize,
         numberOfCol,
         numberOfTiles,
-        tileSize
-      ),
-    ];
+      } = Tile.setTiles(width, height);
 
-    this.render();
+      window.tiles = [
+        ...Tile.initializeTiles(
+          numberOfCol,
+          numberOfTiles,
+          tileSize
+        ),
+      ];
+    }
 
+    if (this.isFillAnimationOver()) {
+      this.render();
+      this.changeBackgroundImage();
+    }
+  }
+
+  changeBackgroundImage() {
     this.shadowRoot.getElementById(
       "background"
     ).style.backgroundImage = `url("/public/images/moon-background.svg")`;
@@ -246,26 +257,7 @@ class Intro extends PageComponent {
       });
     };
 
-    button.addEventListener(
-      "mouseenter",
-      () => {
-        window.preventMousePress = true;
-      }
-    );
-
-    button.addEventListener(
-      "mouseleave",
-      () => {
-        window.preventMousePress = false;
-      }
-    );
-
-    button.addEventListener(
-      "mousedown",
-      () => {
-        window.preventMousePress = true;
-      }
-    );
+    this.addTileInteractionPreventer();
 
     button.addEventListener(
       "click",

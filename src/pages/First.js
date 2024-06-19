@@ -8,12 +8,9 @@ class First extends PageComponent {
   }
 
   connectedCallback() {
-    const isAnimatingOver =
-      window.tiles.every(
-        (tile) => !tile.animatingFill
-      );
+    this.resetTileInteractionPreventer();
 
-    if (isAnimatingOver) {
+    if (this.isFillAnimationOver()) {
       setTimeout(() => {
         this.render();
       }, 500);
@@ -274,6 +271,7 @@ class First extends PageComponent {
   addListeners() {
     this.addLabelListeners();
     this.addButtonListners();
+    this.addTileInteractionPreventer();
   }
 
   addLabelListeners() {
@@ -391,19 +389,20 @@ class First extends PageComponent {
       });
     };
 
+    const refillTiles = () => {
+      window.tiles.forEach((tile) => {
+        tile.setAnimatingFill();
+      });
+    };
+
     backButton.addEventListener(
       "click",
       () => {
-        collapseTiles();
         removeElements();
 
-        setTimeout(() => {
-          restackTiles();
+        refillTiles();
 
-          setTimeout(() => {
-            movePage(0);
-          }, 2500);
-        }, 2500);
+        movePage(0);
       }
     );
 

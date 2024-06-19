@@ -13,6 +13,53 @@ class PageComponent extends HTMLElement {
 
   render() {}
 
+  resetTileInteractionPreventer() {
+    window.preventMousePress = false;
+  }
+
+  isFillAnimationOver() {
+    return window.tiles.every(
+      (tile) => !tile.animatingFill
+    );
+  }
+
+  addTileInteractionPreventer() {
+    const buttons =
+      this.shadowRoot.querySelectorAll(
+        "button"
+      );
+
+    buttons.forEach((button) => {
+      button.addEventListener(
+        "mousedown",
+        () => {
+          window.preventMousePress = true;
+        }
+      );
+
+      button.addEventListener(
+        "mouseleave",
+        () => {
+          window.preventMousePress = false;
+        }
+      );
+
+      button.addEventListener(
+        "pointerdown",
+        () => {
+          window.preventMousePress = true;
+        }
+      );
+
+      button.addEventListener(
+        "pointerout",
+        () => {
+          window.preventMousePress = false;
+        }
+      );
+    });
+  }
+
   createTilePosition(x, y) {
     if (isNaN(x) || isNaN(y)) {
       return;
