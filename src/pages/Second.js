@@ -210,8 +210,11 @@ class SecondPage extends PageComponent {
     const selectedReceiver =
       AppLayout.state.selectedReceiver;
 
+    this.resetStyles();
     this.shadowRoot.innerHTML = `
       <style>
+        ${PageComponent.resetStyles}
+
         #logo {
           position: fixed;
           left: 0;
@@ -328,7 +331,7 @@ class SecondPage extends PageComponent {
       </div>
 
       <button id='button--back'>이전으로</button>
-      <button id='button--submit'>전송하기</button>
+      <button id='button--submit' disabled>전송하기</button>
     `;
 
     this.addListeners();

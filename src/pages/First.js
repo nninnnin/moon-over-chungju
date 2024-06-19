@@ -188,6 +188,8 @@ class First extends PageComponent {
 
     this.shadowRoot.innerHTML = `
       <style>
+        ${PageComponent.resetStyles}
+
         #logo {
           position: fixed;
           left: 0;

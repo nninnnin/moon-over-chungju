@@ -95,6 +95,8 @@ class Intro extends PageComponent {
 
     this.shadowRoot.innerHTML = `
       <style>
+        ${PageComponent.resetStyles}
+
         button {
           ${PageComponent.buttonStyles}
 

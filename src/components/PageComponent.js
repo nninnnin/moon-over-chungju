@@ -98,6 +98,15 @@ class PageComponent extends HTMLElement {
     };
   }
 
+  static resetStyles = `
+    * {
+      touch-action: manipulation;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+  `;
+
   static labelStyles = `
     box-sizing: border-box;
     background-color: #d8d8d8;

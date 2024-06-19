@@ -14,6 +14,9 @@ class AboutDialog extends PageComponent {
   render() {
     if (!window.NUMBER_OF_COL) return;
 
+    window.ignoreHover =
+      this.state.opened;
+
     const WIDTH_TILE_SPAN = 2;
 
     const containerPosition =
@@ -184,7 +187,9 @@ class AboutDialog extends PageComponent {
       }
     );
 
-    this.addInteractionPreventer();
+    if (!this.state.opened) {
+      this.addInteractionPreventer();
+    }
   }
 
   addInteractionPreventer() {
