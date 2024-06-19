@@ -5,29 +5,23 @@ class ResultPage extends PageComponent {
 
   connectedCallback() {
     this.render();
-    this.renderBarCode();
     this.addListeners();
 
-    setTimeout(() => {
-      this.renderCapturedCard().then(
-        (data) => {
-          console.log("this!", data);
+    (async () => {
+      await this.renderBarCode();
 
-          const image = new Image();
-          image.src = data;
+      const cardCont =
+        this.shadowRoot.querySelector(
+          "#card-container"
+        );
 
-          const cardContainer =
-            this.shadowRoot.querySelector(
-              "#card-container"
-            );
-
-          // cardContainer.innerHTML = "";
-          document.body.appendChild(
-            image
-          );
+      cardCont.addEventListener(
+        "animationend",
+        () => {
+          this.renderCapturedCard();
         }
       );
-    }, 0);
+    })();
   }
 
   render() {
@@ -126,18 +120,28 @@ class ResultPage extends PageComponent {
           }
         }
 
+        img {
+          touch-action: auto !important;
+        }
+
         #card-container {
           min-width: ${
+            window.TILE_SIZE * 9
+          }px;
+          width: ${
             window.TILE_SIZE * 9
           }px;
           min-height: ${
             window.TILE_SIZE *
             (window.NUMBER_OF_ROW - 7)
           }px;
+          height: ${
+            window.TILE_SIZE *
+            (window.NUMBER_OF_ROW - 7)
+          }px;
 
-          position: fixed;
-          ${cardPoisiton.y};
-          z-index: 9999;
+          margin: 0;
+          padding: 0;
 
           display: flex;
           flex-direction: column;
@@ -279,7 +283,7 @@ class ResultPage extends PageComponent {
         "#barcode"
       );
 
-    createBarcode(
+    return createBarcode(
       "id....",
       barcodeCanvas
     );
@@ -291,10 +295,47 @@ class ResultPage extends PageComponent {
         "#card-container"
       );
 
-    return captureDom(cardContainer);
+    captureDom(cardContainer).then(
+      (data) => {
+        console.log(
+          "captured card:",
+          data
+        );
+
+        const image = new Image();
+        image.width =
+          cardContainer.offsetWidth;
+        image.height =
+          cardContainer.offsetHeight;
+        image.src = data;
+
+        cardContainer.innerHTML = ``;
+        cardContainer.appendChild(
+          image
+        );
+
+        const canvas =
+          document.querySelector(
+            "canvas"
+          );
+        canvas.remove();
+      }
+    );
   }
 
   addListeners() {
+    const 전시소개버튼 =
+      this.shadowRoot.querySelector(
+        "#about-button"
+      );
+
+    전시소개버튼.addEventListener(
+      "click",
+      () => {
+        this.renderCapturedCard();
+      }
+    );
+
     const homeButton =
       this.shadowRoot.querySelector(
         "#home-button"

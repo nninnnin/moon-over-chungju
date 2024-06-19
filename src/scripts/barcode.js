@@ -1,11 +1,11 @@
 import JSBarcode from "jsbarcode";
 
 const main = () => {
-  const createBarcode = (
+  const createBarcode = async (
     str,
     canvasElement
   ) => {
-    JSBarcode(
+    return JSBarcode(
       canvasElement,
       "zbcheq" + str,
       {

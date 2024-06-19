@@ -1,14 +1,8 @@
-import domtoimage from "dom-to-image";
+import { toPng } from "html-to-image";
 
 const main = () => {
-  const captureDom = async (node) => {
-    return await domtoimage.toPng(
-      node,
-      {
-        width: 300,
-        height: 300,
-      }
-    );
+  const captureDom = (node) => {
+    return toPng(node);
   };
 
   window.captureDom = captureDom;
