@@ -80,6 +80,47 @@ class ResultPage extends PageComponent {
       <style>
         ${PageComponent.resetStyles}
 
+        #background {
+          width: 100vw;
+          height: 100vh;
+
+          position: fixed;
+          left: 0;
+          bottom: 0;
+          z-index: -2;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          background-color: ${
+            window.themeColor
+          };
+        }
+
+        @keyframes growIn {
+          0% {
+            height: 0px;
+          }
+
+          100% {
+            height: 80px;
+          }
+        }
+
+        #gradient {
+          width: 100vw;
+
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          z-index: -1;
+
+          background: linear-gradient(to top, black 30%, transparent);
+
+          animation: growIn 0.7s forwards ease-in-out;
+        }
+
         #container {
           width: 100vw;
           height: 100dvh;
@@ -95,10 +136,6 @@ class ResultPage extends PageComponent {
           padding-bottom: ${
             window.TILE_SIZE * 1.5
           }px;
-
-          background: linear-gradient(to top, black 24px, transparent 80px), ${
-            window.themeColor
-          };
         }
 
         .label {
@@ -222,6 +259,12 @@ class ResultPage extends PageComponent {
           }px;
         }
       </style>
+
+      <div id='background'>
+      </div>
+
+      <div id='gradient'>
+      </div>
 
       <div id='container'>
         <div class='label' id='label-header'>
