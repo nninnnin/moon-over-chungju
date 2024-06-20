@@ -189,26 +189,26 @@ class Intro extends PageComponent {
       <img id='logo' src="/public/images/logo--intro.svg" />
       <img id='logo-desktop' />
 
-      <marquee-custom
+      <marquee
         class='label'
         id='label--left-first'
       >
         청주시립미술관
-      </marquee-custom>
+      </marquee>
 
-      <marquee-custom
+      <marquee
         class='label'
         id='label--right-first'
       >
         <청주에 뜬 달> 전시 소개
-      </marquee-custom>
+      </marquee>
 
-      <marquee-custom
+      <marquee
         class='label'
         id='label--right-second'
       >
         청주시립미술관 통합 청주시 10주년 기념전 <청주 가는 길:강익중>
-      </marquee-custom>
+      </marquee>
 
       <button>소망 남기기</button>
     `;
