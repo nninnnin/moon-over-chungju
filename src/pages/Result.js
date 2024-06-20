@@ -239,7 +239,7 @@ class ResultPage extends PageComponent {
       <div id='container'>
         <div class='label' id='label-header'>
           당신의 달이 떠올랐습니다.<br/>
-          바코드 이미지를 꾹 눌러 저장하세요.
+          다운로드 버튼을 눌러 저장하세요.
         </div>
 
         <div id='card-container'>
