@@ -344,9 +344,11 @@ class SecondPage extends PageComponent {
 
           const payload = {
             keyword,
-            moonType: null,
+            moonType: '',
             message,
           };
+
+          console.log('보내는 페이로드', payload)
 
           return await requestLambda(
             payload
@@ -379,6 +381,10 @@ class SecondPage extends PageComponent {
             "moon-drive"
           );
         };
+
+        const response = await submit();
+
+        console.log("submit response", response);
 
         // 1. 엘리먼트 사라지기
         hideElements();
