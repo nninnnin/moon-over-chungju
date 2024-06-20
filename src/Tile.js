@@ -67,7 +67,9 @@ class Tile {
       if (!!animateIntro) {
         if (animateIntro === "fill") {
           tile.setAnimatingFill();
-        } else if (animateIntro === "restack") {
+        } else if (
+          animateIntro === "restack"
+        ) {
           tile.targetY = y;
 
           const MARGIN = 100;
@@ -521,7 +523,13 @@ class Tile {
   checkIsHovered() {
     if (window.ignoreHover) return;
 
-    if (!window.mouseIsPressed) {
+    const isMobile =
+      window.innerWidth < 768;
+
+    if (
+      isMobile &&
+      !window.mouseIsPressed
+    ) {
       this.hovered = false;
       mouseX = 0;
       mouseY = 0;
