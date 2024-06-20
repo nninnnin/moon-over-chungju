@@ -93,11 +93,7 @@ class AboutDialog extends PageComponent {
           align-items: center;
           justify-content: center;
 
-          border: ${
-            this.state.opened
-              ? "1px"
-              : "0.5px"
-          } solid black;
+          border: 0.5px solid black;
         }
 
         #contents {
@@ -107,7 +103,10 @@ class AboutDialog extends PageComponent {
           z-index: 9998;
 
           width: 93vw;
-          height: 90dvh;
+          height: ${
+            window.TILE_SIZE *
+            (window.NUMBER_OF_ROW - 2)
+          }px;
 
           border: 1px solid black;
           border-top: 0px;
