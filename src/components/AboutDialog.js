@@ -121,6 +121,17 @@ class AboutDialog extends PageComponent {
           padding-bottom: 3em;
         }
 
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        #contents::-webkit-scrollbar {
+          display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        #contents {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+        }
+
         #contents * {
           font-family: JTimeMachine;
           font-weight: 500;
@@ -147,7 +158,7 @@ class AboutDialog extends PageComponent {
 
         ul {
           list-style: decimal;
-          margin-top: 0;
+          margin: 0;
           padding-left: 1em;
         }
       </style>
