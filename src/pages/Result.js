@@ -103,13 +103,13 @@ class ResultPage extends PageComponent {
           align-items: center;
 
           padding-top: ${
-            window.TILE_SIZE
+            window.TILE_SIZE * 0.5
           }px;
           padding-bottom: ${
-            window.TILE_SIZE
+            window.TILE_SIZE * 1.5
           }px;
 
-          background: linear-gradient(to top, black, transparent 80px), ${
+          background: linear-gradient(to top, black 24px, transparent 80px), ${
             window.themeColor
           };
         }
