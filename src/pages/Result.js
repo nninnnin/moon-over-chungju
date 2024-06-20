@@ -55,21 +55,6 @@ class ResultPage extends PageComponent {
       window.NUMBER_OF_COL / 2
     );
 
-    const headerPosition =
-      this.createTilePosition(1, 1);
-
-    const aboutButtonPosition =
-      this.createTilePosition(
-        MIDDLE_COL_INDEX - 4,
-        window.NUMBER_OF_ROW - 2.5
-      );
-
-    const homeButtonPosition =
-      this.createTilePosition(
-        MIDDLE_COL_INDEX + 1,
-        window.NUMBER_OF_ROW - 2.5
-      );
-
     setTimeout(() => {
       const buttons =
         this.shadowRoot.querySelectorAll(
@@ -77,7 +62,7 @@ class ResultPage extends PageComponent {
         );
 
       buttons.forEach((button) => {
-        button.style.display = "flex";
+        button.style.visibility = "visible";
       });
 
       const header =
@@ -85,18 +70,24 @@ class ResultPage extends PageComponent {
           "#label-header"
         );
 
-      header.style.display = "flex";
+      header.style.visibility = "visible";
     }, 3500);
 
     this.shadowRoot.innerHTML = `
       <style>
+        ${PageComponent.resetStyles}
+
         #container {
           width: 100vw;
           height: 100dvh;
 
           display: flex;
-          justify-content: center;
+          flex-direction: column;
+          justify-content: space-between;
           align-items: center;
+
+          padding-top: ${window.TILE_SIZE}px;
+          padding-bottom: ${window.TILE_SIZE}px;
 
           background-color: ${
             window.themeColor
@@ -108,7 +99,10 @@ class ResultPage extends PageComponent {
         }
 
         #label-header {
-          display: none;
+          position: relative;
+          background-color: blue;
+
+          visibility: hidden;
           border: none;
 
           font-family: JTimeMachine;
@@ -127,10 +121,6 @@ class ResultPage extends PageComponent {
             window.TILE_SIZE * 2
           }px;
           background-color: transparent;
-
-          left: 50%;
-          transform: translateX(-50%);
-          ${headerPosition.y};
         }
 
         @keyframes driveIn {
@@ -139,7 +129,7 @@ class ResultPage extends PageComponent {
           }
 
           100% {
-            transform: translateY(0);
+            transform: translateY(0%);
           }
         }
 
@@ -148,26 +138,10 @@ class ResultPage extends PageComponent {
         }
 
         #card-container {
-          min-width: ${
-            window.TILE_SIZE * 9
-          }px;
-          width: ${
-            window.TILE_SIZE * 9
-          }px;
-          min-height: ${
-            window.TILE_SIZE *
-            (window.NUMBER_OF_ROW - 7)
-          }px;
-          height: ${
-            window.TILE_SIZE *
-            (window.NUMBER_OF_ROW - 7)
-          }px;
+          width: ${window.TILE_SIZE * (window.NUMBER_OF_COL - 2)}px;
+          height: ${window.TILE_SIZE * (window.NUMBER_OF_ROW - 7)}px;
 
-          margin: 0;
-          margin-top: 4dvh;
-          padding: 0;
-
-          transform: translateY(5%);
+          background-color: red;
 
           display: flex;
           flex-direction: column;
@@ -198,9 +172,7 @@ class ResultPage extends PageComponent {
 
         #moon-container {
           width: 100%;
-          height: ${
-            window.TILE_SIZE * 9
-          }px;
+          flex: 1;
 
           position: relative;
           background: linear-gradient(0deg, black, transparent 20%), #ffd56c;
@@ -244,9 +216,20 @@ class ResultPage extends PageComponent {
           white-space: nowrap;
         }
 
+        #button-container {
+          position: relative;
+
+          width: ${window.TILE_SIZE * (window.NUMBER_OF_COL - 2)}px;
+
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
         button {
           ${PageComponent.buttonStyles};
-          display: none;
+          position: relative;
+          visibility: hidden;
         }
 
         #about-button {
@@ -256,9 +239,6 @@ class ResultPage extends PageComponent {
           height: ${
             window.TILE_SIZE * 1
           }px;
-
-          ${aboutButtonPosition.x};
-          ${aboutButtonPosition.y};
         }
 
         #home-button {
@@ -268,9 +248,6 @@ class ResultPage extends PageComponent {
           height: ${
             window.TILE_SIZE * 1
           }px;
-
-          ${homeButtonPosition.x};
-          ${homeButtonPosition.y};
         }
       </style>
 
@@ -297,8 +274,10 @@ class ResultPage extends PageComponent {
           </div>
         </div>
 
-        <button id='about-button'>전시소개</button>
-        <button id='home-button'>처음으로</button>
+        <div id='button-container'>
+          <button id='about-button'>전시소개</button>
+          <button id='home-button'>처음으로</button>
+        </div>
       </div>
     `;
   }
