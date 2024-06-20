@@ -19,7 +19,9 @@ class MarqueeComponent extends HTMLElement {
 
   render() {
     this.shadowRoot.innerHTML = `
-      <style>
+    <style>
+        ${PageComponent.resetStyles}
+
         #container {
           width: 100%;
           height: 100%;
@@ -30,7 +32,7 @@ class MarqueeComponent extends HTMLElement {
 
         #contents {
           width: fit-content;
-          height: 100%;
+          height: fit-content;
           margin-right: 10px;
 
           position: absolute;
