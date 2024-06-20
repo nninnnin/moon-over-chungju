@@ -6,7 +6,7 @@ class ResultPage extends PageComponent {
       barcodeLoaded: false,
       moonLoaded: false,
       logoLoaded: false,
-    }
+    };
   }
 
   connectedCallback() {
@@ -28,25 +28,39 @@ class ResultPage extends PageComponent {
         () => {
           setTimeout(() => {
             this.renderCapturedCard();
-          }, 500)
+          }, 500);
         }
       );
 
-      const images = cardCont.querySelectorAll('img')
+      const images =
+        cardCont.querySelectorAll(
+          "img"
+        );
       console.log(images);
 
-      images.forEach(img => {
-        img.addEventListener('load', (e) => {
-          console.log("img is loaded", e.target.id)
-          if (e.target.id === 'moon') {
-            this.state.moonLoaded = true;
-          }
+      images.forEach((img) => {
+        img.addEventListener(
+          "load",
+          (e) => {
+            console.log(
+              "img is loaded",
+              e.target.id
+            );
+            if (
+              e.target.id === "moon"
+            ) {
+              this.state.moonLoaded = true;
+            }
 
-          if (e.target.id === 'card-logo') {
-            this.state.logoLoaded = true;
+            if (
+              e.target.id ===
+              "card-logo"
+            ) {
+              this.state.logoLoaded = true;
+            }
           }
-        })
-      })
+        );
+      });
     })();
   }
 
@@ -62,7 +76,8 @@ class ResultPage extends PageComponent {
         );
 
       buttons.forEach((button) => {
-        button.style.visibility = "visible";
+        button.style.visibility =
+          "visible";
       });
 
       const header =
@@ -70,7 +85,8 @@ class ResultPage extends PageComponent {
           "#label-header"
         );
 
-      header.style.visibility = "visible";
+      header.style.visibility =
+        "visible";
     }, 3500);
 
     this.shadowRoot.innerHTML = `
@@ -86,8 +102,12 @@ class ResultPage extends PageComponent {
           justify-content: space-between;
           align-items: center;
 
-          padding-top: ${window.TILE_SIZE}px;
-          padding-bottom: ${window.TILE_SIZE}px;
+          padding-top: ${
+            window.TILE_SIZE
+          }px;
+          padding-bottom: ${
+            window.TILE_SIZE
+          }px;
 
           background: linear-gradient(to top, black, transparent 80px), ${
             window.themeColor
@@ -139,7 +159,10 @@ class ResultPage extends PageComponent {
         }
 
         #card-container {
-          width: ${window.TILE_SIZE * (window.NUMBER_OF_COL - 2)}px;
+          width: ${
+            window.TILE_SIZE *
+            (window.NUMBER_OF_COL - 2)
+          }px;
           height: fit-content;
 
           background-color: red;
@@ -178,7 +201,10 @@ class ResultPage extends PageComponent {
         #button-container {
           position: relative;
 
-          width: ${window.TILE_SIZE * (window.NUMBER_OF_COL - 2)}px;
+          width: ${
+            window.TILE_SIZE *
+            (window.NUMBER_OF_COL - 2)
+          }px;
 
           display: flex;
           justify-content: space-between;
@@ -191,7 +217,7 @@ class ResultPage extends PageComponent {
           visibility: hidden;
         }
 
-        #about-button {
+        #download-button {
           width: ${
             window.TILE_SIZE * 4
           }px;
@@ -225,8 +251,8 @@ class ResultPage extends PageComponent {
         </div>
 
         <div id='button-container'>
-          <button id='about-button'>전시소개</button>
           <button id='home-button'>처음으로</button>
+          <button id='download-button'>바코드 다운로드</button>
         </div>
       </div>
     `;
@@ -288,6 +314,39 @@ class ResultPage extends PageComponent {
       "click",
       () => {
         window.location.reload();
+      }
+    );
+
+    const downloadButton =
+      this.shadowRoot.querySelector(
+        "#download-button"
+      );
+
+    downloadButton.addEventListener(
+      "click",
+      () => {
+        const downloadImage =
+          async () => {
+            const cardContainer =
+              this.shadowRoot.querySelector(
+                "#card-container"
+              );
+
+            const data =
+              await captureDom(
+                cardContainer
+              );
+
+            const a =
+              document.createElement(
+                "a"
+              );
+            a.href = data;
+            a.download = "card.png";
+            a.click();
+          };
+
+        downloadImage();
       }
     );
   }
