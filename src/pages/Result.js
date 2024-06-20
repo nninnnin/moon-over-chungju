@@ -1,6 +1,12 @@
 class ResultPage extends PageComponent {
   constructor() {
     super();
+
+    this.state = {
+      barcodeLoaded: false,
+      moonLoaded: false,
+      logoLoaded: false,
+    }
   }
 
   connectedCallback() {
@@ -10,6 +16,8 @@ class ResultPage extends PageComponent {
     (async () => {
       await this.renderBarCode();
 
+      this.state.barcodeLoaded = true;
+
       const cardCont =
         this.shadowRoot.querySelector(
           "#card-container"
@@ -18,9 +26,31 @@ class ResultPage extends PageComponent {
       cardCont.addEventListener(
         "animationend",
         () => {
-          this.renderCapturedCard();
+          const hasAllImagesLoaded = Object.values(this.state).every(el => el);
+
+          if (hasAllImagesLoaded) {
+            this.renderCapturedCard();
+          } else {
+            console.log("Not loaded yet")
+          }
         }
       );
+
+      const images = cardCont.querySelectorAll('img')
+      console.log(images);
+
+      images.forEach(img => {
+        img.addEventListener('load', (e) => {
+          console.log("img is loaded", e.target.id)
+          if (e.target.id === 'moon') {
+            this.state.moonLoaded = true;
+          }
+
+          if (e.target.id === 'card-logo') {
+            this.state.logoLoaded = true;
+          }
+        })
+      })
     })();
   }
 
@@ -324,18 +354,6 @@ class ResultPage extends PageComponent {
   }
 
   addListeners() {
-    const 전시소개버튼 =
-      this.shadowRoot.querySelector(
-        "#about-button"
-      );
-
-    전시소개버튼.addEventListener(
-      "click",
-      () => {
-        this.renderCapturedCard();
-      }
-    );
-
     const homeButton =
       this.shadowRoot.querySelector(
         "#home-button"
