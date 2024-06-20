@@ -26,7 +26,7 @@ class Intro extends PageComponent {
         ...Tile.initializeTiles(
           numberOfCol,
           numberOfTiles,
-          tileSize,
+          tileSize
         ),
       ];
     }
@@ -182,26 +182,32 @@ class Intro extends PageComponent {
       <img id='logo' src="/public/images/logo--intro.svg" />
       <img id='logo-desktop' />
 
-      <marquee-custom
-        class='label'
-        id='label--left-first'
+      <a
+        href='https://cmoa.cheongju.go.kr/www/index.do'
       >
-        청주시립미술관
-      </marquee-custom>
+        <marquee-custom class='label'
+        id='label--left-first'>
+          청주시립미술관
+        </marquee-custom>
+      </a>
 
-      <marquee-custom
-        class='label'
-        id='label--right-first'
-      >
-        <청주에 뜬 달> 전시 소개
-      </marquee-custom>
+      <a href='https://cmoa.cheongju.go.kr/www/index.do'>
+        <marquee-custom
+          class='label'
+          id='label--right-first'
+        >
+          <청주에 뜬 달> 전시 소개
+        </marquee-custom>
+      </a>
 
-      <marquee-custom
-        class='label'
-        id='label--right-second'
-      >
-        청주시립미술관 통합 청주시 10주년 기념전 <청주 가는 길:강익중>
-      </marquee-custom>
+      <a href='https://cmoa.cheongju.go.kr/www/speclExbiView.do?key=63&exbiNo=773&pageUnit=10&searchCnd=all&searchKrwd=&pageIndex=1&kindExhi='>
+        <marquee-custom
+          class='label'
+          id='label--right-second'
+        >
+          청주시립미술관 통합 청주시 10주년 기념전 <청주 가는 길:강익중>
+        </marquee-custom>
+      </a>
 
       <button>소망 남기기</button>
     `;
@@ -257,26 +263,26 @@ class Intro extends PageComponent {
     const collapseTiles = (cb) => {
       window.collapseCallback = cb;
 
-      window.tiles.forEach(tile => {
+      window.tiles.forEach((tile) => {
         tile.setToBeCollapse();
-      })
-    }
+      });
+    };
 
     const animateRestack = () => {
       const {
         numberOfCol,
         numberOfTiles,
-        tileSize
-      } = Tile.setTiles()
+        tileSize,
+      } = Tile.setTiles();
 
       window.tiles = [
         ...Tile.initializeTiles(
           numberOfCol,
           numberOfTiles,
           tileSize,
-          'restack'
-        )
-      ]
+          "restack"
+        ),
+      ];
     };
 
     button.addEventListener(
@@ -292,8 +298,8 @@ class Intro extends PageComponent {
 
           setTimeout(() => {
             movePage(1);
-          }, 2000)
-        }, 1200)
+          }, 2000);
+        }, 1200);
       }
     );
   }

@@ -23,12 +23,16 @@ class PageComponent extends HTMLElement {
     );
   }
 
-  isCollapseAnimationOver () {
-    return window.tiles.every(tile => !tile.animatingCollapse);
+  isCollapseAnimationOver() {
+    return window.tiles.every(
+      (tile) => !tile.animatingCollapse
+    );
   }
 
-  isRestackAnimationOver () {
-    return window.tiles.every(tile => !tile.animatingStack)
+  isRestackAnimationOver() {
+    return window.tiles.every(
+      (tile) => !tile.animatingStack
+    );
   }
 
   addTileInteractionPreventer() {
@@ -112,6 +116,22 @@ class PageComponent extends HTMLElement {
       box-sizing: border-box;
       -webkit-font-smoothing: auto;
       text-rendering: optimizeLegibility;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    a:visited {
+      color: inherit;
+    }
+
+    a:active {
+      color: inherit;
+    }
+
+    a:link {
+      color: inherit;
     }
   `;
 
