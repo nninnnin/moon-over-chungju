@@ -247,25 +247,6 @@ class SecondPage extends PageComponent {
         }
       }
     );
-
-    input.addEventListener(
-      "click",
-      () => {
-        input.setAttribute(
-          "contenteditable",
-          true
-        );
-      }
-    );
-    input.addEventListener(
-      "blur",
-      () => {
-        input.setAttribute(
-          "contenteditable",
-          false
-        );
-      }
-    );
   }
 
   addButtonListeners() {
