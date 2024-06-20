@@ -64,10 +64,10 @@ class Tile {
         colIndex
       );
 
-      if (animateIntro) {
-        if ("fill") {
+      if (!!animateIntro) {
+        if (animateIntro === "fill") {
           tile.setAnimatingFill();
-        } else if ("restack") {
+        } else if (animateIntro === "restack") {
           tile.targetY = y;
 
           const MARGIN = 100;

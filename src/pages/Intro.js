@@ -1,10 +1,6 @@
 class Intro extends PageComponent {
   constructor() {
     super();
-
-    this.state = {
-      showBackgroundImage: false,
-    };
   }
 
   connectedCallback() {
@@ -30,28 +26,25 @@ class Intro extends PageComponent {
         ...Tile.initializeTiles(
           numberOfCol,
           numberOfTiles,
-          tileSize
+          tileSize,
         ),
       ];
-
-      const AppLayout =
-        document.querySelector(
-          "app-layout"
-        );
-
-      AppLayout.render();
     }
 
-    if (this.isFillAnimationOver()) {
-      this.render();
-      this.changeBackgroundImage();
-    }
+    this.render();
+    this.changeBackgroundImage();
   }
 
   changeBackgroundImage() {
     this.shadowRoot.getElementById(
       "background"
     ).style.backgroundImage = `url("/public/images/moon-background.svg")`;
+  }
+
+  removeBackgroundImage() {
+    this.shadowRoot.getElementById(
+      "background"
+    ).style.backgroundImage = `none`;
   }
 
   render() {
@@ -255,22 +248,52 @@ class Intro extends PageComponent {
 
       AppLayout.state.pageNumber =
         pageNumber;
-    };
 
-    const refillTiles = () => {
-      window.tiles.forEach((tile) => {
-        tile.setAnimatingFill();
-      });
+      AppLayout.render();
     };
 
     this.addTileInteractionPreventer();
 
+    const collapseTiles = (cb) => {
+      window.collapseCallback = cb;
+
+      window.tiles.forEach(tile => {
+        tile.setToBeCollapse();
+      })
+    }
+
+    const animateRestack = () => {
+      const {
+        numberOfCol,
+        numberOfTiles,
+        tileSize
+      } = Tile.setTiles()
+
+      window.tiles = [
+        ...Tile.initializeTiles(
+          numberOfCol,
+          numberOfTiles,
+          tileSize,
+          'restack'
+        )
+      ]
+    };
+
     button.addEventListener(
       "click",
       () => {
+        this.removeBackgroundImage();
         removeElements();
-        refillTiles();
-        movePage(1);
+
+        collapseTiles();
+
+        setTimeout(() => {
+          animateRestack();
+
+          setTimeout(() => {
+            movePage(1);
+          }, 2000)
+        }, 1200)
       }
     );
   }

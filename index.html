@@ -289,8 +289,6 @@
         rerenderComponents();
       }
 
-      let animatingFill = false;
-
       function draw() {
         clear();
 
@@ -306,28 +304,6 @@
         // orbitControl();
 
         if (!window.tiles) return;
-
-        const isAnimatingFillOver =
-          window.tiles.every(
-            (tile) =>
-              !tile.animatingFill
-          );
-
-        if (
-          animatingFill &&
-          isAnimatingFillOver
-        ) {
-          animatingFill = false;
-
-          rerenderComponents();
-        }
-
-        if (
-          !animatingFill &&
-          !isAnimatingFillOver
-        ) {
-          animatingFill = true;
-        }
 
         window.tiles.forEach((tile) => {
           tile.checkIsHovered();

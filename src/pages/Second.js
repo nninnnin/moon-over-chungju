@@ -279,12 +279,6 @@ class SecondPage extends PageComponent {
       });
     };
 
-    const refillTiles = () => {
-      window.tiles.forEach((tile) => {
-        tile.setAnimatingFill();
-      });
-    };
-
     const movePage = (pageNumber) => {
       AppLayout.state.pageNumber =
         pageNumber;
@@ -292,13 +286,54 @@ class SecondPage extends PageComponent {
       AppLayout.render();
     };
 
+    const collapseTiles = () => {
+      window.tiles.forEach(
+        (tile) => {
+          tile.setToBeCollapse();
+        }
+      );
+
+      setTimeout(() => {
+        window.tiles.forEach(
+          (tile) => {
+            tile.setNotToBeCollapse();
+          }
+        );
+      }, 2500);
+    };
+
+    const restackTiles = () => {
+      const {
+        numberOfCol,
+        numberOfTiles,
+        tileSize
+      } = Tile.setTiles()
+
+      window.tiles = [
+        ...Tile.initializeTiles(
+          numberOfCol,
+          numberOfTiles,
+          tileSize,
+          'restack'
+        )
+      ]
+    };
+
     backButton.addEventListener(
       "click",
       () => {
         hideElements();
         this.hideContents();
-        refillTiles();
-        movePage(1);
+
+        collapseTiles();
+
+        setTimeout(() => {
+          restackTiles();
+
+          setTimeout(() => {
+            movePage(1);
+          }, 2000)
+        }, 1200);
       }
     );
 
@@ -336,22 +371,6 @@ class SecondPage extends PageComponent {
           return await requestLambda(
             payload
           );
-        };
-
-        const collapseTiles = () => {
-          window.tiles.forEach(
-            (tile) => {
-              tile.setToBeCollapse();
-            }
-          );
-
-          setTimeout(() => {
-            window.tiles.forEach(
-              (tile) => {
-                tile.setNotToBeCollapse();
-              }
-            );
-          }, 2500);
         };
 
         const animateMoon = () => {

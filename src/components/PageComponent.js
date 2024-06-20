@@ -23,6 +23,14 @@ class PageComponent extends HTMLElement {
     );
   }
 
+  isCollapseAnimationOver () {
+    return window.tiles.every(tile => !tile.animatingCollapse);
+  }
+
+  isRestackAnimationOver () {
+    return window.tiles.every(tile => !tile.animatingStack)
+  }
+
   addTileInteractionPreventer() {
     const buttons =
       this.shadowRoot.querySelectorAll(

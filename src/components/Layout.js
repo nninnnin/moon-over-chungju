@@ -31,7 +31,9 @@ class Layout extends HTMLElement {
       </style>
 
       ${
-        this.state.pageNumber === 0
+        this.state.pageNumber === 0 ||
+        this.state.pageNumber === 3 ||
+        this.state.pageNumber === 4
           ? ""
           : "<dialog-about></dialog-about>"
       }

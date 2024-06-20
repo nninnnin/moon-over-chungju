@@ -5,10 +5,27 @@ class First extends PageComponent {
 
   connectedCallback() {
     this.resetTileInteractionPreventer();
+    this.render();
+  }
 
-    if (this.isFillAnimationOver()) {
-      this.render();
-    }
+  prerender () {
+    this.shadowRoot.innerHTML = `
+      <style>
+        #background {
+          background-color: black;
+
+          width: 100vw;
+          height: 100dvh;
+
+          position: fixed;
+          top: 0;
+          left: 0;
+          z-index: -1;
+        }
+      </style>
+
+      <div id='background'></div>
+    `;
   }
 
   render() {
@@ -373,6 +390,8 @@ class First extends PageComponent {
     const movePage = (pageNumber) => {
       AppLayout.state.pageNumber =
         pageNumber;
+
+      AppLayout.render();
     };
 
     const removeElements = () => {
@@ -393,18 +412,43 @@ class First extends PageComponent {
       });
     };
 
-    const refillTiles = () => {
-      window.tiles.forEach((tile) => {
-        tile.setAnimatingFill();
-      });
+    const collapseTiles = () => {
+      window.tiles.forEach(tile => {
+        tile.setToBeCollapse();
+      })
+    }
+
+    const animateRestack = () => {
+      const {
+        numberOfCol,
+        numberOfTiles,
+        tileSize
+      } = Tile.setTiles()
+
+      window.tiles = [
+        ...Tile.initializeTiles(
+          numberOfCol,
+          numberOfTiles,
+          tileSize,
+          'restack'
+        )
+      ]
     };
 
     backButton.addEventListener(
       "click",
       () => {
         removeElements();
-        refillTiles();
-        movePage(0);
+
+        collapseTiles();
+
+        setTimeout(() => {
+          animateRestack();
+
+          setTimeout(() => {
+            movePage(0);
+          }, 2000)
+        }, 1200)
       }
     );
 
@@ -419,8 +463,17 @@ class First extends PageComponent {
         }
 
         removeElements();
-        refillTiles();
-        movePage(2);
+
+        collapseTiles();
+
+        setTimeout(() => {
+          animateRestack();
+
+          setTimeout(() => {
+            movePage(2);
+          }, 2000);
+        }, 1200);
+
       }
     );
   }
