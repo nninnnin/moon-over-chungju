@@ -28,7 +28,7 @@ class ResultPage extends PageComponent {
         () => {
           setTimeout(() => {
             this.renderCapturedCard();
-          }, 300)
+          }, 500)
         }
       );
 
