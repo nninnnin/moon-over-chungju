@@ -308,20 +308,20 @@
         window.tiles.forEach((tile) => {
           tile.checkIsHovered();
 
-          // if (tile.animatingPunching) {
-          //   perspective();
-          // } else {
-          //   ortho(
-          //     -width / 2,
-          //     width / 2,
-          //     -height / 2,
-          //     height / 2,
-          //     100,
-          //     1000
-          //   );
-          // }
+          if (tile.animatingPunching) {
+            perspective();
+          } else {
+            ortho(
+              -width / 2,
+              width / 2,
+              -height / 2,
+              height / 2,
+              100,
+              1000
+            );
+          }
 
-          perspective();
+          // perspective();
 
           tile.draw();
         });
