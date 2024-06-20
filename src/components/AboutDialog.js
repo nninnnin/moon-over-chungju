@@ -94,6 +94,8 @@ class AboutDialog extends PageComponent {
           justify-content: center;
 
           border: 0.5px solid black;
+          border-top: 0px;
+          border-right: 0px;
         }
 
         #contents {
