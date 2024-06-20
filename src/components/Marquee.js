@@ -13,8 +13,24 @@ class MarqueeComponent extends HTMLElement {
 
   connectedCallback() {
     this.render();
-    this.addListeners();
     this.addObserver();
+
+    window.addEventListener('resize', () => {
+      this.render();
+      this.addObserver();
+    });
+  }
+
+  disconnectedCallback () {
+    const allContents = this.shadowRoot.querySelectorAll('#contents')
+
+    allContents.forEach((el) => {
+      this.observer.unobserve(el)
+    })
+
+    console.log('unobserved', allContents)
+
+    this.shadowRoot.innerHTML = ``;
   }
 
   render() {
@@ -71,82 +87,40 @@ class MarqueeComponent extends HTMLElement {
   addObserver() {
     const observer =
       new IntersectionObserver(
-        (entries) => {
+        (entries, observe) => {
           const entry = entries[0];
 
           if (!entry.isIntersecting) {
-            const clone =
-              entry.target.cloneNode(
-                true
-              );
+            console.log(entry, observe)
 
-            const container =
-              this.shadowRoot.querySelector(
-                "#container"
-              );
+            if ([...entry.target.classList].includes('intersected')) {
+              const clone = entry.target.cloneNode(true)
 
-            container.appendChild(
-              clone
-            );
+              entry.target.remove();
 
-            entry.target.remove();
-
-            observer.observe(clone);
+              const container = this.shadowRoot.querySelector('#container')
+              container.appendChild(clone)
+              observer.observe(clone)
+            }
+          } else {
+            entry.target.classList.add('intersected');
           }
         },
         {
           root: this.shadowRoot.querySelector(
             "#container"
           ),
-          threshold: 0.001,
+          threshold: 0.01,
         }
       );
+
+    this.observer = observer;
 
     observer.observe(
       this.shadowRoot.querySelector(
         "#contents"
       )
     );
-  }
-
-  addListeners() {
-    document.addEventListener(
-      "visibilitychange",
-      () => {
-        if (
-          document.visibilityState ===
-          "hidden"
-        ) {
-          this.pauseMarquee();
-        } else {
-          this.resumeMarquee();
-        }
-      }
-    );
-  }
-
-  pauseMarquee() {
-    const contents =
-      this.shadowRoot.querySelector(
-        "#contents"
-      );
-
-    if (!contents) return;
-
-    contents.style.animationPlayState =
-      "paused";
-  }
-
-  resumeMarquee() {
-    const contents =
-      this.shadowRoot.querySelector(
-        "#contents"
-      );
-
-    if (!contents) return;
-
-    contents.style.animationPlayState =
-      "running";
   }
 }
 
