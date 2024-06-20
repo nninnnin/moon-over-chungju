@@ -329,6 +329,8 @@ class SecondPage extends PageComponent {
     submitButton.addEventListener(
       "click",
       async () => {
+        submitButton.disabled = true;
+
         const submit = async () => {
           const MessageInput =
             document.querySelector(

@@ -44,15 +44,11 @@ const main = () => {
       Payload: JSON.stringify(payload),
     });
 
-    console.log(payload)
-
     try {
       const response =
         await lambdaClient.send(
           command
         );
-
-        console.log(repsonse)
 
       // Convert buffer to string
       const payloadString =
