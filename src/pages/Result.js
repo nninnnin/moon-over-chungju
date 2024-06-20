@@ -23,15 +23,6 @@ class ResultPage extends PageComponent {
           "#card-container"
         );
 
-      cardCont.addEventListener(
-        "animationend",
-        () => {
-          setTimeout(() => {
-            this.renderCapturedCard();
-          }, 500);
-        }
-      );
-
       const images =
         cardCont.querySelectorAll(
           "img"
@@ -65,10 +56,6 @@ class ResultPage extends PageComponent {
   }
 
   render() {
-    const MIDDLE_COL_INDEX = Math.floor(
-      window.NUMBER_OF_COL / 2
-    );
-
     setTimeout(() => {
       const buttons =
         this.shadowRoot.querySelectorAll(
