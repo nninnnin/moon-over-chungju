@@ -110,10 +110,12 @@ class AboutDialog extends PageComponent {
           height: 90dvh;
 
           border: 1px solid black;
+          border-top: 0px;
+          border-right: 0px;
           padding: 1em;
 
           overflow: scroll;
-          background: linear-gradient(to top, #3b3b3b, #6d6d6d 4%, #dadada 17%);
+          background: linear-gradient(to top, black, transparent 48px), #dadada;
 
           padding-bottom: 3em;
         }
