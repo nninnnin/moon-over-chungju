@@ -189,8 +189,6 @@ class ResultPage extends PageComponent {
           }px;
           height: fit-content;
 
-          background-color: red;
-
           display: flex;
           flex-direction: column;
           align-items: center;
