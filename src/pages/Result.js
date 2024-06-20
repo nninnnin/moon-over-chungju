@@ -89,7 +89,7 @@ class ResultPage extends PageComponent {
           padding-top: ${window.TILE_SIZE}px;
           padding-bottom: ${window.TILE_SIZE}px;
 
-          background-color: ${
+          background: linear-gradient(to top, black, transparent 80px), ${
             window.themeColor
           };
         }
@@ -106,9 +106,10 @@ class ResultPage extends PageComponent {
           border: none;
 
           font-family: JTimeMachine;
-          font-weight: bold;
+          font-weight: medium;
           font-size: 20px;
           line-height: 160%;
+          letter-spacing: -0.2em;
 
           text-align: center;
           justify-content: center;
@@ -139,7 +140,7 @@ class ResultPage extends PageComponent {
 
         #card-container {
           width: ${window.TILE_SIZE * (window.NUMBER_OF_COL - 2)}px;
-          height: ${window.TILE_SIZE * (window.NUMBER_OF_ROW - 7)}px;
+          height: fit-content;
 
           background-color: red;
 
@@ -170,50 +171,8 @@ class ResultPage extends PageComponent {
           display: block;
         }
 
-        #moon-container {
+        #moon {
           width: 100%;
-          flex: 1;
-
-          position: relative;
-          background: linear-gradient(0deg, black, transparent 20%), #ffd56c;
-
-          overflow: hidden;
-        }
-
-        #moon-container #moon {
-          width: 100%;
-          height: auto;
-
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-        }
-
-        #moon-container #card-logo {
-          position: absolute;
-          bottom: 64px;
-          left: 50%;
-          transform: translateX(-50%);
-
-          width: 90%;
-        }
-
-        #moon-container #card-description {
-          position: absolute;
-          top: 25%;
-          left: 50%;
-          transform: translateX(-50%);
-
-          text-align: center;
-          font-size: 14px;
-          font-family: JTimeMachine;
-          font-weight: 500;
-          letter-spacing: -0.27em;
-
-          color: black;
-
-          white-space: nowrap;
         }
 
         #button-container {
@@ -262,16 +221,7 @@ class ResultPage extends PageComponent {
             <canvas id='barcode'></canvas>
           </div>
 
-          <div id='moon-container'>
-            <img id='moon' src='/public/images/last-moon.png' />
-
-            <img id='card-logo' src='/public/images/card-logo.svg' />
-
-            <div id='card-description'>
-              청주시립미술관에 방문하여<br/>
-              나의 달을 찾아보세요
-            </div>
-          </div>
+          <img id='moon' src='/public/images/card-moon.png' />
         </div>
 
         <div id='button-container'>
