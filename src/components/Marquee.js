@@ -15,18 +15,24 @@ class MarqueeComponent extends HTMLElement {
     this.render();
     this.addObserver();
 
-    window.addEventListener('resize', () => {
-      this.render();
-      this.addObserver();
-    });
+    window.addEventListener(
+      "resize",
+      () => {
+        this.render();
+        this.addObserver();
+      }
+    );
   }
 
-  disconnectedCallback () {
-    const allContents = this.shadowRoot.querySelectorAll('#contents')
+  disconnectedCallback() {
+    const allContents =
+      this.shadowRoot.querySelectorAll(
+        "#contents"
+      );
 
     allContents.forEach((el) => {
-      this.observer.unobserve(el)
-    })
+      this.observer.unobserve(el);
+    });
 
     this.shadowRoot.innerHTML = ``;
   }
@@ -46,29 +52,29 @@ class MarqueeComponent extends HTMLElement {
 
         #contents {
           width: fit-content;
-          height: fit-content;
+          height: 100%;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
           margin-right: 10px;
 
           position: absolute;
           right: 0;
-          top: 50%;
-          transform: translateY(-50%);
 
           animation: 15s flowLeft linear forwards;
-
-          display: grid;
-          place-items: center;
         }
 
         @keyframes flowLeft {
           0% {
             right: 0;
-            transform: translateX(100%) translateY(-50%);
+            transform: translateX(100%);
           }
 
           100% {
             right: 100%;
-            transform: translateX(-120%) translateY(-50%);
+            transform: translateX(-120%);
           }
         }
       </style>
@@ -89,17 +95,32 @@ class MarqueeComponent extends HTMLElement {
           const entry = entries[0];
 
           if (!entry.isIntersecting) {
-            if ([...entry.target.classList].includes('intersected')) {
-              const clone = entry.target.cloneNode(true)
+            if (
+              [
+                ...entry.target
+                  .classList,
+              ].includes("intersected")
+            ) {
+              const clone =
+                entry.target.cloneNode(
+                  true
+                );
 
               entry.target.remove();
 
-              const container = this.shadowRoot.querySelector('#container')
-              container.appendChild(clone)
-              observer.observe(clone)
+              const container =
+                this.shadowRoot.querySelector(
+                  "#container"
+                );
+              container.appendChild(
+                clone
+              );
+              observer.observe(clone);
             }
           } else {
-            entry.target.classList.add('intersected');
+            entry.target.classList.add(
+              "intersected"
+            );
           }
         },
         {
