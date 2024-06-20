@@ -417,12 +417,20 @@ class SecondPage extends PageComponent {
   }
 
   showContents() {
-    const background =
+    const container =
       document.body.querySelector(
         "#third-input-container"
       );
 
-    background.style.display = "flex";
+    const isMobile = window.innerWidth < 768;
+
+    if (isMobile) {
+      container.style.top = `${(Math.floor(window.NUMBER_OF_ROW / 2) - 1.5) * window.TILE_SIZE}px`;
+    } else {
+      container.style.top = `${(Math.floor(window.NUMBER_OF_ROW / 2) - 1) * window.TILE_SIZE}px`;
+      container.querySelector('input').margin = '0px';
+    }
+    container.style.display = "flex";
   }
 
   hideContents() {
