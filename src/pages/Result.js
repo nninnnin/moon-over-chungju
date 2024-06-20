@@ -26,13 +26,9 @@ class ResultPage extends PageComponent {
       cardCont.addEventListener(
         "animationend",
         () => {
-          const hasAllImagesLoaded = Object.values(this.state).every(el => el);
-
-          if (hasAllImagesLoaded) {
+          setTimeout(() => {
             this.renderCapturedCard();
-          } else {
-            console.log("Not loaded yet")
-          }
+          }, 300)
         }
       );
 
@@ -61,9 +57,6 @@ class ResultPage extends PageComponent {
 
     const headerPosition =
       this.createTilePosition(1, 1);
-
-    const cardPoisiton =
-      this.createTilePosition(1, 3.5);
 
     const aboutButtonPosition =
       this.createTilePosition(
@@ -99,7 +92,7 @@ class ResultPage extends PageComponent {
       <style>
         #container {
           width: 100vw;
-          height: 100vh;
+          height: 100dvh;
 
           display: flex;
           justify-content: center;
@@ -171,7 +164,10 @@ class ResultPage extends PageComponent {
           }px;
 
           margin: 0;
+          margin-top: 4dvh;
           padding: 0;
+
+          transform: translateY(5%);
 
           display: flex;
           flex-direction: column;
