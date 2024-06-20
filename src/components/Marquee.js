@@ -28,8 +28,6 @@ class MarqueeComponent extends HTMLElement {
       this.observer.unobserve(el)
     })
 
-    console.log('unobserved', allContents)
-
     this.shadowRoot.innerHTML = ``;
   }
 
@@ -91,8 +89,6 @@ class MarqueeComponent extends HTMLElement {
           const entry = entries[0];
 
           if (!entry.isIntersecting) {
-            console.log(entry, observe)
-
             if ([...entry.target.classList].includes('intersected')) {
               const clone = entry.target.cloneNode(true)
 
