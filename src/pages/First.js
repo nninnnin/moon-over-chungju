@@ -251,7 +251,7 @@ class First extends PageComponent {
 
         .flip {
           transform: rotateX(-180deg);
-          border: 4px solid black;
+          border: 2px solid black;
         }
 
         .inner {
