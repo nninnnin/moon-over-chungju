@@ -12,9 +12,9 @@ const getLambdaClient = (() => {
     region: "ap-northeast-2",
     credentials: {
       accessKeyId:
-        process.env.AWS_ACCESS_KEY,
+        process.env.USER_AWS_ACCESS_KEY,
       secretAccessKey:
-        process.env.AWS_SECRET_KEY,
+        process.env.USER_AWS_SECRET_KEY,
     },
   });
 
