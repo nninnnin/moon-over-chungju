@@ -287,18 +287,14 @@ class SecondPage extends PageComponent {
     };
 
     const collapseTiles = () => {
-      window.tiles.forEach(
-        (tile) => {
-          tile.setToBeCollapse();
-        }
-      );
+      window.tiles.forEach((tile) => {
+        tile.setToBeCollapse();
+      });
 
       setTimeout(() => {
-        window.tiles.forEach(
-          (tile) => {
-            tile.setNotToBeCollapse();
-          }
-        );
+        window.tiles.forEach((tile) => {
+          tile.setNotToBeCollapse();
+        });
       }, 2500);
     };
 
@@ -306,17 +302,17 @@ class SecondPage extends PageComponent {
       const {
         numberOfCol,
         numberOfTiles,
-        tileSize
-      } = Tile.setTiles()
+        tileSize,
+      } = Tile.setTiles();
 
       window.tiles = [
         ...Tile.initializeTiles(
           numberOfCol,
           numberOfTiles,
           tileSize,
-          'restack'
-        )
-      ]
+          "restack"
+        ),
+      ];
     };
 
     backButton.addEventListener(
@@ -332,7 +328,7 @@ class SecondPage extends PageComponent {
 
           setTimeout(() => {
             movePage(1);
-          }, 2000)
+          }, 2000);
         }, 1200);
       }
     );
@@ -362,11 +358,14 @@ class SecondPage extends PageComponent {
 
           const payload = {
             keyword,
-            moonType: '',
+            moonType: "",
             message,
           };
 
-          console.log('보내는 페이로드', payload)
+          console.log(
+            "보내는 페이로드",
+            payload
+          );
 
           return await requestLambda(
             payload
@@ -386,7 +385,10 @@ class SecondPage extends PageComponent {
 
         const response = await submit();
 
-        console.log("submit response", response);
+        console.log(
+          "submit response",
+          response
+        );
 
         // 1. 엘리먼트 사라지기
         hideElements();
@@ -422,13 +424,28 @@ class SecondPage extends PageComponent {
         "#third-input-container"
       );
 
-    const isMobile = window.innerWidth < 768;
+    const isMobile =
+      window.innerWidth < 768;
 
     if (isMobile) {
-      container.style.top = `${(Math.floor(window.NUMBER_OF_ROW / 2) - 1.5) * window.TILE_SIZE}px`;
+      container.style.top = `${
+        (Math.floor(
+          window.NUMBER_OF_ROW / 2
+        ) -
+          1.5) *
+        window.TILE_SIZE
+      }px`;
     } else {
-      container.style.top = `${(Math.floor(window.NUMBER_OF_ROW / 2) - 1) * window.TILE_SIZE}px`;
-      container.querySelector('input').margin = '0px';
+      container.style.top = `${
+        (Math.floor(
+          window.NUMBER_OF_ROW / 2
+        ) -
+          1) *
+        window.TILE_SIZE
+      }px`;
+      container.querySelector(
+        "input"
+      ).margin = "0px";
     }
     container.style.display = "flex";
   }

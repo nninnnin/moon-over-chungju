@@ -28,15 +28,12 @@
 
       canvas {
         width: 100vw;
-        height: 100dvh;
+        height: 100svh;
 
         position: fixed;
-        top: 50%;
+        top: 0;
         left: 50%;
-        transform: translate(
-          -50%,
-          -50%
-        );
+        transform: translateX(-50%);
 
         background-color: transparent;
       }
@@ -93,9 +90,7 @@
 
       #message-input {
         width: 300px;
-
-        margin-top: 3vh;
-        margin-bottom: 1vh;
+        height: 50px;
 
         font-family: JTimeMachine;
         font-weight: 700;
@@ -255,6 +250,10 @@
         window.addEventListener(
           "resize",
           () => {
+            if (innerWidth < 768) {
+              return;
+            }
+
             resizeCanvas(
               window.innerWidth,
               window.innerHeight
@@ -322,13 +321,13 @@
           // }
 
           ortho(
-              -width / 2,
-              width / 2,
-              -height / 2,
-              height / 2,
-              100,
-              1000
-            );
+            -width / 2,
+            width / 2,
+            -height / 2,
+            height / 2,
+            100,
+            1000
+          );
 
           // perspective();
 
