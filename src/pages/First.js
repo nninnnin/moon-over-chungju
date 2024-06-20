@@ -169,23 +169,21 @@ class First extends PageComponent {
 
     const labelElements = labels.map(
       (label) => {
-        const AppLayout =
-          document.querySelector(
-            "app-layout"
-          );
-
-        const isSelectedLabel =
-          AppLayout.state
-            .selectedReceiver ===
-          label.id;
-
         return `
-        <div class='label ${
-          isSelectedLabel ? "zoom" : ""
-        }' id='${
-          label.id
-        }' data-value=${label.value}>
-          ${label.text}
+        <div
+          class='label outer'
+          id='${label.id}'
+          data-value=${label.value}
+        >
+          <div class='inner'>
+            <div class='front' style='backgroundColor: ${label.backgroundColor}'>
+              ${label.text}
+            </div>
+
+            <div class='back' style='backgroundColor: ${label.backgroundColor}'>
+              ${label.text}
+            </div>
+          </div>
         </div>
       `
           .replaceAll("\n", "")
@@ -238,15 +236,51 @@ class First extends PageComponent {
 
         .label {
           ${PageComponent.labelStyles}
+          padding-left: 0;
           z-index: 1;
         }
 
-        ${labelStyles.join("\n")}
-
-        .zoom {
-          transform: scale3d(1.3, 1.3, 1.3);
-          z-index: 8900;
+        .outer {
+          perspective: 1000px;
         }
+
+        .flip {
+          transform: rotateX(180deg);
+        }
+
+        .inner {
+          position: relative;
+          width: 100%;
+          height: 100%;
+
+          text-align: center;
+          transition: transform 0.6s;
+          transform-style: preserve-3d;
+        }
+
+        .front, .back {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          position: absolute;
+          width: 100%;
+          height: 100%;
+
+          -webkit-perspective: 0;
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+        }
+
+        .front {
+        }
+
+        .back {
+          transform: rotateY(180deg);
+          -webkit-transform:rotateY(180deg);
+        }
+
+        ${labelStyles.join("\n")}
 
         button {
           ${PageComponent.buttonStyles}
@@ -338,11 +372,11 @@ class First extends PageComponent {
 
           labels.forEach((label) => {
             label.classList.remove(
-              "zoom"
+              "flip"
             );
           });
 
-          label.classList.add("zoom");
+          label.classList.add("flip");
 
           const AppLayout =
             document.querySelector(
