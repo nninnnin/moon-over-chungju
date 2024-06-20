@@ -132,6 +132,11 @@
         color: rgba(0, 0, 0, 0.4);
       }
 
+      #spinner {
+        position: absolute;
+        display: none;
+      }
+
       @keyframes fadeOut {
         0% {
           opacity: 1;
@@ -225,6 +230,11 @@
         id="message-input"
         type="text"
         placeholder="10자 이내로 입력해주세요!"
+      />
+
+      <img
+        id="spinner"
+        src="/public/images/spinner.svg"
       />
     </div>
 

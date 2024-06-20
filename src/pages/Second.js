@@ -333,6 +333,34 @@ class SecondPage extends PageComponent {
       }
     );
 
+    const activateSpinner = () => {
+      const spinner =
+        document.querySelector(
+          "#spinner"
+        );
+
+      spinner.style.width = `${window.TILE_SIZE}px`;
+      spinner.style.height = `${window.TILE_SIZE}px`;
+
+      spinner.style.left = `50%`;
+      spinner.style.top = `calc(50% + ${
+        window.TILE_SIZE * 1.5
+      }px)`;
+
+      spinner.style.transform = `translate(-50%, -50%)`;
+
+      spinner.style.display = "block";
+    };
+
+    const removeSpinner = () => {
+      const spinner =
+        document.querySelector(
+          "#spinner"
+        );
+
+      spinner.style.display = "none";
+    };
+
     const submitButton =
       this.shadowRoot.querySelector(
         "#button--submit"
@@ -341,6 +369,8 @@ class SecondPage extends PageComponent {
     submitButton.addEventListener(
       "click",
       async () => {
+        activateSpinner();
+
         submitButton.disabled = true;
 
         const submit = async () => {
@@ -355,6 +385,8 @@ class SecondPage extends PageComponent {
 
           const message =
             MessageInput.value;
+
+          MessageInput.disabled = true;
 
           const payload = {
             keyword,
@@ -389,6 +421,9 @@ class SecondPage extends PageComponent {
           "submit response",
           response
         );
+
+        // 스피너 제거
+        removeSpinner();
 
         // 1. 엘리먼트 사라지기
         hideElements();
