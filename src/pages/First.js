@@ -8,7 +8,7 @@ class First extends PageComponent {
     this.render();
   }
 
-  prerender () {
+  prerender() {
     this.shadowRoot.innerHTML = `
       <style>
         #background {
@@ -176,11 +176,11 @@ class First extends PageComponent {
           data-value=${label.value}
         >
           <div class='inner'>
-            <div class='front' style='backgroundColor: ${label.backgroundColor}'>
+            <div class='front' style='background-color: ${label.backgroundColor}'>
               ${label.text}
             </div>
 
-            <div class='back' style='backgroundColor: ${label.backgroundColor}'>
+            <div class='back' style='background-color: ${label.backgroundColor}'>
               ${label.text}
             </div>
           </div>
@@ -234,6 +234,8 @@ class First extends PageComponent {
           box-sizing: border-box;
         }
 
+        ${labelStyles.join("\n")}
+
         .label {
           ${PageComponent.labelStyles}
           padding-left: 0;
@@ -242,10 +244,13 @@ class First extends PageComponent {
 
         .outer {
           perspective: 1000px;
+          transition: transform 0.6s;
+          transform-style: preserve-3d;
+          perspective-origin: center;
         }
 
         .flip {
-          transform: rotateX(180deg);
+          transform: rotateX(-180deg);
         }
 
         .inner {
@@ -254,8 +259,6 @@ class First extends PageComponent {
           height: 100%;
 
           text-align: center;
-          transition: transform 0.6s;
-          transform-style: preserve-3d;
         }
 
         .front, .back {
@@ -266,21 +269,33 @@ class First extends PageComponent {
           position: absolute;
           width: 100%;
           height: 100%;
+        }
+
+        .front {
+          z-index: 2;
 
           -webkit-perspective: 0;
           -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
         }
 
-        .front {
-        }
-
         .back {
-          transform: rotateY(180deg);
-          -webkit-transform:rotateY(180deg);
+          z-index: 1;
+          transform: rotateX(180deg);
+          -webkit-transform:rotateX(180deg);
         }
 
-        ${labelStyles.join("\n")}
+        @keyframes flipIndex {
+          0% {
+            z-index: 1;
+          } 100% {
+            z-index: 2;
+          }
+        }
+
+        .flip .back {
+          animation: flipIndex 0.6s forwards;
+        }
 
         button {
           ${PageComponent.buttonStyles}
@@ -447,26 +462,26 @@ class First extends PageComponent {
     };
 
     const collapseTiles = () => {
-      window.tiles.forEach(tile => {
+      window.tiles.forEach((tile) => {
         tile.setToBeCollapse();
-      })
-    }
+      });
+    };
 
     const animateRestack = () => {
       const {
         numberOfCol,
         numberOfTiles,
-        tileSize
-      } = Tile.setTiles()
+        tileSize,
+      } = Tile.setTiles();
 
       window.tiles = [
         ...Tile.initializeTiles(
           numberOfCol,
           numberOfTiles,
           tileSize,
-          'restack'
-        )
-      ]
+          "restack"
+        ),
+      ];
     };
 
     backButton.addEventListener(
@@ -481,8 +496,8 @@ class First extends PageComponent {
 
           setTimeout(() => {
             movePage(0);
-          }, 2000)
-        }, 1200)
+          }, 2000);
+        }, 1200);
       }
     );
 
@@ -507,7 +522,6 @@ class First extends PageComponent {
             movePage(2);
           }, 2000);
         }, 1200);
-
       }
     );
   }
