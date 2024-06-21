@@ -239,7 +239,7 @@ class First extends PageComponent {
         .label {
           ${PageComponent.labelStyles}
           padding-left: 0;
-          z-index: 1;
+          z-index: 100;
         }
 
         .outer {

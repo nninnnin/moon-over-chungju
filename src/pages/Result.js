@@ -239,6 +239,10 @@ class ResultPage extends PageComponent {
           }px;
         }
 
+        #download-button:disabled {
+          background-color: #c3c3c3;
+        }
+
         #home-button {
           width: ${
             window.TILE_SIZE * 4
@@ -365,7 +369,7 @@ class ResultPage extends PageComponent {
     homeButton.addEventListener(
       "click",
       () => {
-        this.renderCapturedCard();
+        window.location.href = "/";
       }
     );
 
@@ -379,23 +383,38 @@ class ResultPage extends PageComponent {
       () => {
         const downloadImage =
           async () => {
-            const cardContainer =
+            const container =
               this.shadowRoot.querySelector(
                 "#card-container"
               );
 
-            const data =
-              await captureDom(
-                cardContainer
+            const image =
+              container.querySelector(
+                "img"
               );
 
-            const a =
-              document.createElement(
-                "a"
-              );
-            a.href = data;
-            a.download = "card.png";
-            a.click();
+            captureDom(image).then(
+              (captureCanvas) => {
+                captureCanvas.toBlob(
+                  (blob) => {
+                    const dataUrl =
+                      URL.createObjectURL(
+                        blob
+                      );
+
+                    const a =
+                      document.createElement(
+                        "a"
+                      );
+
+                    a.href = dataUrl;
+                    a.download =
+                      "moon.png";
+                    a.click();
+                  }
+                );
+              }
+            );
           };
 
         downloadImage();
