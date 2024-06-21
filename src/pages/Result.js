@@ -234,7 +234,7 @@ class ResultPage extends PageComponent {
 
         @media (min-width: 768px) {
           #button-container {
-            max-width: 320px;
+            max-width: 436px;
           }
         }
 

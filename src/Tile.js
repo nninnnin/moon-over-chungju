@@ -92,7 +92,12 @@ class Tile {
     const isMobile =
       window.innerWidth < 768;
 
-    const NUMBER_OF_COL = isMobile
+    const isWideScreen =
+      window.innerWidth > 1560;
+
+    const NUMBER_OF_COL = isWideScreen
+      ? 37
+      : isMobile
       ? 11
       : 23;
     const numberOfCol = NUMBER_OF_COL;
