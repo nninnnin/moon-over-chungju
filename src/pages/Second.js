@@ -49,19 +49,27 @@ class SecondPage extends PageComponent {
   }
 
   render() {
+    const isMobile = window.innerWidth < 768;
+
     const MIDDLE_COL_INDEX = Math.floor(
       window.NUMBER_OF_COL / 2
     );
 
     const firstLabelPosition =
-      this.createTilePosition(2, 3);
+      this.createTilePosition(
+        isMobile ? 2 : MIDDLE_COL_INDEX - 4,
+        3
+      );
 
     const secondLabelPosition =
-      this.createTilePosition(5, 3);
+      this.createTilePosition(
+        isMobile ? 5 : MIDDLE_COL_INDEX - 1,
+        3
+      );
 
     const thirdLabelPosition =
       this.createTilePosition(
-        window.NUMBER_OF_COL - 1 - 8,
+        isMobile ? window.NUMBER_OF_COL - 1 - 8 : MIDDLE_COL_INDEX - 2,
         4
       );
 
@@ -129,7 +137,7 @@ class SecondPage extends PageComponent {
 
         #label-second {
           width: ${
-            window.TILE_SIZE * 3
+            window.TILE_SIZE * 4
           }px;
           height: ${window.TILE_SIZE}px;
 

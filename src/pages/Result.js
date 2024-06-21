@@ -187,6 +187,12 @@ class ResultPage extends PageComponent {
           animation: driveIn 3s forwards ease-out;
         }
 
+        @media (min-width: 768px) {
+          #card-container {
+            max-width: 320px;
+          }
+        }
+
         #barcode-container {
           background-color: white;
           width: 100%;
@@ -222,6 +228,12 @@ class ResultPage extends PageComponent {
           display: flex;
           justify-content: space-between;
           align-items: center;
+        }
+
+        @media (min-width: 768px) {
+          #button-container {
+            max-width: 320px;
+          }
         }
 
         button {
