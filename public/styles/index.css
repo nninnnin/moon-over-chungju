@@ -1,0 +1,27 @@
+* {
+  touch-action: manipulation;
+  box-sizing: border-box;
+  -webkit-font-smoothing: auto;
+  text-rendering: optimizeLegibility;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+canvas {
+  width: 100vw;
+  height: 100svh;
+
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background-color: transparent;
+}

@@ -75,197 +75,24 @@
     />
     <!-- URL to your thumbnail image -->
 
-    <style>
-      * {
-        touch-action: manipulation;
-        box-sizing: border-box;
-        -webkit-font-smoothing: auto;
-        text-rendering: optimizeLegibility;
-      }
-
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-
-        overflow: hidden;
-        overscroll-behavior: none;
-      }
-
-      canvas {
-        width: 100vw;
-        height: 100svh;
-
-        position: fixed;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-
-        background-color: transparent;
-      }
-    </style>
-
+    <link
+      rel="stylesheet"
+      href="/public/styles/index.css"
+    />
     <link
       rel="stylesheet"
       href="/public/styles/font.css"
     />
     <link
       rel="stylesheet"
-      href="/public/styles/glide.css"
+      href="/public/styles/third-page-contents.css"
     />
-
-    <style>
-      .moon-header,
-      .moon-footer {
-        text-align: center;
-        font-family: "JTimeMachine";
-        letter-spacing: -0.2em;
-        font-size: 20px;
-        font-weight: 700;
-        line-height: 120%;
-      }
-
-      .moon {
-        width: 140px;
-        height: 140px;
-
-        margin-top: 13px;
-        margin-bottom: 8px;
-      }
-
-      .eng {
-        letter-spacing: -0.13em;
-      }
-    </style>
-
-    <style>
-      #third-input-container {
-        width: 100vw;
-        height: 100px;
-
-        position: fixed;
-        left: 0;
-        top: 0%;
-        z-index: 8000;
-
-        display: none;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      #message-input {
-        width: 300px;
-        height: 50px;
-
-        font-family: JTimeMachine;
-        font-weight: 700;
-        font-size: 18px;
-        text-align: center;
-        letter-spacing: -0.2em;
-
-        border: none;
-        outline: none;
-        background-color: transparent;
-      }
-
-      #message-input::placeholder {
-        text-align: center;
-        color: rgba(0, 0, 0, 0.4);
-      }
-
-      /* or, for legacy browsers */
-
-      #message-input::-webkit-input-placeholder {
-        text-align: center;
-        color: rgba(0, 0, 0, 0.4);
-      }
-
-      :-moz-placeholder {
-        /* Firefox 18- */
-        text-align: center;
-        color: rgba(0, 0, 0, 0.4);
-      }
-
-      #message-input::-moz-placeholder {
-        /* Firefox 19+ */
-        text-align: center;
-        color: rgba(0, 0, 0, 0.4);
-      }
-
-      #message-input:-ms-input-placeholder {
-        text-align: center;
-        color: rgba(0, 0, 0, 0.4);
-      }
-
-      #spinner {
-        position: absolute;
-        display: none;
-      }
-
-      @keyframes fadeOut {
-        0% {
-          opacity: 1;
-        }
-
-        100% {
-          opacity: 0;
-        }
-      }
-
-      .fadeout {
-        animation: fadeOut 1s forwards;
-      }
-
-      @keyframes moonDrive {
-        0% {
-          bottom: -30%;
-          opacity: 0.2;
-        }
-
-        50% {
-          bottom: 50%;
-          opacity: 1;
-        }
-
-        100% {
-          bottom: 150%;
-          opacity: 1;
-        }
-      }
-
-      #last-moon {
-        width: 90vw;
-        height: 90vw;
-
-        position: fixed;
-        bottom: -100%;
-        left: 50%;
-        transform: translate(-50%, 50%);
-        z-index: 100;
-      }
-
-      @media (min-width: 768px) {
-        #last-moon {
-          max-width: 360px;
-          max-height: 360px;
-        }
-      }
-
-      .moon-drive {
-        animation: moonDrive 4s forwards;
-        animation-timing-function: ease-in-out;
-      }
-    </style>
-
-    <!-- for using glide.js -->
-    <script src="https://unpkg.com/@glidejs/glide@3.6.0/dist/glide.js"></script>
 
     <!-- internal classes -->
     <!--
       **
         주의: 클래스 간 디펜던시가 존재하므로,
-        import 순서를 변경하면 작동하지 않을 수 있습니다.
+        스크립트 순서를 변경하면 작동하지 않을 수 있습니다.
       **
     -->
     <script src="/src/constants/index.js"></script>
@@ -303,7 +130,7 @@
         id="message-input"
         type="text"
         placeholder="12자 이내로 입력해주세요!"
-        maxlength="12"
+        maxlength="13"
       />
 
       <img
@@ -317,107 +144,94 @@
       src="/public/images/last-moon.png"
     />
 
-    <!-- for using lambda client -->
+    <!-- bundled external libs -->
     <script src="/dist/bundled.js"></script>
 
-    <!-- for p5.js -->
+    <!-- p5 lib -->
     <script src="/src/libs/p5.min.js"></script>
+    <!-- p5 setup & draw -->
+    <script src="/src/scripts/draw.js"></script>
 
     <script>
-      function setup() {
-        const canvas = createCanvas(
-          window.innerWidth,
-          window.innerHeight,
-          WEBGL
-        );
+      document.addEventListener(
+        "DOMContentLoaded",
+        () => {
+          const input =
+            document.querySelector(
+              "input"
+            );
 
-        window.addEventListener(
-          "resize",
-          () => {
-            if (innerWidth < 768) {
-              return;
+          input.addEventListener(
+            "input",
+            () => {
+              const value = input.value;
+
+              if (value.length > 12) {
+                const hasToast =
+                  document.querySelector(
+                    ".toast"
+                  );
+
+                if (hasToast) {
+                  hasToast.remove();
+                }
+
+                const toast =
+                  document.createElement(
+                    "div"
+                  );
+
+                toast.classList.add(
+                  "toast"
+                );
+
+                toast.style.position =
+                  "fixed";
+                console.log(
+                  `${
+                    Math.floor(
+                      window.NUMBER_OF_ROW /
+                        2
+                    ) * window.TILE_SIZE
+                  }px`
+                );
+                toast.style.top = `${
+                  (Math.floor(
+                    window.NUMBER_OF_ROW /
+                      2
+                  ) -
+                    1) *
+                  window.TILE_SIZE
+                }px`;
+                toast.style.left =
+                  "50%";
+                toast.style.transform =
+                  "translate(-50%, -100%)";
+
+                toast.textContent =
+                  "12자 이내로 작성해주세요";
+
+                document.body.appendChild(
+                  toast
+                );
+
+                setTimeout(() => {
+                  toast.classList.add(
+                    "fadeout"
+                  );
+
+                  setTimeout(() => {
+                    toast.remove();
+                  }, 1000);
+                }, 1000);
+
+                input.value =
+                  value.slice(0, 12);
+              }
             }
-
-            resizeCanvas(
-              window.innerWidth,
-              window.innerHeight
-            );
-
-            const {
-              tileSize,
-              numberOfRow,
-              numberOfCol,
-              numberOfTiles,
-            } = Tile.setTiles(
-              width,
-              height
-            );
-
-            // After set tiles, rerender components
-            rerenderComponents();
-
-            window.tiles = [
-              ...Tile.initializeTiles(
-                numberOfCol,
-                numberOfTiles,
-                tileSize
-              ),
-            ];
-          }
-        );
-
-        angleMode(DEGREES);
-        blendMode(BLEND);
-
-        rerenderComponents();
-      }
-
-      function draw() {
-        clear();
-
-        ortho(
-          -width / 2,
-          width / 2,
-          -height / 2,
-          height / 2,
-          100,
-          1000
-        );
-
-        // orbitControl();
-
-        if (!window.tiles) return;
-
-        window.tiles.forEach((tile) => {
-          tile.checkIsHovered();
-
-          // if (tile.animatingPunching) {
-          //   perspective();
-          // } else {
-          //   ortho(
-          //     -width / 2,
-          //     width / 2,
-          //     -height / 2,
-          //     height / 2,
-          //     100,
-          //     1000
-          //   );
-          // }
-
-          ortho(
-            -width / 2,
-            width / 2,
-            -height / 2,
-            height / 2,
-            100,
-            1000
           );
-
-          // perspective();
-
-          tile.draw();
-        });
-      }
+        }
+      );
     </script>
   </body>
 </html>

@@ -1,0 +1,134 @@
+#third-input-container {
+  width: 100vw;
+  height: 100px;
+
+  position: fixed;
+  left: 0;
+  top: 0%;
+  z-index: 8000;
+
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#message-input {
+  width: 300px;
+  height: 50px;
+
+  font-family: JTimeMachine;
+  font-weight: 700;
+  font-size: 18px;
+  text-align: center;
+  letter-spacing: -0.2em;
+
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+#message-input::placeholder {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+/* or, for legacy browsers */
+
+#message-input::-webkit-input-placeholder {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+:-moz-placeholder {
+  /* Firefox 18- */
+  text-align: center;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+#message-input::-moz-placeholder {
+  /* Firefox 19+ */
+  text-align: center;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+#message-input:-ms-input-placeholder {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+#spinner {
+  position: absolute;
+  display: none;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.fadeout {
+  animation: fadeOut 1s forwards;
+}
+
+@keyframes moonDrive {
+  0% {
+    bottom: -30%;
+    opacity: 0.2;
+  }
+
+  50% {
+    bottom: 50%;
+    opacity: 1;
+  }
+
+  100% {
+    bottom: 150%;
+    opacity: 1;
+  }
+}
+
+#last-moon {
+  width: 90vw;
+  height: 90vw;
+
+  position: fixed;
+  bottom: -100%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  z-index: 100;
+}
+
+@media (min-width: 768px) {
+  #last-moon {
+    max-width: 360px;
+    max-height: 360px;
+  }
+}
+
+.moon-drive {
+  animation: moonDrive 4s forwards;
+  animation-timing-function: ease-in-out;
+}
+.toast {
+  width: 200px;
+  height: 24px;
+  background-color: #cacaca;
+
+  font-family: JTimeMachine;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 150%;
+  letter-spacing: -0.2em;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 0.5px solid black;
+}
