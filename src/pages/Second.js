@@ -145,7 +145,7 @@ class SecondPage extends PageComponent {
           ${secondLabelPosition.y};
           font-size: 20px;
 
-          background-color: #01A29B;
+          background-color: ${window.themeColor};
         }
 
         #label-third {
@@ -203,7 +203,7 @@ class SecondPage extends PageComponent {
       <img id='logo' src='/public/images/logo--intro.svg' />
 
       <div class='label' id='label-first'>
-        10년 후
+        10년 후의
       </div>
 
       <div class='label' id='label-second'>
