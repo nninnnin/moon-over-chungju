@@ -236,6 +236,7 @@ class SecondPage extends PageComponent {
   }
 
   addListeners() {
+    this.addLogoListener();
     this.addButtonListeners();
     this.addInputListener();
   }

@@ -385,6 +385,7 @@ class First extends PageComponent {
   }
 
   addListeners() {
+    this.addLogoListener();
     this.addLabelListeners();
     this.addButtonListners();
     this.addTileInteractionPreventer();

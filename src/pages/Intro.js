@@ -248,7 +248,7 @@ class Intro extends PageComponent {
     this.addListeners();
   }
 
-  addListeners() {
+  addButtonListener() {
     const button =
       this.shadowRoot.querySelector(
         "button"
@@ -335,6 +335,11 @@ class Intro extends PageComponent {
         }, 1200);
       }
     );
+  }
+
+  addListeners() {
+    this.addLogoListener();
+    this.addButtonListener();
   }
 }
 

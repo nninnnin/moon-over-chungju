@@ -35,6 +35,22 @@ class PageComponent extends HTMLElement {
     );
   }
 
+  addLogoListener() {
+    const logo =
+      this.shadowRoot.querySelector(
+        "#logo"
+      );
+
+    logo.style.cursor = "pointer";
+
+    logo.addEventListener(
+      "click",
+      () => {
+        window.location.reload();
+      }
+    );
+  }
+
   addTileInteractionPreventer() {
     const buttons =
       this.shadowRoot.querySelectorAll(
