@@ -184,8 +184,6 @@ class ResultPage extends PageComponent {
           align-items: center;
           justify-content: center;
 
-          margin-right: -1px;
-
           animation: driveIn 3s forwards ease-out;
         }
 
@@ -311,11 +309,16 @@ class ResultPage extends PageComponent {
           cardContainer.offsetHeight;
         img.src = dataUrl;
         img.style.position = "absolute";
-        img.style.top = "0px";
-        img.style.left = "0px";
+        img.style.top = "1px";
+        img.style.left = "1px";
         img.style.zIndex = "999";
 
         cardContainer.appendChild(img);
+
+        cardContainer.style.position =
+          "relative";
+        cardContainer.style.overflow =
+          "hidden";
 
         this.state.captured = true;
 
