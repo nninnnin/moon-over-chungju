@@ -216,15 +216,21 @@ class Intro extends PageComponent {
       <img id='logo-desktop' />
 
       <a
+        target="_blank"
+        rel="noopener noreferrer"
         href='https://cmoa.cheongju.go.kr/www/index.do'
       >
         <marquee-custom class='label'
         id='label--first'>
-          청주시립미술관
+          청주시립미술관 홈페이지
         </marquee-custom>
       </a>
 
-      <a href='https://cmoa.cheongju.go.kr/www/index.do'>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href='https://cmoa.cheongju.go.kr/www/index.do'
+      >
         <marquee-custom
           class='label'
           id='label--second'
@@ -233,12 +239,17 @@ class Intro extends PageComponent {
         </marquee-custom>
       </a>
 
-      <a href='https://cmoa.cheongju.go.kr/www/speclExbiView.do?key=63&exbiNo=773&pageUnit=10&searchCnd=all&searchKrwd=&pageIndex=1&kindExhi='>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href='https://cmoa.cheongju.go.kr/www/speclExbiView.do?key=63&exbiNo=773&pageUnit=10&searchCnd=all&searchKrwd=&pageIndex=1&kindExhi='
+      >
         <marquee-custom
           class='label'
           id='label--third'
+          duration='26'
         >
-          청주시립미술관 통합 청주시 10주년 기념전 <청주 가는 길:강익중>
+          통합 청주시 10주년 기념전 <청주 가는 길: 강익중> 전시 소개
         </marquee-custom>
       </a>
 

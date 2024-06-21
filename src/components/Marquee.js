@@ -38,6 +38,9 @@ class MarqueeComponent extends HTMLElement {
   }
 
   render() {
+    const duration =
+      this.getAttribute("duration");
+
     this.shadowRoot.innerHTML = `
     <style>
         ${PageComponent.resetStyles}
@@ -63,7 +66,11 @@ class MarqueeComponent extends HTMLElement {
           position: absolute;
           right: 0;
 
-          animation: 15s flowLeft linear forwards;
+          animation: ${
+            duration
+              ? `${duration}s`
+              : "15s"
+          } flowLeft linear forwards;
         }
 
         @keyframes flowLeft {
