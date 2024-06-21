@@ -176,7 +176,7 @@ class PageComponent extends HTMLElement {
 
     box-sizing: border-box;
 
-    border: none;
+    border: 0.5px solid black;
     outline: none;
     background-color: black;
     color: white;

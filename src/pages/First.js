@@ -33,22 +33,33 @@ class First extends PageComponent {
       window.NUMBER_OF_ROW / 2
     );
 
+    const isMobile =
+      window.innerWidth < 768;
+
+    const MIDDLE_COL_INDEX = Math.floor(
+      window.NUMBER_OF_COL / 2
+    );
+
     const labels = [
       {
         id: "label-years",
         position: {
-          x: 1,
+          x: isMobile
+            ? 1
+            : MIDDLE_COL_INDEX - 4,
           y: MIDDLE_ROW_INDEX - 6,
         },
-        size: { x: 3, y: 1 },
+        size: { x: 6, y: 1 },
         backgroundColor: "#DADADA",
-        text: "10년 후",
+        text: "지금 이 순간, 10년 후의",
         value: null,
       },
       {
         id: "label-family",
         position: {
-          x: 1,
+          x: isMobile
+            ? 1
+            : MIDDLE_COL_INDEX - 4,
           y: MIDDLE_ROW_INDEX - 4,
         },
         size: { x: 3, y: 1 },
@@ -59,7 +70,9 @@ class First extends PageComponent {
       {
         id: "label-friend",
         position: {
-          x: window.NUMBER_OF_COL - 5,
+          x: isMobile
+            ? window.NUMBER_OF_COL - 5
+            : MIDDLE_COL_INDEX + 1,
           y: MIDDLE_ROW_INDEX - 4,
         },
         size: { x: 3, y: 1 },
@@ -70,10 +83,15 @@ class First extends PageComponent {
       {
         id: "label-partner",
         position: {
-          x: 1,
+          x: isMobile
+            ? 1
+            : MIDDLE_COL_INDEX - 4,
           y: MIDDLE_ROW_INDEX - 3,
         },
-        size: { x: 5, y: 1 },
+        size: {
+          x: 5,
+          y: 1,
+        },
         backgroundColor: "#01A29B",
         text: "소중한 사람",
         value: "specialPerson",
@@ -81,7 +99,9 @@ class First extends PageComponent {
       {
         id: "label-me",
         position: {
-          x: 1,
+          x: isMobile
+            ? 1
+            : MIDDLE_COL_INDEX - 4,
           y: MIDDLE_ROW_INDEX - 2,
         },
         size: { x: 2, y: 1 },
@@ -92,7 +112,9 @@ class First extends PageComponent {
       {
         id: "label-pet",
         position: {
-          x: window.NUMBER_OF_COL - 4,
+          x: isMobile
+            ? window.NUMBER_OF_COL - 4
+            : MIDDLE_COL_INDEX + 2,
           y: MIDDLE_ROW_INDEX - 1,
         },
         size: { x: 3, y: 1 },
@@ -103,7 +125,9 @@ class First extends PageComponent {
       {
         id: "label-chungju",
         position: {
-          x: window.NUMBER_OF_COL - 6,
+          x: isMobile
+            ? window.NUMBER_OF_COL - 6
+            : MIDDLE_COL_INDEX,
           y: MIDDLE_ROW_INDEX,
         },
         size: { x: 2, y: 1 },
@@ -114,7 +138,9 @@ class First extends PageComponent {
       {
         id: "label-somebody",
         position: {
-          x: window.NUMBER_OF_COL - 5,
+          x: isMobile
+            ? window.NUMBER_OF_COL - 5
+            : MIDDLE_COL_INDEX + 1,
           y: MIDDLE_ROW_INDEX + 1,
         },
         size: { x: 3, y: 1 },
@@ -125,12 +151,14 @@ class First extends PageComponent {
       {
         id: "label-wish",
         position: {
-          x: window.NUMBER_OF_COL - 8,
+          x: isMobile
+            ? window.NUMBER_OF_COL - 8
+            : MIDDLE_COL_INDEX - 2,
           y: MIDDLE_ROW_INDEX + 3,
         },
         size: { x: 7, y: 1 },
         backgroundColor: "#DADADA",
-        text: "에게 바람을 남기고 싶어요",
+        text: "를 위한 소망을 남기고 싶어요",
         value: null,
       },
     ];
@@ -191,10 +219,6 @@ class First extends PageComponent {
       }
     );
 
-    const MIDDLE_COL_INDEX = Math.floor(
-      window.NUMBER_OF_COL / 2
-    );
-
     const backButtonStyle =
       this.createTilePosition(
         MIDDLE_COL_INDEX - 4,
@@ -231,6 +255,8 @@ class First extends PageComponent {
 
           background-color: #d8d8d8;
           border: 0.5px solid black;
+          border-left: 0px;
+          border-top: 0px;
           box-sizing: border-box;
         }
 
@@ -258,14 +284,13 @@ class First extends PageComponent {
           position: relative;
           width: 100%;
           height: 100%;
-
-          text-align: center;
         }
 
         .front, .back {
           display: flex;
           align-items: center;
-          justify-content: center;
+          justify-content: flex-start;
+          padding-left: 8px;
 
           position: absolute;
           width: 100%;

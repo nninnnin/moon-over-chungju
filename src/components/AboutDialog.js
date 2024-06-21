@@ -110,7 +110,7 @@ class AboutDialog extends PageComponent {
             (window.NUMBER_OF_ROW - 2)
           }px;
 
-          border: 1px solid black;
+          border: 0.5px solid black;
           border-top: 0px;
           border-right: 0px;
           padding: 1em;

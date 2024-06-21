@@ -104,6 +104,8 @@ class SecondPage extends PageComponent {
 
           background-color: #d8d8d8;
           border: 0.5px solid black;
+          border-left: 0px;
+          border-top: 0px;
           box-sizing: border-box;
         }
 
