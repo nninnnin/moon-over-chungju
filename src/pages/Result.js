@@ -5,7 +5,7 @@ class ResultPage extends PageComponent {
     this.state = {
       barcodeLoaded: false,
       moonLoaded: false,
-      logoLoaded: false,
+      captured: false,
     };
   }
 
@@ -13,69 +13,59 @@ class ResultPage extends PageComponent {
     this.render();
     this.addListeners();
 
+    setTimeout(() => {
+      this.showElements();
+    }, 3500);
+
+    const cardContainer =
+      this.shadowRoot.querySelector(
+        "#card-container"
+      );
+
+    cardContainer.addEventListener(
+      "animationend",
+      () => {
+        if (!this.state.captured) {
+          this.renderCapturedCard();
+        }
+      }
+    );
+
     (async () => {
-      await this.renderBarCode();
-
-      this.state.barcodeLoaded = true;
-
-      const cardCont =
+      const moonImg =
         this.shadowRoot.querySelector(
-          "#card-container"
+          "#moon"
         );
 
-      const images =
-        cardCont.querySelectorAll(
-          "img"
-        );
-      console.log(images);
+      moonImg.onload = () => {
+        this.state.moonLoaded = true;
+      };
 
-      images.forEach((img) => {
-        img.addEventListener(
-          "load",
-          (e) => {
-            console.log(
-              "img is loaded",
-              e.target.id
-            );
-            if (
-              e.target.id === "moon"
-            ) {
-              this.state.moonLoaded = true;
-            }
-
-            if (
-              e.target.id ===
-              "card-logo"
-            ) {
-              this.state.logoLoaded = true;
-            }
-          }
-        );
-      });
+      await this.renderBarCode();
+      this.state.barcodeLoaded = true;
     })();
   }
 
-  render() {
-    setTimeout(() => {
-      const buttons =
-        this.shadowRoot.querySelectorAll(
-          "button"
-        );
+  showElements() {
+    const buttons =
+      this.shadowRoot.querySelectorAll(
+        "button"
+      );
 
-      buttons.forEach((button) => {
-        button.style.visibility =
-          "visible";
-      });
-
-      const header =
-        this.shadowRoot.querySelector(
-          "#label-header"
-        );
-
-      header.style.visibility =
+    buttons.forEach((button) => {
+      button.style.visibility =
         "visible";
-    }, 3500);
+    });
 
+    const header =
+      this.shadowRoot.querySelector(
+        "#label-header"
+      );
+
+    header.style.visibility = "visible";
+  }
+
+  render() {
     this.shadowRoot.innerHTML = `
       <style>
         ${PageComponent.resetStyles}
@@ -194,6 +184,8 @@ class ResultPage extends PageComponent {
           align-items: center;
           justify-content: center;
 
+          margin-right: -1px;
+
           animation: driveIn 3s forwards ease-out;
         }
 
@@ -305,23 +297,27 @@ class ResultPage extends PageComponent {
       );
 
     captureDom(cardContainer).then(
-      (data) => {
-        console.log(
-          "captured card:",
-          data
-        );
+      (captureCanvas) => {
+        const dataUrl =
+          captureCanvas.toDataURL(
+            "image/png"
+          );
 
-        const image = new Image();
-        image.width =
+        const img = new Image();
+
+        img.width =
           cardContainer.offsetWidth;
-        image.height =
+        img.height =
           cardContainer.offsetHeight;
-        image.src = data;
+        img.src = dataUrl;
+        img.style.position = "absolute";
+        img.style.top = "0px";
+        img.style.left = "0px";
+        img.style.zIndex = "999";
 
-        cardContainer.innerHTML = ``;
-        cardContainer.appendChild(
-          image
-        );
+        cardContainer.appendChild(img);
+
+        this.state.captured = true;
 
         const canvas =
           document.querySelector(
@@ -341,7 +337,7 @@ class ResultPage extends PageComponent {
     homeButton.addEventListener(
       "click",
       () => {
-        window.location.reload();
+        this.renderCapturedCard();
       }
     );
 

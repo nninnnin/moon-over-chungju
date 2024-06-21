@@ -245,7 +245,7 @@ class First extends PageComponent {
         .outer {
           perspective: 1000px;
           transition: transform 0.6s;
-          transform-style: preserve-3d;
+          transform: translate3d(0, 0, 0);
           perspective-origin: center;
         }
 

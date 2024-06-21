@@ -1,8 +1,8 @@
-import { toPng } from "html-to-image";
+import html2canvas from "html2canvas";
 
 const main = () => {
   const captureDom = (node) => {
-    return toPng(node);
+    return html2canvas(node);
   };
 
   window.captureDom = captureDom;
