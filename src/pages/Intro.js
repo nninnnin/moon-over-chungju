@@ -48,14 +48,33 @@ class Intro extends PageComponent {
   }
 
   render() {
+    const isMobile =
+      window.innerWidth < 768;
+    const MIDDLE_COL = Math.floor(
+      window.NUMBER_OF_COL / 2
+    );
+
     const firstLabelPosition =
       this.createTilePosition(
-        window.NUMBER_OF_COL - 6,
+        isMobile
+          ? window.NUMBER_OF_COL - 6
+          : MIDDLE_COL,
         6
       );
 
+    const SECOND_LABEL_TILESPAN = 5;
+    const secondLabelWidth =
+      window.TILE_SIZE *
+      SECOND_LABEL_TILESPAN;
     const secondLabelPosition =
-      this.createTilePosition(1, 7);
+      this.createTilePosition(
+        isMobile
+          ? 1
+          : MIDDLE_COL -
+              SECOND_LABEL_TILESPAN +
+              1,
+        7
+      );
 
     const thirdLabelPosition =
       this.createTilePosition(
@@ -70,9 +89,6 @@ class Intro extends PageComponent {
         ) - 2,
         window.NUMBER_OF_ROW - 3
       );
-
-    const isMobile =
-      window.innerWidth < 768;
 
     const positions = [
       firstLabelPosition,
@@ -106,9 +122,11 @@ class Intro extends PageComponent {
           ${PageComponent.labelStyles}
         }
 
-        #label--left-first {
+        #label--first {
           width: ${
-            window.TILE_SIZE * 4
+            window.innerWidth > 768
+              ? window.TILE_SIZE * 5
+              : window.TILE_SIZE * 4
           }px;
           height: ${window.TILE_SIZE}px;
 
@@ -116,17 +134,15 @@ class Intro extends PageComponent {
           ${firstLabelPosition.x};
         }
 
-        #label--right-first {
-          width: ${
-            window.TILE_SIZE * 5
-          }px;
+        #label--second {
+          width: ${secondLabelWidth}px;
           height: ${window.TILE_SIZE}px;
 
           ${secondLabelPosition.y};
           ${secondLabelPosition.x};
         }
 
-        #label--right-second {
+        #label--third {
           width: ${
             window.TILE_SIZE * 5
           }px;
@@ -138,7 +154,18 @@ class Intro extends PageComponent {
 
         #logo {
           position: fixed;
-          left: 0;
+          left: ${
+            window.innerWidth > 768
+              ? `${
+                  (Math.ceil(
+                    window.NUMBER_OF_COL /
+                      2
+                  ) -
+                    5) *
+                  window.TILE_SIZE
+                }px`
+              : "0"
+          };
           top: 0;
           z-index: 8000;
 
@@ -146,7 +173,7 @@ class Intro extends PageComponent {
             isMobile
               ? "100%"
               : `${
-                  window.TILE_SIZE * 6
+                  window.TILE_SIZE * 10
                 }px`
           };
 
@@ -154,9 +181,13 @@ class Intro extends PageComponent {
             isMobile
               ? "auto"
               : `${
-                  window.TILE_SIZE * 2
+                  window.TILE_SIZE * 3
                 }px`
           }
+
+          object-fit: cover;
+          transform: scale(0.98);
+          transform-origin: center;
         }
 
         #background {
@@ -172,7 +203,7 @@ class Intro extends PageComponent {
           background-image: none;
           background-position: center;
           background-repeat: no-repeat;
-          background-size: 100%;
+          background-size: contain;
         }
       </style>
 
@@ -186,7 +217,7 @@ class Intro extends PageComponent {
         href='https://cmoa.cheongju.go.kr/www/index.do'
       >
         <marquee-custom class='label'
-        id='label--left-first'>
+        id='label--first'>
           청주시립미술관
         </marquee-custom>
       </a>
@@ -194,7 +225,7 @@ class Intro extends PageComponent {
       <a href='https://cmoa.cheongju.go.kr/www/index.do'>
         <marquee-custom
           class='label'
-          id='label--right-first'
+          id='label--second'
         >
           <청주에 뜬 달> 전시 소개
         </marquee-custom>
@@ -203,7 +234,7 @@ class Intro extends PageComponent {
       <a href='https://cmoa.cheongju.go.kr/www/speclExbiView.do?key=63&exbiNo=773&pageUnit=10&searchCnd=all&searchKrwd=&pageIndex=1&kindExhi='>
         <marquee-custom
           class='label'
-          id='label--right-second'
+          id='label--third'
         >
           청주시립미술관 통합 청주시 10주년 기념전 <청주 가는 길:강익중>
         </marquee-custom>
