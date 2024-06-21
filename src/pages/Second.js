@@ -49,7 +49,8 @@ class SecondPage extends PageComponent {
   }
 
   render() {
-    const isMobile = window.innerWidth < 768;
+    const isMobile =
+      window.innerWidth < 768;
 
     const MIDDLE_COL_INDEX = Math.floor(
       window.NUMBER_OF_COL / 2
@@ -57,19 +58,25 @@ class SecondPage extends PageComponent {
 
     const firstLabelPosition =
       this.createTilePosition(
-        isMobile ? 2 : MIDDLE_COL_INDEX - 4,
+        isMobile
+          ? 2
+          : MIDDLE_COL_INDEX - 4,
         3
       );
 
     const secondLabelPosition =
       this.createTilePosition(
-        isMobile ? 5 : MIDDLE_COL_INDEX - 1,
+        isMobile
+          ? 5
+          : MIDDLE_COL_INDEX - 1,
         3
       );
 
     const thirdLabelPosition =
       this.createTilePosition(
-        isMobile ? window.NUMBER_OF_COL - 1 - 8 : MIDDLE_COL_INDEX - 2,
+        isMobile
+          ? window.NUMBER_OF_COL - 1 - 8
+          : MIDDLE_COL_INDEX - 2,
         4
       );
 
@@ -145,7 +152,9 @@ class SecondPage extends PageComponent {
           ${secondLabelPosition.y};
           font-size: 20px;
 
-          background-color: ${window.themeColor};
+          background-color: ${
+            window.themeColor
+          };
         }
 
         #label-third {
@@ -469,29 +478,20 @@ class SecondPage extends PageComponent {
         "#third-input-container"
       );
 
-    const isMobile =
-      window.innerWidth < 768;
+    container.style.height =
+      window.TILE_SIZE * 4 + "px";
+    container.querySelector(
+      'input[type="text"]'
+    ).style.height =
+      window.TILE_SIZE * 2 + "px";
+    container.style.top = `${
+      (Math.floor(
+        window.NUMBER_OF_ROW / 2
+      ) -
+        2) *
+      window.TILE_SIZE
+    }px`;
 
-    if (isMobile) {
-      container.style.top = `${
-        (Math.floor(
-          window.NUMBER_OF_ROW / 2
-        ) -
-          1.5) *
-        window.TILE_SIZE
-      }px`;
-    } else {
-      container.style.top = `${
-        (Math.floor(
-          window.NUMBER_OF_ROW / 2
-        ) -
-          1) *
-        window.TILE_SIZE
-      }px`;
-      container.querySelector(
-        "input"
-      ).margin = "0px";
-    }
     container.style.display = "flex";
   }
 
