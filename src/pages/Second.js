@@ -435,40 +435,84 @@ class SecondPage extends PageComponent {
           );
         };
 
-        const response = await submit();
+        try {
+          const response =
+            await submit();
 
-        console.log(
-          "submit response",
-          response
-        );
+          // 스피너 제거
+          removeSpinner();
 
-        // 스피너 제거
-        removeSpinner();
-
-        // 1. 엘리먼트 사라지기
-        hideElements();
-
-        // 2. 메시지 페이드아웃
-        const input =
-          document.getElementById(
-            "message-input"
+          console.log(
+            "submit response",
+            response
           );
 
-        input.classList.add("fadeout");
+          const succeed =
+            response.statusCode ===
+              200 ||
+            response.statusCode === 201;
 
-        setTimeout(() => {
-          // 3. 타일 콜랩스
+          if (!succeed) {
+            const AppLayout =
+              document.querySelector(
+                "app-layout"
+              );
+
+            AppLayout.shadowRoot.querySelector(
+              "error-modal"
+            ).style.display = "block";
+
+            return;
+          } else {
+            window.createdId =
+              response.body;
+          }
+
+          // 1. 엘리먼트 사라지기
+          hideElements();
+
+          // 2. 메시지 페이드아웃
+          const input =
+            document.getElementById(
+              "message-input"
+            );
+
+          input.classList.add(
+            "fadeout"
+          );
+
           setTimeout(() => {
-            collapseTiles();
-          }, 300);
+            // 3. 타일 콜랩스
+            setTimeout(() => {
+              collapseTiles();
+            }, 300);
 
-          // 4. 달 떠오르기
-          animateMoon();
+            // 4. 달 떠오르기
+            animateMoon();
 
-          setTimeout(() => {
-            movePage(3);
-          }, 4000);
-        }, 900);
+            setTimeout(() => {
+              movePage(3);
+            }, 4000);
+          }, 900);
+        } catch (error) {
+          console.error(
+            "submit error",
+            error
+          );
+
+          removeSpinner();
+
+          const AppLayout =
+            document.querySelector(
+              "app-layout"
+            );
+
+          AppLayout.shadowRoot.querySelector(
+            "error-modal"
+          ).style.display = "block";
+
+          return;
+        }
       }
     );
   }

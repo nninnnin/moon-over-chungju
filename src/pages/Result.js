@@ -41,7 +41,9 @@ class ResultPage extends PageComponent {
         this.state.moonLoaded = true;
       };
 
-      await this.renderBarCode();
+      await this.renderBarCode(
+        window.createdId
+      );
       this.state.barcodeLoaded = true;
     })();
   }
@@ -293,14 +295,19 @@ class ResultPage extends PageComponent {
     `;
   }
 
-  renderBarCode() {
+  renderBarCode(payload) {
+    console.log(
+      "payloads be like..",
+      payload
+    );
+
     const barcodeCanvas =
       this.shadowRoot.querySelector(
         "#barcode"
       );
 
     return createBarcode(
-      "id....",
+      payload,
       barcodeCanvas
     );
   }

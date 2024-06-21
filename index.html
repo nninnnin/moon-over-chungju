@@ -101,6 +101,7 @@
 
     <script src="/src/components/PageComponent.js"></script>
     <script src="/src/components/AboutDialog.js"></script>
+    <script src="/src/components/ErrorModal.js"></script>
     <script src="/src/components/Layout.js"></script>
     <script src="/src/components/Marquee.js"></script>
 
@@ -152,86 +153,6 @@
     <!-- p5 setup & draw -->
     <script src="/src/scripts/draw.js"></script>
 
-    <script>
-      document.addEventListener(
-        "DOMContentLoaded",
-        () => {
-          const input =
-            document.querySelector(
-              "input"
-            );
-
-          input.addEventListener(
-            "input",
-            () => {
-              const value = input.value;
-
-              if (value.length > 12) {
-                const hasToast =
-                  document.querySelector(
-                    ".toast"
-                  );
-
-                if (hasToast) {
-                  hasToast.remove();
-                }
-
-                const toast =
-                  document.createElement(
-                    "div"
-                  );
-
-                toast.classList.add(
-                  "toast"
-                );
-
-                toast.style.position =
-                  "fixed";
-                console.log(
-                  `${
-                    Math.floor(
-                      window.NUMBER_OF_ROW /
-                        2
-                    ) * window.TILE_SIZE
-                  }px`
-                );
-                toast.style.top = `${
-                  (Math.floor(
-                    window.NUMBER_OF_ROW /
-                      2
-                  ) -
-                    1) *
-                  window.TILE_SIZE
-                }px`;
-                toast.style.left =
-                  "50%";
-                toast.style.transform =
-                  "translate(-50%, -100%)";
-
-                toast.textContent =
-                  "12자 이내로 작성해주세요";
-
-                document.body.appendChild(
-                  toast
-                );
-
-                setTimeout(() => {
-                  toast.classList.add(
-                    "fadeout"
-                  );
-
-                  setTimeout(() => {
-                    toast.remove();
-                  }, 1000);
-                }, 1000);
-
-                input.value =
-                  value.slice(0, 12);
-              }
-            }
-          );
-        }
-      );
-    </script>
+    <script src="/src/scripts/input-validation.js"></script>
   </body>
 </html>

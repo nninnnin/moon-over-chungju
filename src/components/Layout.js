@@ -1,9 +1,9 @@
 const PAGE_MAP = {
-  0: "<page-intro>",
-  1: "<page-first>",
-  2: "<page-second>",
-  3: "<page-result>",
-  4: "<page-error>",
+  0: "<page-intro></page-intro>",
+  1: "<page-first></page-first>",
+  2: "<page-second></page-second>",
+  3: "<page-result></page-result>",
+  4: "<page-error></page-error>",
 };
 
 class Layout extends HTMLElement {
@@ -39,6 +39,11 @@ class Layout extends HTMLElement {
       }
 
       ${pageComponent}
+
+      <error-modal>
+        메시지 전송에 문제가 생겼습니다.<br/>
+        다시 [전송하기] 버튼을 눌러주세요
+      </error-modal>
     `;
   }
 
