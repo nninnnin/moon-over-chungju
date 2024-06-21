@@ -105,6 +105,7 @@ class AboutDialog extends PageComponent {
           z-index: 9998;
 
           width: 93vw;
+          max-width: 540px;
           height: ${
             window.TILE_SIZE *
             (window.NUMBER_OF_ROW - 2)
