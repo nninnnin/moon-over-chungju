@@ -200,10 +200,11 @@ class ResultPage extends PageComponent {
         }
 
         #barcode {
-          width: 100%;
+          width: 90%;
           height: 100%;
 
           display: block;
+          margin: 0 auto;
         }
 
         #moon {
@@ -308,9 +309,10 @@ class ResultPage extends PageComponent {
         img.height =
           cardContainer.offsetHeight;
         img.src = dataUrl;
+
         img.style.position = "absolute";
-        img.style.top = "1px";
-        img.style.left = "1px";
+        img.style.top = "0px";
+        img.style.left = "0px";
         img.style.zIndex = "999";
 
         cardContainer.appendChild(img);
@@ -319,6 +321,29 @@ class ResultPage extends PageComponent {
           "relative";
         cardContainer.style.overflow =
           "hidden";
+
+        const imageHeight =
+          window.getComputedStyle(
+            img
+          ).height;
+        const imageWidth =
+          window.getComputedStyle(
+            img
+          ).width;
+
+        cardContainer.style.width =
+          imageWidth;
+        cardContainer.style.height =
+          imageHeight;
+
+        cardContainer.style.overflow =
+          "hidden";
+
+        [...cardContainer.children]
+          .filter((el) => el !== img)
+          .forEach((el) => {
+            el.remove();
+          });
 
         this.state.captured = true;
 

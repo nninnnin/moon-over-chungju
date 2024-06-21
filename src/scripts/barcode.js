@@ -9,7 +9,7 @@ const main = () => {
       canvasElement,
       "zbcheq" + str,
       {
-        width: 1,
+        width: 240,
         displayValue: false,
         height: 80,
       }
