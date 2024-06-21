@@ -78,8 +78,10 @@ class Intro extends PageComponent {
 
     const thirdLabelPosition =
       this.createTilePosition(
-        -1,
-        window.NUMBER_OF_ROW - 7
+        isMobile ? -1 : MIDDLE_COL,
+        isMobile
+          ? window.NUMBER_OF_ROW - 7
+          : 11
       );
 
     const buttonPosition =
