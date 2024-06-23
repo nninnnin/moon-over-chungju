@@ -184,10 +184,6 @@ class First extends PageComponent {
             window.TILE_SIZE *
             label.size.y
           }px;
-
-          background-color: ${
-            label.backgroundColor
-          };
         }
       `
           .replaceAll("\n", "")
@@ -203,7 +199,7 @@ class First extends PageComponent {
           id='${label.id}'
           data-value=${label.value}
         >
-          <div class='inner'>
+          <div class='inner' style='background-color: ${label.backgroundColor}'>
             <div class='front' style='background-color: ${label.backgroundColor}'>
               ${label.text}
             </div>
@@ -269,21 +265,29 @@ class First extends PageComponent {
         }
 
         .outer {
+          transform-style: preserve-3d;
+          
           perspective: 1000px;
-          transition: transform 0.6s;
           transform: translate3d(0, 0, 0);
           perspective-origin: center;
+
+          -webkit-perspective: 1000px;
+          -webkit-backface-visibility: hidden;
+          -webkit-transform: translate3d(0,0,0);
         }
 
         .flip {
           transform: rotateX(-180deg);
           border: 2px solid black;
+          padding-left: 2px;
         }
 
         .inner {
           position: relative;
           width: 100%;
           height: 100%;
+
+          transition: transform 0.6s;
         }
 
         .front, .back {
@@ -304,6 +308,7 @@ class First extends PageComponent {
 
           -webkit-perspective: 0;
           -webkit-backface-visibility: hidden;
+          -webkit-transform: translate3d(0,0,0);
           backface-visibility: hidden;
         }
 
@@ -415,12 +420,14 @@ class First extends PageComponent {
           nextButton.disabled = false;
 
           labels.forEach((label) => {
-            label.classList.remove(
-              "flip"
-            );
+            label
+              .querySelector(".inner")
+              .classList.remove("flip");
           });
 
-          label.classList.add("flip");
+          label
+            .querySelector(".inner")
+            .classList.add("flip");
 
           const AppLayout =
             document.querySelector(
@@ -433,7 +440,9 @@ class First extends PageComponent {
           // Store selected label's background color as theme color
           const labelColor =
             getComputedStyle(
-              label
+              label.querySelector(
+                ".inner"
+              )
             ).backgroundColor;
 
           window.themeColor =
