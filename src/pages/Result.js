@@ -215,6 +215,8 @@ class ResultPage extends PageComponent {
 
         #barcode-container {
           flex: 1;
+          width: 100%;
+          background-color: white;
 
           display: flex;
           justify-content: center;
