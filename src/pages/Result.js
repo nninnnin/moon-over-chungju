@@ -208,8 +208,9 @@ class ResultPage extends PageComponent {
               TILE_SIZE
             }px;
 
-            max-width: 320px;
-            max-height: 448px;
+            
+            max-width: calc(60vh * 0.73);
+            max-height: 60vh;
           }
         }
 
@@ -250,9 +251,25 @@ class ResultPage extends PageComponent {
           align-items: center;
         }
 
+        #button-container > button:first-child {
+          margin-right: 18px;
+        }
+
+        #button-container > button:nth-child(2) {
+          margin-left: 18px;
+        }
+
         @media (min-width: 768px) {
           #button-container {
-            max-width: 436px;
+            max-width: 60vh;
+          }
+
+          #button-container > button:first-child {
+            margin-right: 10px;
+          }
+
+          #button-container > button:nth-child(2) {
+            margin-left: 10px;
           }
         }
 
@@ -265,9 +282,7 @@ class ResultPage extends PageComponent {
         }
 
         #download-button {
-          width: ${
-            window.TILE_SIZE * 4
-          }px;
+          flex: 1;
           height: ${
             window.TILE_SIZE * 1
           }px;
@@ -278,9 +293,7 @@ class ResultPage extends PageComponent {
         }
 
         #home-button {
-          width: ${
-            window.TILE_SIZE * 4
-          }px;
+          flex: 1;
           height: ${
             window.TILE_SIZE * 1
           }px;
