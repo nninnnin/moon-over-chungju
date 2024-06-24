@@ -103,9 +103,10 @@ class Tile {
     const numberOfCol = NUMBER_OF_COL;
 
     const tileSize =
-      width / numberOfCol;
+      (width ?? innerWidth) /
+      numberOfCol;
     const numberOfRow = Math.ceil(
-      height / tileSize
+      (height ?? innerHeight) / tileSize
     );
     const numberOfTiles =
       numberOfCol * numberOfRow;

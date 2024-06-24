@@ -10,6 +10,20 @@ class ResultPage extends PageComponent {
   }
 
   connectedCallback() {
+    if (!window.tiles) {
+      const {
+        tileSize,
+        numberOfCol,
+        numberOfTiles,
+      } = Tile.setTiles(window.tiles);
+
+      Tile.initializeTiles(
+        numberOfCol,
+        numberOfTiles,
+        tileSize
+      );
+    }
+
     this.render();
     this.addListeners();
 
@@ -92,11 +106,11 @@ class ResultPage extends PageComponent {
 
         @keyframes growIn {
           0% {
-            height: 0px;
+            height: 0vh;
           }
 
           100% {
-            height: 80px;
+            height: 9.5vh;
           }
         }
 
@@ -117,17 +131,13 @@ class ResultPage extends PageComponent {
           width: 100vw;
           height: 100dvh;
 
+          padding-top: 5vh;
+          padding-bottom: 5vh;
+
           display: flex;
           flex-direction: column;
           justify-content: space-between;
           align-items: center;
-
-          padding-top: ${
-            window.TILE_SIZE * 0.5
-          }px;
-          padding-bottom: ${
-            window.TILE_SIZE * 1.5
-          }px;
         }
 
         .label {
@@ -136,14 +146,14 @@ class ResultPage extends PageComponent {
 
         #label-header {
           position: relative;
-          background-color: blue;
 
           visibility: hidden;
           border: none;
+          background-color: transparent;
 
           font-family: JTimeMachine;
           font-weight: medium;
-          font-size: 20px;
+          font-size: min(3vh, 20px);
           line-height: 160%;
           letter-spacing: -0.2em;
 
@@ -151,13 +161,11 @@ class ResultPage extends PageComponent {
           justify-content: center;
           align-items: center;
 
-          width: ${
-            window.TILE_SIZE * 9
-          }px;
           height: ${
-            window.TILE_SIZE * 2
+            NUMBER_OF_ROW *
+            0.1 *
+            TILE_SIZE
           }px;
-          background-color: transparent;
         }
 
         @keyframes driveIn {
@@ -175,11 +183,8 @@ class ResultPage extends PageComponent {
         }
 
         #card-container {
-          width: ${
-            window.TILE_SIZE *
-            (window.NUMBER_OF_COL - 2)
-          }px;
-          height: fit-content;
+          width: 85vw;
+          height: calc(85vw * 1.36);
 
           display: flex;
           flex-direction: column;
@@ -191,16 +196,25 @@ class ResultPage extends PageComponent {
 
         @media (min-width: 768px) {
           #card-container {
+            width: calc(${
+              NUMBER_OF_ROW *
+              0.6 *
+              TILE_SIZE
+            }px * 0.73);
+
+            height: ${
+              NUMBER_OF_ROW *
+              0.6 *
+              TILE_SIZE
+            }px;
+
             max-width: 320px;
+            max-height: 448px;
           }
         }
 
         #barcode-container {
-          background-color: white;
-          width: 100%;
-          height: ${
-            window.TILE_SIZE * 4
-          }px;
+          flex: 1;
 
           display: flex;
           justify-content: center;
@@ -222,9 +236,11 @@ class ResultPage extends PageComponent {
         #button-container {
           position: relative;
 
-          width: ${
-            window.TILE_SIZE *
-            (window.NUMBER_OF_COL - 2)
+          width: 85vw;
+          height: ${
+            NUMBER_OF_ROW *
+            0.1 *
+            TILE_SIZE
           }px;
 
           display: flex;
@@ -242,6 +258,8 @@ class ResultPage extends PageComponent {
           ${PageComponent.buttonStyles};
           position: relative;
           visibility: hidden;
+
+          font-size: min(3vh, 20px);
         }
 
         #download-button {
@@ -276,7 +294,7 @@ class ResultPage extends PageComponent {
       <div id='container'>
         <div class='label' id='label-header'>
           당신의 달이 떠올랐습니다.<br/>
-          다운로드 버튼을 눌러 저장하세요.
+          바코드 이미지를 꾹 눌러 저장하세요.
         </div>
 
         <div id='card-container'>
