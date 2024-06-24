@@ -61,7 +61,7 @@ class SecondPage extends PageComponent {
         isMobile
           ? 2
           : MIDDLE_COL_INDEX - 4,
-        3
+        2
       );
 
     const secondLabelPosition =
