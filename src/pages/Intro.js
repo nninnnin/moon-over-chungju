@@ -235,7 +235,7 @@ class Intro extends PageComponent {
           class='label'
           id='label--second'
         >
-          <청주에 뜬 달> 전시 소개
+          ≪청주에 뜬 달≫ 전시 소개
         </marquee-custom>
       </a>
 
@@ -249,7 +249,7 @@ class Intro extends PageComponent {
           id='label--third'
           duration='26'
         >
-          통합 청주시 10주년 기념전 <청주 가는 길: 강익중> 전시 소개
+          통합 청주시 10주년 기념전 ≪청주 가는 길: 강익중≫ 전시 소개
         </marquee-custom>
       </a>
 
