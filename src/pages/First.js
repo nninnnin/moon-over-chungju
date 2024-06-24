@@ -51,7 +51,7 @@ class First extends PageComponent {
         },
         size: { x: 6, y: 1 },
         backgroundColor: "#DADADA",
-        text: "지금 이 순간, 10년 후의",
+        text: "10년 후의",
         value: null,
       },
       {
@@ -158,7 +158,7 @@ class First extends PageComponent {
         },
         size: { x: 7, y: 1 },
         backgroundColor: "#DADADA",
-        text: "를 위한 소망을 남기고 싶어요",
+        text: "에게 소망을 남기고 싶어요",
         value: null,
       },
     ];
