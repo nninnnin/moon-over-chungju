@@ -448,9 +448,11 @@ class SecondPage extends PageComponent {
           );
 
           const succeed =
-            response.statusCode ===
+            response &&
+            (response.statusCode ===
               200 ||
-            response.statusCode === 201;
+              response.statusCode ===
+                201);
 
           if (!succeed) {
             const AppLayout =
@@ -458,9 +460,13 @@ class SecondPage extends PageComponent {
                 "app-layout"
               );
 
-            AppLayout.shadowRoot.querySelector(
-              "error-modal"
-            ).style.display = "block";
+            AppLayout.shadowRoot
+              .querySelector(
+                "error-modal"
+              )
+              .shadowRoot.querySelector(
+                "#container"
+              ).style.display = "flex";
 
             return;
           } else {

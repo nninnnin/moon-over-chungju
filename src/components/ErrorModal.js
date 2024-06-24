@@ -87,7 +87,25 @@ class ErrorModal extends HTMLElement {
     button.addEventListener(
       "click",
       () => {
-        this.remove();
+        // 전송하기 활성화
+        const AppLayout =
+          document.querySelector(
+            "app-layout"
+          );
+        const CurrentPageComponent =
+          AppLayout.shadowRoot.querySelector(
+            Layout.PAGE_MAP[
+              AppLayout.state.pageNumber
+            ]
+          );
+        CurrentPageComponent.shadowRoot.querySelector(
+          "#button--submit"
+        ).disabled = false;
+
+        // 모달 닫기
+        this.shadowRoot.querySelector(
+          "#container"
+        ).style.display = "none";
       }
     );
   }

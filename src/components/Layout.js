@@ -1,12 +1,12 @@
-const PAGE_MAP = {
-  0: "<page-intro></page-intro>",
-  1: "<page-first></page-first>",
-  2: "<page-second></page-second>",
-  3: "<page-result></page-result>",
-  4: "<page-error></page-error>",
-};
-
 class Layout extends HTMLElement {
+  static PAGE_MAP = {
+    0: "page-intro",
+    1: "page-first",
+    2: "page-second",
+    3: "page-result",
+    4: "page-error",
+  };
+
   constructor() {
     super();
 
@@ -24,7 +24,9 @@ class Layout extends HTMLElement {
 
   render() {
     const pageComponent =
-      PAGE_MAP[this.state.pageNumber];
+      Layout.PAGE_MAP[
+        this.state.pageNumber
+      ];
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -38,7 +40,7 @@ class Layout extends HTMLElement {
           : "<dialog-about></dialog-about>"
       }
 
-      ${pageComponent}
+      ${`<${pageComponent}></${pageComponent}>`}
 
       <error-modal>
         메시지 전송에 문제가 생겼습니다.<br/>
