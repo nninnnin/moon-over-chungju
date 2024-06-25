@@ -31,7 +31,7 @@ class AboutDialog extends PageComponent {
         <header>
           시민참여 실감 미디어 아트전
           <br/>
-          <span>≪청주에 뜬 달≫</span>
+          <span>《청주에 뜬 달》</span>
         </header>
 
         <div>
