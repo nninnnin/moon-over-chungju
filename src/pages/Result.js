@@ -17,11 +17,12 @@ class ResultPage extends PageComponent {
         numberOfTiles,
       } = Tile.setTiles(window.tiles);
 
-      Tile.initializeTiles(
-        numberOfCol,
-        numberOfTiles,
-        tileSize
-      );
+      window.tiles =
+        Tile.initializeTiles(
+          numberOfCol,
+          numberOfTiles,
+          tileSize
+        );
     }
 
     this.render();
