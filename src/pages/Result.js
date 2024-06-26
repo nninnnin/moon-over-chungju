@@ -59,6 +59,7 @@ class ResultPage extends PageComponent {
       await this.renderBarCode(
         window.createdId
       );
+
       this.state.barcodeLoaded = true;
     })();
   }
@@ -181,6 +182,7 @@ class ResultPage extends PageComponent {
 
         img {
           touch-action: auto !important;
+          -webkit-touch-callout: default !important;
         }
 
         #card-container {
@@ -195,6 +197,7 @@ class ResultPage extends PageComponent {
           animation: driveIn 3s forwards ease-out;
 
           touch-action: auto !important;
+          -webkit-touch-callout: default !important;
         }
 
         @media (min-width: 768px) {
@@ -214,6 +217,16 @@ class ResultPage extends PageComponent {
             
             max-width: calc(60vh * 0.73);
             max-height: 60vh;
+          }
+
+          #moon {
+            min-height: width: calc(${
+              NUMBER_OF_ROW *
+              0.6 *
+              TILE_SIZE
+            }px * 0.73);
+
+            max-height: calc(60vh * 0.73);
           }
         }
 
@@ -237,6 +250,7 @@ class ResultPage extends PageComponent {
 
         #moon {
           width: 100%;
+          min-height: 85vw;
         }
 
         #button-container {
@@ -349,6 +363,20 @@ class ResultPage extends PageComponent {
   }
 
   renderCapturedCard() {
+    if (
+      !this.state.barcodeLoaded ||
+      !this.state.moonLoaded
+    ) {
+      setTimeout(() => {
+        console.log(
+          "Things are not ready to be captured."
+        );
+        this.renderCapturedCard();
+      }, 100);
+
+      return;
+    }
+
     const cardContainer =
       this.shadowRoot.querySelector(
         "#card-container"
