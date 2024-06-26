@@ -218,16 +218,6 @@ class ResultPage extends PageComponent {
             max-width: calc(60vh * 0.73);
             max-height: 60vh;
           }
-
-          #moon {
-            min-height: width: calc(${
-              NUMBER_OF_ROW *
-              0.6 *
-              TILE_SIZE
-            }px * 0.73);
-
-            max-height: calc(60vh * 0.73);
-          }
         }
 
         #barcode-container {
@@ -250,7 +240,11 @@ class ResultPage extends PageComponent {
 
         #moon {
           width: 100%;
-          min-height: 85vw;
+          min-height: calc(${
+            NUMBER_OF_ROW *
+            0.6 *
+            TILE_SIZE
+          }px * 0.73);
         }
 
         #button-container {
