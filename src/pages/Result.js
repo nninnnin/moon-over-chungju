@@ -192,6 +192,8 @@ class ResultPage extends PageComponent {
           justify-content: center;
 
           animation: driveIn 3s forwards ease-out;
+
+          touch-action: auto !important;
         }
 
         @media (min-width: 768px) {
