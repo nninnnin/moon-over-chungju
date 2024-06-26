@@ -229,7 +229,7 @@ class Intro extends PageComponent {
       <a
         target="_blank"
         rel="noopener noreferrer"
-        href='https://cmoa.cheongju.go.kr/www/index.do'
+        href='https://cmoa.cheongju.go.kr/www/speclExbiView.do?key=63&exbiNo=778&pageUnit=10&searchCnd=all&searchKrwd=&pageIndex=1&kindExhi='
       >
         <marquee-custom
           class='label'

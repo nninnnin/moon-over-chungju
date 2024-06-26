@@ -17,11 +17,12 @@ class ResultPage extends PageComponent {
         numberOfTiles,
       } = Tile.setTiles(window.tiles);
 
-      Tile.initializeTiles(
-        numberOfCol,
-        numberOfTiles,
-        tileSize
-      );
+      window.tiles =
+        Tile.initializeTiles(
+          numberOfCol,
+          numberOfTiles,
+          tileSize
+        );
     }
 
     this.render();
@@ -131,7 +132,7 @@ class ResultPage extends PageComponent {
           width: 100vw;
           height: 100dvh;
 
-          padding-top: 5vh;
+          padding-top: 20px;
           padding-bottom: 5vh;
 
           display: flex;

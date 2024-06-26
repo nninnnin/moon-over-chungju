@@ -9,7 +9,24 @@ document.addEventListener(
       () => {
         const value = input.value;
 
-        if (value.length > 12) {
+        // when space is continously pressed or value has continous space character,
+        // replace that with single space character
+        if (value.includes("  ")) {
+          input.value = value.replace(
+            /\s\s/g,
+            " "
+          );
+
+          return;
+        }
+
+        const lengthWithoutSpace =
+          value.replace(
+            /\s/g,
+            ""
+          ).length;
+
+        if (lengthWithoutSpace > 12) {
           const hasToast =
             document.querySelector(
               ".toast"
@@ -65,7 +82,7 @@ document.addEventListener(
 
           input.value = value.slice(
             0,
-            12
+            value.length - 1
           );
         }
       }

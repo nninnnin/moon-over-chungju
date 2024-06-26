@@ -4,6 +4,21 @@ class SecondPage extends PageComponent {
   }
 
   connectedCallback() {
+    if (!window.tiles) {
+      const {
+        tileSize,
+        numberOfCol,
+        numberOfTiles,
+      } = Tile.setTiles(window.tiles);
+
+      window.tiles =
+        Tile.initializeTiles(
+          numberOfCol,
+          numberOfTiles,
+          tileSize
+        );
+    }
+
     this.resetTileInteractionPreventer();
     this.prerender();
 
@@ -404,7 +419,7 @@ class SecondPage extends PageComponent {
               .selectedReceiver;
 
           const message =
-            MessageInput.value;
+            MessageInput.value.trim();
 
           MessageInput.disabled = true;
 
