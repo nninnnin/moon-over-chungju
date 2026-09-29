@@ -1,2 +1,5 @@
 node_modules
 .env
+
+# Generated bundles may contain local environment credentials.
+/dist/
