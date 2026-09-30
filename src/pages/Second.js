@@ -408,37 +408,6 @@ class SecondPage extends PageComponent {
 
         submitButton.disabled = true;
 
-        const submit = async () => {
-          const MessageInput =
-            document.querySelector(
-              "#message-input"
-            );
-
-          const keyword =
-            AppLayout.state
-              .selectedReceiver;
-
-          const message =
-            MessageInput.value.trim();
-
-          MessageInput.disabled = true;
-
-          const payload = {
-            keyword,
-            moonType: "",
-            message,
-          };
-
-          console.log(
-            "보내는 페이로드",
-            payload
-          );
-
-          return await requestLambda(
-            payload
-          );
-        };
-
         const animateMoon = () => {
           const lastMoon =
             document.querySelector(
@@ -451,43 +420,11 @@ class SecondPage extends PageComponent {
         };
 
         try {
-          const response =
-            await submit();
+          document.querySelector("#message-input").disabled = true;
 
-          // 스피너 제거
+          // Used only for the card barcode; no message is sent or stored.
+          window.createdId = crypto.randomUUID();
           removeSpinner();
-
-          console.log(
-            "submit response",
-            response
-          );
-
-          const succeed =
-            response &&
-            (response.statusCode ===
-              200 ||
-              response.statusCode ===
-                201);
-
-          if (!succeed) {
-            const AppLayout =
-              document.querySelector(
-                "app-layout"
-              );
-
-            AppLayout.shadowRoot
-              .querySelector(
-                "error-modal"
-              )
-              .shadowRoot.querySelector(
-                "#container"
-              ).style.display = "flex";
-
-            return;
-          } else {
-            window.createdId =
-              response.body;
-          }
 
           // 1. 엘리먼트 사라지기
           hideElements();

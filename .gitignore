@@ -3,3 +3,5 @@ node_modules
 
 # Generated bundles may contain local environment credentials.
 /dist/
+
+/build/
