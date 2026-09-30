@@ -422,8 +422,8 @@ class SecondPage extends PageComponent {
         try {
           document.querySelector("#message-input").disabled = true;
 
-          // Used only for the card barcode; no message is sent or stored.
-          window.createdId = crypto.randomUUID();
+          // Demo card number; no message is sent or stored.
+          window.createdId = "000001";
           removeSpinner();
 
           // 1. 엘리먼트 사라지기

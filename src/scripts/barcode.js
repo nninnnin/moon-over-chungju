@@ -7,8 +7,9 @@ const main = () => {
   ) => {
     return JSBarcode(
       canvasElement,
-      "zbcheq" + str,
+      "zbcheq" + (str || "000001"),
       {
+        format: "CODE128",
         width: 240,
         displayValue: false,
         height: 80,
